@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-RideOnBulgaria-4C2F6E9F-1C1C-4DB3-BAC9-2B1E0DFECEC3</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RideOnBulgaria.Data\RideOnBulgaria.Data.csproj" />
+    <ProjectReference Include="..\RideOnBulgaria.Services\RideOnBulgaria.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Areas\Roads\Data\" />
+    <Folder Include="Areas\Roads\Views\Categories\" />
+    <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
+</Project>

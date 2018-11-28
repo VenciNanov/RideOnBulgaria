@@ -1,0 +1,24 @@
+﻿@inject SignInManager<User> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<nav class="navbar navbar-expand-md navbar-light bg-light text-black-50 pt-0 pb-0">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="@ManageNavPages.IndexNavClass(ViewContext) nav-item nav-link"><a asp-page="./Index" class="nav-link">Profile</a></li>
+            <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) nav-item nav-link"><a id="change-password" asp-page="./ChangePassword" class="nav-link">Password</a></li>
+            @if (hasExternalLogins)
+            {
+                <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext) nav-item nav-link"><a id="external-login" asp-page="./ExternalLogins" class="nav-link">External logins</a></li>
+            }
+            <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) nav-item nav-link"><a asp-page="./TwoFactorAuthentication" class="nav-link">Two-factor authentication</a></li>
+            <li class="@ManageNavPages.PersonalDataNavClass(ViewContext) nav-item nav-link"><a asp-page="./PersonalData" class="nav-link">Personal data</a></li>
+        </ul>
+    </div>
+
+</nav>
