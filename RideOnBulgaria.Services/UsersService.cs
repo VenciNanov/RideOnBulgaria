@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using RideOnBulgaria.Models;
 using RideOnBulgaria.Services.Contracts;
@@ -78,6 +80,7 @@ namespace RideOnBulgaria.Services
 
             return user;
         }
+
 
         public async void Logout()
         {

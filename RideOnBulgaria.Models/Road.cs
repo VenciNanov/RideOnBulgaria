@@ -14,13 +14,13 @@ namespace RideOnBulgaria.Models
 
         public string Id { get; set; }
 
-        public string TripName { get; set; }
+        public string RoadName { get; set; }
 
         public string StartingPoint { get; set; }
 
         public string EndPoint { get; set; }
 
-        public double TripLength { get; set; }
+        public double RoadLength { get; set; }
 
         public virtual ICollection<Image> Photos { get; set; }
 

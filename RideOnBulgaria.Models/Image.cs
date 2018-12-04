@@ -13,8 +13,17 @@ namespace RideOnBulgaria.Models
 
         public string Id { get; set; }
 
-        public byte[] Photo { get; set; }
+        public string PublicId { get; set; }
 
-        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+
+        public DateTime DateAdded { get; set; }
+
+        public bool IsMain { get; set; }
+
+        public string RoadId { get; set; }
+        public virtual Road Road { get; set; }
+
+
     }
 }
