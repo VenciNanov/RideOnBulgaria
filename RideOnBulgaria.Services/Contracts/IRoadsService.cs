@@ -6,7 +6,7 @@ namespace RideOnBulgaria.Services.Contracts
 {
     public interface IRoadsService
     {
-        bool Create(string roadName, string startingPoint, string endPoint, double roadLength, string description, string video,string userId,IFormFile photo);
+        bool Create(string roadName, string startingPoint, string endPoint, double roadLength, string description, string video,string userId,IFormFile photo,ICollection<IFormFile> photos);
 
         T Details<T>(string id);
 

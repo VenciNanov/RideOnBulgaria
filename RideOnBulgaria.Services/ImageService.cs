@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -32,7 +33,6 @@ namespace RideOnBulgaria.Services
 
         public Image AddPhoto(IFormFile photo)
         {
-
             var file = photo;
 
             var uploadResult = new ImageUploadResult();
@@ -67,6 +67,9 @@ namespace RideOnBulgaria.Services
             return image;
 
         }
+
+       
+
 
         public async Task<bool> SaveAll()
         {

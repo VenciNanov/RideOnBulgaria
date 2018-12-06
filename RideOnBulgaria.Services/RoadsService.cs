@@ -26,7 +26,7 @@ namespace RideOnBulgaria.Services
             this.videoService = videoService;
         }
 
-        public bool Create(string roadName, string startingPoint, string endPoint, double roadLength, string description, string video, string userId, IFormFile imageFromForm)
+        public bool Create(string roadName, string startingPoint, string endPoint, double roadLength, string description, string video, string userId, IFormFile imageFromForm,ICollection<IFormFile> photos)
         {
             if (roadName == null ||
                 startingPoint == null ||
@@ -47,6 +47,13 @@ namespace RideOnBulgaria.Services
                 embedYoutubeUrl = videoService.ReturnEmbedYoutubeLink(video);
             }
 
+            var imageList = new List<Image>();
+
+            foreach (var photo in photos)
+            {
+                imageList.Add(this.imageService.AddPhoto(photo));
+
+            }
 
             Road road = new Road
             {
@@ -57,7 +64,8 @@ namespace RideOnBulgaria.Services
                 StartingPoint = startingPoint,
                 RoadLength = roadLength,
                 Video = embedYoutubeUrl,
-                UserId = userId
+                UserId = userId,
+                Photos = imageList
             };
 
             context.Roads.Add(road);

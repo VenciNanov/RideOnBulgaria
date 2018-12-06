@@ -64,7 +64,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
           var result =  this.roadsService.Create(model.TripName, model.StartingPoint, model.EndPoint, model.TripLength, model.Description,
-                 model.Video,userId, model.CoverPhoto);
+                 model.Video,userId, model.CoverPhoto,model.Images);
 
             if (!result)
             {

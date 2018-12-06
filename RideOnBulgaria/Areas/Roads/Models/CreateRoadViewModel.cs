@@ -41,10 +41,11 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
         [Display(Name = "Video")]
         public string Video { get; set; }
 
-        [Display(Name = "CoverPhoto")]
+        [Display(Name = "CoverPhoto(Drag and drop your image here...)")]
         public IFormFile CoverPhoto { get; set; }
 
-        [Display(Name = "Photos")]
+        [Display(Name = "Photos(Drag and drop your images here...)")]
+        [DataType(DataType.Upload)]
         public ICollection<IFormFile> Images { get; set; }
 
         public DateTime PostedOn { get; set; }
