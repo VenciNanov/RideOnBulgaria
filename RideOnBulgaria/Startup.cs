@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +11,7 @@ using RideOnBulgaria.Data;
 using RideOnBulgaria.Models;
 using RideOnBulgaria.Services;
 using RideOnBulgaria.Services.Contracts;
+using RideOnBulgaria.Web;
 using RideOnBulgaria.Web.Infrastructure.Extensions;
 
 namespace RideOnBulgaria
@@ -56,19 +58,21 @@ namespace RideOnBulgaria
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //var mappingConfig = new MapperConfiguration(mc =>
-            //    mc.AddProfile(new MappingProfile())
-            //);
+            var mappingConfig = new MapperConfiguration(mc =>
+                mc.AddProfile(new MappingProfile())
+            );
 
-            //IMapper mapper = mappingConfig.CreateMapper();
-            //services.AddSingleton(mapper);
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
             //services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            services.AddScoped<IRoadsIndexService, RoadsIndexService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IRoadsService, RoadsService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IVideoService, VideoService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

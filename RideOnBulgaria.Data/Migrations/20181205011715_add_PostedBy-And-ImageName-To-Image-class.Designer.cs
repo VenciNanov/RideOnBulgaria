@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RideOnBulgaria.Data;
 
 namespace RideOnBulgaria.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181205011715_add_PostedBy-And-ImageName-To-Image-class")]
+    partial class add_PostedByAndImageNameToImageclass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,21 +131,6 @@ namespace RideOnBulgaria.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("RideOnBulgaria.Models.CoverPhotoRoad", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("ImageId");
-
-                    b.Property<string>("RoadId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
-
-                    b.ToTable("CoverPhotoRoads");
-                });
-
             modelBuilder.Entity("RideOnBulgaria.Models.Image", b =>
                 {
                     b.Property<string>("Id")
@@ -176,8 +163,6 @@ namespace RideOnBulgaria.Data.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CoverPhotoId");
 
                     b.Property<string>("Description");
 
@@ -300,18 +285,6 @@ namespace RideOnBulgaria.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("RideOnBulgaria.Models.CoverPhotoRoad", b =>
-                {
-                    b.HasOne("RideOnBulgaria.Models.Road", "Road")
-                        .WithOne("CoverPhoto")
-                        .HasForeignKey("RideOnBulgaria.Models.CoverPhotoRoad", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("RideOnBulgaria.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
                 });
 
             modelBuilder.Entity("RideOnBulgaria.Models.Image", b =>

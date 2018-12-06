@@ -30,7 +30,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
         [Range(0, double.MaxValue, ErrorMessage = "Please enter valid road length.")]
         public double TripLength { get; set; }
 
-        public virtual ICollection<Image> Photos { get; set; }
+        //public virtual ICollection<Image> Photos { get; set; }
 
         [Required]
         [Display(Name = "Description about the road")]
@@ -41,8 +41,11 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
         [Display(Name = "Video")]
         public string Video { get; set; }
 
+        [Display(Name = "CoverPhoto")]
+        public IFormFile CoverPhoto { get; set; }
+
         [Display(Name = "Photos")]
-        public IFormFile Photo { get; set; }
+        public ICollection<IFormFile> Images { get; set; }
 
         public DateTime PostedOn { get; set; }
     }

@@ -22,6 +22,12 @@ namespace RideOnBulgaria.Models
 
         public double RoadLength { get; set; }
 
+        //public string CoverId { get; set; }
+        //public virtual Image Cover { get; set; }
+
+        public string CoverPhotoId { get; set; }
+        public virtual CoverPhotoRoad CoverPhoto { get; set; }
+
         public virtual ICollection<Image> Photos { get; set; }
 
         public string Description { get; set; }

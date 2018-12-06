@@ -13,6 +13,8 @@ namespace RideOnBulgaria.Models
 
         public string Id { get; set; }
 
+        public string Name{ get; set; }
+
         public string PublicId { get; set; }
 
         public string ImageUrl { get; set; }
@@ -23,6 +25,10 @@ namespace RideOnBulgaria.Models
 
         public string RoadId { get; set; }
         public virtual Road Road { get; set; }
+
+        //Posted by
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
 
 
     }

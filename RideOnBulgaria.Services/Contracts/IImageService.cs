@@ -10,6 +10,7 @@ namespace RideOnBulgaria.Services.Contracts
         Image AddPhoto(IFormFile formFile);
         Task<bool> SaveAll();
 
+        string ReturnImage(Image image);
         //Task<PhotoForReturnViewModel> GetPhoto(string id);
     }
 }

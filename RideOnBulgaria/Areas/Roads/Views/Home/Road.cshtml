@@ -1,0 +1,13 @@
+﻿@model DetailsRoadViewModel
+
+<div class="container-image-details">
+    <img class="img-thumbnail" src="@Model.CoverPhoto.ImageUrl" />
+    <div class="centered">@Model.RoadName</div>
+    <div class="centered-info">From: @Model.StartingPoint To: @Model.EndPoint , @Model.RoadLength Km</div>
+</div>
+<div class="container justify-content-center text-center">
+    <p>@Model.Description</p>
+    <iframe width="901" height="507" src="@Model.Video" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <p class="text-left">Posted On: @Model.PostedOn by: @Model.PostedBy</p>
+</div>
+

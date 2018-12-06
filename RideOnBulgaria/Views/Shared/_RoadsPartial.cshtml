@@ -1,7 +1,9 @@
-﻿<div class="dropdown show collapse navbar-collapse d-flex justify-content-between " id="navbarNav">
-    <a asp-area="Roads" asp-controller="Home" asp-action="Index" class="dropdown-toggle nav-link nav-link-dark " id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="False">
+﻿<div class="dropdown show collapse navbar-collapse d-flex  " id="navbarNav">
+    <a class="nav-link" asp-area="Roads" asp-controller="Home" asp-action="Index">
         Roads
     </a>
+    <span class="dropdown-toggle nav-link nav-link-dark " id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="False"></span>
+
     <div class="dropdown-menu mt-2" aria-labelledby="dropDownMenuLink">
         <a class="dropdown-item" asp-area="Roads" asp-controller="Categories" asp-action="All">All Roads</a>
 
@@ -11,3 +13,4 @@
 
     </div>
 </div>
+

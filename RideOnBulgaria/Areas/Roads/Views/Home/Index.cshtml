@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="jumbotron text-center">
+    <div class="container-fluid text-center">
+        <h2 class="font-weight-light">All Roads</h2>
+        <hr class="hr-1" />
+    </div>
+    <partial name="_AllRoadsPartial" />
+    <br />
+    <a asp-area="Roads" asp-controller="Categories" asp-action="All" style="color: red"><h4>more roads...</h4></a>
+</div>
+<br />
+
+
+<div class="jumbotron text-center">
+    <div class="container-fluid text-center">
+        <h2 class="font-weight-light">Longest Roads</h2>
+        <hr class="hr-1" />
+    </div>
+    <partial name="_LongestRoadsPartial" />
+    <br />
+    <a asp-area="Roads" asp-controller="Categories" asp-action="LongestRoads" style="color: red"><h4>more roads...</h4></a>
+</div>
+<br />
+
+<div class="jumbotron text-center">
+    <div class="container-fluid text-center">
+        <h2 class="font-weight-light">Top Roads</h2>
+        <hr class="hr-1" />
+    </div>
+    <partial name="_TopRoadsPartial" />
+    <br />
+    <a asp-area="Roads" asp-controller="Categories" asp-action="TopRoads" style="color: red"><h4>more roads...</h4></a>
+</div>
+<br />
+
+<div class="jumbotron text-center">
+    <div class="container-fluid text-center">
+        <h2 class="font-weight-light">Latest Roads</h2>
+        <hr class="hr-1" />
+    </div>
+    <partial name="_LatestRoadsPartial" />
+    <br />
+    <a asp-area="Roads" asp-controller="Categories" asp-action="LatestRoads" style="color: red"><h4>more roads...</h4></a>
+</div>
+<br />
+
+

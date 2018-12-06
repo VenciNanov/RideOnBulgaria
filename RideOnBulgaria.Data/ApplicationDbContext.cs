@@ -15,9 +15,19 @@ namespace RideOnBulgaria.Data
         {
         }
 
+        public DbSet<CoverPhotoRoad> CoverPhotoRoads { get; set; }
+
         public DbSet<Road> Roads { get; set; }
 
         public DbSet<Image> Images { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Road>()
+                .HasOne(x => x.CoverPhoto)
+                .WithOne(x => x.Road)
+                .HasForeignKey<CoverPhotoRoad>(x=>x.Id);
+        }
     }
 }
