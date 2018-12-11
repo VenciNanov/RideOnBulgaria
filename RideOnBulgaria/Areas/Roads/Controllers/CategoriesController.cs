@@ -23,33 +23,53 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         public IActionResult All()
         {
             var roads = this.roadsService.GetRoads();
-            var roadsModel = new List<RoadViewModel>();
-            
-            foreach (var road in roads)
-            {
-                var mainImage = this.imageService.ReturnImage(road.CoverPhoto.Image);
-
-                roadsModel.Add(new RoadViewModel
-                {
-                    Id = road.Id,
-                    Image = mainImage,
-                    PostedOn = road.PostedOn,
-                    RoadName = road.RoadName,
-                    PostedBy = this.User.Identity.Name
-                });
-            }
+            List<RoadViewModel> roadsModel = GetRoadsViewModel(roads);
             return View(roadsModel);
         }
 
         public IActionResult LatestRoads()
         {
-            return View();
+            var roads = this.roadsService.GetLatestRoads();
+            List<RoadViewModel> roadsModel = GetRoadsViewModel(roads);
+
+            return View(roadsModel);
 
         }
+
+        public IActionResult LongestRoads()
+        {
+            var roads = this.roadsService.GetLongestRoads();
+            List<RoadViewModel> roadsModel = GetRoadsViewModel(roads);
+
+            return View(roadsModel);
+
+        }
+
+
 
         public IActionResult TopRoads()
         {
             return View();
+        }
+
+        private List<RoadViewModel> GetRoadsViewModel(ICollection<RideOnBulgaria.Models.Road> roads)
+        {
+            var roadsModel = new List<RoadViewModel>();
+
+            foreach (var road in roads)
+            {
+                var coverPhoto = this.imageService.ReturnImage(road.CoverPhoto.Image);
+                roadsModel.Add(new RoadViewModel
+                {
+                    Id = road.Id,
+                    Image = coverPhoto,
+                    PostedOn = road.PostedOn,
+                    RoadName = road.RoadName,
+                    PostedBy = this.User.Identity.Name
+                });
+            }
+
+            return roadsModel;
         }
     }
 }

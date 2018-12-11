@@ -15,6 +15,8 @@ namespace RideOnBulgaria.Web
             CreateMap<Road, DetailsRoadViewModel>()
                 .ForMember(x => x.CoverPhoto,
                             c => c.MapFrom(x => x.CoverPhoto.Image))
+                .ForMember(x=>x.Images,c=>c.MapFrom(x=>x.Photos))
+                .ForMember(x=>x.PostedBy,c=>c.MapFrom(x=>x.User))
                 .ReverseMap();
         }
     }

@@ -1,0 +1,16 @@
+﻿@model IEnumerable<RoadViewModel>
+
+
+
+@foreach (var item in Model)
+{
+
+    <div class="container-image">
+        <a asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@item.Id">
+            <img class="img-fluid rounded" src="@item.Image" />
+        </a>
+        <div class="bottom-right">@item.RoadName</div>
+        <div class="bottom-left-info"> Posted On: @item.PostedOn by @item.PostedBy.</div>
+    </div>
+
+}

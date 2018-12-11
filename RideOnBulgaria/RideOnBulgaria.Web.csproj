@@ -26,6 +26,12 @@
     <Content Update="Areas\Roads\Views\Shared\_AllRoadsPartial - Copy (2).cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\Roads\Views\Shared\_CreateRoadPleasureRatingPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Roads\Views\Shared\_CreateRoadSurfaceRatingPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Roads\Views\Shared\_LongestRoadsPartial - Copy (3).cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

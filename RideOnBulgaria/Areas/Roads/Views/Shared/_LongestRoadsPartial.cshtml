@@ -1,18 +1,18 @@
 ﻿@model RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex.RoadsIndexViewModel
 
-<div id="demo" class="carousel slide" data-ride="carousel">
+<div id="longest" class="carousel slide" data-ride="longest">
     <ul class="carousel-indicators">
-        <li data-target="#demo" data-slide-to="0" class="active"></li>
-        @for (int i = 1; i <= @Model.AllRoads.Count-1 ; i++)
+        <li data-target="#longest" data-slide-to="0" class="active"></li>
+        @for (int i = 1; i <= @Model.LongestRoads.Count-1 ; i++)
         {
-            <li data-target="#demo" data-slide-to="i"></li>
+            <li data-target="#longest" data-slide-to="i"></li>
         }
     </ul>
 
 
     <div class="carousel-inner">
         @{
-         var roadActive = Model.AllRoads.Take(1);
+         var roadActive = Model.LongestRoads.Take(1);
         }
         @foreach (var item in roadActive)
         {
@@ -27,7 +27,7 @@
             </div>
         }
 
-        @foreach (var item in Model.AllRoads.Skip(1))
+        @foreach (var item in Model.LongestRoads.Skip(1))
         {
 
             <div class="carousel-item">
@@ -43,10 +43,10 @@
 
 
     </div>
-    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <a class="carousel-control-prev" href="#longest" data-slide="prev">
         <span class="carousel-control-prev-icon"></span>
     </a>
-    <a class="carousel-control-next" href="#demo" data-slide="next">
+    <a class="carousel-control-next" href="#longest" data-slide="next">
         <span class="carousel-control-next-icon"></span>
     </a>
 </div>

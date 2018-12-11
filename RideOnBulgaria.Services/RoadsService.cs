@@ -26,14 +26,15 @@ namespace RideOnBulgaria.Services
             this.videoService = videoService;
         }
 
-        public bool Create(string roadName, string startingPoint, string endPoint, double roadLength, string description, string video, string userId, IFormFile imageFromForm,ICollection<IFormFile> photos)
+        public bool Create(string roadName, string startingPoint, string endPoint, double roadLength, string description, string video, string userId, IFormFile imageFromForm,ICollection<IFormFile> photos, int viewRating,int surfaceRating, int pleasureRating)
         {
             if (roadName == null ||
                 startingPoint == null ||
                 endPoint == null ||
                 roadLength == null ||
                 description == null ||
-                userId == null) return false;
+                userId == null||
+                imageFromForm==null) return false;
 
             if (this.context.Roads.Any(x=>x.RoadName==roadName))
             {
@@ -52,7 +53,6 @@ namespace RideOnBulgaria.Services
             foreach (var photo in photos)
             {
                 imageList.Add(this.imageService.AddPhoto(photo));
-
             }
 
             Road road = new Road
@@ -65,7 +65,10 @@ namespace RideOnBulgaria.Services
                 RoadLength = roadLength,
                 Video = embedYoutubeUrl,
                 UserId = userId,
-                Photos = imageList
+                Photos = imageList,
+                SurfaceRating = surfaceRating,
+                ViewRating = viewRating,
+                PleasureRating = pleasureRating
             };
 
             context.Roads.Add(road);
@@ -83,8 +86,6 @@ namespace RideOnBulgaria.Services
                 RoadId = road.Id
             };
 
-            
-
             context.CoverPhotoRoads.Add(coverPhoto);
             context.SaveChanges();
 
@@ -92,10 +93,6 @@ namespace RideOnBulgaria.Services
             road.CoverPhotoId = coverPhoto.Id;
 
             context.SaveChanges();
-
-
-
-
             return true;
         }
 
@@ -116,6 +113,18 @@ namespace RideOnBulgaria.Services
         public ICollection<Road> GetRoads()
         {
             return context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x=>x.User).ToList();
+        }
+
+        public ICollection<Road> GetLatestRoads()
+        {
+            return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
+                .OrderByDescending(x => x.PostedOn).ToList();
+        }
+
+        public ICollection<Road> GetLongestRoads()
+        {
+            return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
+                .OrderByDescending(x => x.RoadLength).ToList();
         }
 
 

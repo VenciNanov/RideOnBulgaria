@@ -12,5 +12,8 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex
         public ICollection<RoadViewModel> TopRoads { get; set; }
 
         public ICollection<RoadViewModel> AllRoads { get; set; }
+
+        public ICollection<RoadViewModel> LongestRoads { get; set; }
+
     }
 }

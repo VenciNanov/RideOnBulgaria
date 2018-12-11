@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace RideOnBulgaria.Models
 {
     public class Road
     {
+        private const int AverageRatingCountDivider = 3;
+
+        private double averagePosterRating;
+
         public Road()
         {
             this.Id = Guid.NewGuid().ToString();
@@ -38,5 +43,25 @@ namespace RideOnBulgaria.Models
 
         public string UserId { get; set; }
         public virtual User User { get; set; }
+
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public double AveragePosterRating
+        {
+            get
+            {
+                int sum = ViewRating + SurfaceRating + PleasureRating;
+                double average = (double)sum / AverageRatingCountDivider;
+                return averagePosterRating = average;
+            }
+            private set => averagePosterRating = value;
+        }
+
+
+        public int ViewRating { get; set; }
+
+        public int SurfaceRating { get; set; }
+
+        public int PleasureRating { get; set; }
     }
 }

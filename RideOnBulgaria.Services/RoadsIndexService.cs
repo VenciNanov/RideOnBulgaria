@@ -11,6 +11,8 @@ namespace RideOnBulgaria.Services
 {
     public class RoadsIndexService:IRoadsIndexService
     {
+        private const int ImagesCountForCarousel = 5;
+
         private readonly ApplicationDbContext context;
         private readonly IImageService imageService;
         private readonly IMapper mapper;
@@ -24,7 +26,28 @@ namespace RideOnBulgaria.Services
 
         public ICollection<Road> GetAllRoads()
         {
-            var roads = this.context.Roads.Take(5).ToList();
+            var roads = this.context.Roads.Take(ImagesCountForCarousel).ToList();
+
+            return roads;
+        }
+
+        public ICollection<Road> GetLatestRoads()
+        {
+            var roads = this.context.Roads.OrderByDescending(x => x.PostedOn).Take(ImagesCountForCarousel).ToList();
+
+            return roads;
+        }
+
+        public ICollection<Road> GetLongestRoads()
+        {
+            var roads = this.context.Roads.OrderByDescending(x => x.RoadLength).Take(ImagesCountForCarousel).ToList();
+
+            return roads;
+        }
+
+        public ICollection<Road> GetTopRoads()
+        {
+            var roads = this.context.Roads.OrderByDescending(x => x.AveragePosterRating).Take(ImagesCountForCarousel).ToList();
 
             return roads;
         }
