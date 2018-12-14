@@ -51,5 +51,11 @@ namespace RideOnBulgaria.Services
 
             return roads;
         }
+
+        public ICollection<Road> GetCurrentUserRoadsByName(string id)
+        {
+            var roads = this.context.Roads.Where(x => x.User.Id == id).ToList();
+            return roads;
+        }
     }
 }

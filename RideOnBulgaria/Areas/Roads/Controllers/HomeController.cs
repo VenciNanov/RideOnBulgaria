@@ -13,7 +13,6 @@ using RoadViewModel = RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex.RoadViewM
 namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 {
     [Area("Roads")]
-
     public class HomeController : Controller
     {
         private readonly IRoadsService roadsService;
@@ -109,7 +108,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var result = this.roadsService.Create(model.TripName, model.StartingPoint, model.EndPoint, model.TripLength, model.Description,
-                   model.Video, userId, model.CoverPhoto, model.Images,model.View,model.Surface,model.Pleasure);
+                   model.Video, userId, model.CoverPhoto, model.Images, model.View, model.Surface, model.Pleasure);
 
             if (!result)
             {
@@ -120,9 +119,103 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             return this.RedirectToAction("All", "Categories");
         }
 
-        public IActionResult EditRoad()
+        public IActionResult EditRoad(string id)
         {
-            return this.View();
+            var road = this.roadsService.GetRoadById(id);
+            
+                if (road == null)
+                {
+                    return NotFound();
+                }
+
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId != road.UserId)
+            {
+                return Unauthorized();
+            }
+            //if (this.User.Identity!=road.User)
+            //{
+            //    return Unauthorized();
+            //}
+
+            var model = new EditRoadViewModel
+            {
+                TripName = road.RoadName,
+                Description = road.Description,
+                StartingPoint = road.StartingPoint,
+                EndPoint = road.EndPoint,
+                Id = id,
+                Surface = road.SurfaceRating,
+                View = road.ViewRating,
+                Pleasure = road.PleasureRating,
+                Images = road.Photos,
+                TripLength = road.RoadLength,
+                Video = road.Video,
+            };
+
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult EditRoad(EditRoadViewModel model)
+        {
+            var road = this.roadsService.GetRoadById(model.Id);
+
+            if (road == null) return NotFound();
+
+
+            var result = this.roadsService.Edit(model.Id, model.TripName, model.StartingPoint, model.EndPoint,
+                model.TripLength, model.Description, model.Video, model.CoverPhoto, model.View, model.Surface,
+                model.Pleasure);
+
+            return this.RedirectToAction("MyRoads", "Home");
+        }
+
+
+        public IActionResult EditRoadPictures(string id)
+        {
+            var road = this.roadsService.GetRoadById(id);
+
+            var model = new EditRoadViewModel
+            {
+                Id=road.Id,
+                Images = road.Photos
+            };
+            
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddImagesToRoad(EditRoadViewModel model)
+        {
+            var road = this.roadsService.GetRoadById(model.Id);
+
+            if (model.NewImages == null)
+            {
+                return RedirectToAction("Error");
+            }
+
+            var images = this.roadsService.AddImagesToRoad(model.NewImages, road.Id);
+
+            return this.Redirect($"/Roads/Home/EditRoadPictures/{road.Id}");
+
+        }
+
+        public IActionResult DeleteRoadPictures(string id)
+        {
+            var image = this.imageService.FindImageById(id);
+
+            var road = this.roadsService.GetRoadByImage(image);
+
+            this.imageService.RemoveImage(image);
+
+            return this.Redirect($"/Roads/Home/EditRoadPictures/{road.Id}");
         }
 
         public IActionResult DeleteRoad()
@@ -142,9 +235,27 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             return this.View(model);
         }
 
-        public IActionResult UploadImage()
+        [Authorize]
+        public IActionResult MyRoads()
         {
-            return this.View();
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var currentUserRoads = this.roadsIndexService.GetCurrentUserRoadsByName(currentUser);
+
+            var model = new List<MyRoadsViewModel>();
+
+            foreach (var road in currentUserRoads)
+            {
+                model.Add(new MyRoadsViewModel
+                {
+                    Id = road.Id,
+                    RoadName = road.RoadName,
+                    CoverPhotoUrl = this.imageService.ReturnImage(road.CoverPhoto.Image),
+                    PostedOn = road.PostedOn,
+                });
+            }
+
+            return this.View(model);
         }
 
         //[HttpPost]
@@ -157,6 +268,6 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
         //}
 
-     
+
     }
 }

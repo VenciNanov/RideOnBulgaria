@@ -9,5 +9,6 @@ namespace RideOnBulgaria.Services.Contracts
         ICollection<Road> GetLatestRoads();
         ICollection<Road> GetLongestRoads();
         ICollection<Road> GetTopRoads();
+        ICollection<Road> GetCurrentUserRoadsByName(string id);
     }
 }

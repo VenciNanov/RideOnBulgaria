@@ -1,0 +1,24 @@
+﻿@model ICollection<MyRoadsViewModel>
+
+<h1>My Roads</h1>
+
+<div class="card-container">
+    <div class="row">
+        @foreach (var road in @Model)
+        {
+            <div class="card">
+                <a asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id"><img src="@road.CoverPhotoUrl" alt="Avatar" style="width: 100%"></a>
+                <div class="container">
+                    <h4><b>@road.RoadName</b></h4>
+                    <p>Posted On: @road.PostedOn</p>
+                    <div class="btn-group bottom-right">
+                        <a type="button" class="btn btn-primary" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" asp-route-id="@road.Id">Edit</a>
+                        <a type="button" class="btn btn-primary" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoad" asp-route-id="@road.Id">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+</div>

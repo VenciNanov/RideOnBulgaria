@@ -24,7 +24,14 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
         public ICollection<Image> Images { get; set; }
 
         public User PostedBy { get; set; }
-       
+
         public DateTime PostedOn { get; set; }
+
+        public int SurfaceRating { get; set; }
+
+        public int ViewRating { get; set; }
+
+        public int PleasureRating { get; set; }
+
     }
 }

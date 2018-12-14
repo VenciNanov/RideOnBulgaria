@@ -17,6 +17,7 @@ namespace RideOnBulgaria.Web
                             c => c.MapFrom(x => x.CoverPhoto.Image))
                 .ForMember(x=>x.Images,c=>c.MapFrom(x=>x.Photos))
                 .ForMember(x=>x.PostedBy,c=>c.MapFrom(x=>x.User))
+                .ForMember(x=>x.ViewRating,c=>c.MapFrom(x=>x.ViewRating))
                 .ReverseMap();
         }
     }

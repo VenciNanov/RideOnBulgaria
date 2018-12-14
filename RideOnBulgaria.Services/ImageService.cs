@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -62,13 +63,33 @@ namespace RideOnBulgaria.Services
                 ImageUrl = url,
                 DateAdded = DateTime.UtcNow,
                 PublicId = publicId,
-              };
+            };
 
             return image;
 
         }
 
-       
+        public Image FindImageById(string id)
+        {
+            var image = this.context.Images.FirstOrDefault(x => x.Id == id);
+
+            return image;
+        }
+
+        public void RemoveImage(Image image)
+        {
+            this.context.Images.Remove(image);
+            this.context.SaveChanges();
+        }
+
+        public void RemovePicture(string publicId)
+        {
+            var image = this.context.Images.FirstOrDefault(x => x.PublicId == publicId);
+
+            this.context.Images.Remove(image);
+        }
+
+
 
 
         public async Task<bool> SaveAll()

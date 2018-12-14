@@ -1,17 +1,16 @@
-﻿@model CreateRoadViewModel
+﻿@model EditRoadViewModel
 
-@{
-    ViewData["Title"] = "Create Road";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<h1 class="text-center">Create Road</h1>
+<h1 class="text-center">Edit Road</h1>
 <hr class="hr-2 bg-secondary half-width" />
-<form class="mx-auto half-width" asp-area="Roads" asp-controller="Home" asp-action="Create" method="post" enctype="multipart/form-data">
+<form class="mx-auto half-width" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <a  class="btn ride-bg-color" type="button" asp-area="Roads" asp-controller="Home" asp-action="EditRoadPictures" asp-route-id="@Model.Id">Add/Remove Pictures</a>
+    </div>
     <div class="form-row d-flex justify-content-between my-3">
         <div class="form-colmn col-md-12 d-flex flex-column align-items-center">
             <label style="font-size: 200%" asp-for="TripName"></label>
-            <input asp-for="TripName" class="form-control" />
+            <input asp-for="TripName" class="form-control" value="@Model.TripName" />
             <span asp-validation-for="TripName" class="text-danger"></span>
         </div>
     </div>
@@ -53,15 +52,15 @@
             <span asp-validation-for="CoverPhoto" class="text-danger"></span>
         </div>
         <div class="col-6 ">
-            <br/>
-            <div class="row"><h4>View: &nbsp; </h4><partial name="_CreateRoadViewRatingPartial"/></div>
-            <div class="row"><h4>Surface: &nbsp; </h4><partial name="_CreateRoadSurfaceRatingPartial"/></div>
-            <div class="row"><h4>Pleasure: &nbsp; </h4><partial name="_CreateRoadPleasureRatingPartial"/></div>
+            <br />
+            <div class="row"><h4>View: &nbsp; </h4><partial name="_EditRoadViewRatingPartial" /></div>
+            <div class="row"><h4>Surface: &nbsp; </h4><partial name="_EditRoadSurfaceRatingPartial" /></div>
+            <div class="row"><h4>Pleasure: &nbsp; </h4><partial name="_EditRoadPleasureRatingPartial" /></div>
 
         </div>
     </div>
-
-    <div class="form-group">
+    
+    @*<div class="form-group">
         <div class="row">
             <div class="col-md-12">
                 <label asp-for="Images" class="control-label"></label>
@@ -69,11 +68,11 @@
                 <span asp-validation-for="Images" class="text-danger"></span>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <hr class="hr-2 bg-secondary" />
     <div class="button-holder d-flex justify-content-center">
-        <button type="submit" class="btn ride-bg-color">Create Road</button>
+        <button type="submit" class="btn ride-bg-color">Edit Road</button>
     </div>
 
 </form>
