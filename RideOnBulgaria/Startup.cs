@@ -58,6 +58,12 @@ namespace RideOnBulgaria
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                });
+
             var mappingConfig = new MapperConfiguration(mc =>
                 mc.AddProfile(new MappingProfile())
             );
