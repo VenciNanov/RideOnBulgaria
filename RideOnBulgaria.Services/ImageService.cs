@@ -89,9 +89,15 @@ namespace RideOnBulgaria.Services
             this.context.Images.Remove(image);
         }
 
+        public string ReturnProfilePicture(Image image)
+        {
+            string url = _cloudinary.Api.UrlImgUp.Transform(
+                    new Transformation().Width(150).Height(100).Crop("thumb").Gravity("face").Radius("max"))
+                .BuildUrl(image.PublicId);
 
-
-
+            return url;
+        }
+        
         public async Task<bool> SaveAll()
         {
             return await context.SaveChangesAsync() > 0;

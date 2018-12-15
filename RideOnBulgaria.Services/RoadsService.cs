@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RideOnBulgaria.Data;
 using RideOnBulgaria.Models;
@@ -17,14 +19,16 @@ namespace RideOnBulgaria.Services
         private readonly ApplicationDbContext context;
         private readonly IImageService imageService;
         private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
         private readonly IVideoService videoService;
 
-        public RoadsService(ApplicationDbContext context, IImageService imageService, IMapper mapper, IVideoService videoService)
+        public RoadsService(ApplicationDbContext context, IImageService imageService, IMapper mapper, IVideoService videoService, UserManager<User> userManager)
         {
             this.context = context;
             this.imageService = imageService;
             this.mapper = mapper;
             this.videoService = videoService;
+            this.userManager = userManager;
         }
 
         public bool Edit(string roadId, string roadName, string startingPoint, string endPoint, double roadLength,
@@ -74,6 +78,8 @@ namespace RideOnBulgaria.Services
 
             if (imageFromForm != null)
             {
+                road.CoverPhoto = null;
+
                 var image = imageService.AddPhoto(imageFromForm);
 
                 image.Name = roadName + "main";
@@ -225,6 +231,21 @@ namespace RideOnBulgaria.Services
                 road.Photos.Add(this.imageService.AddPhoto(image));
             }
 
+            this.context.SaveChanges();
+
+            return true;
+        }
+
+        public bool DeleteRoad(string id , ClaimsPrincipal userClaims)
+        {
+            var road = this.context.Roads.FirstOrDefault(x => x.Id == id);
+            var user = this.userManager.GetUserId(userClaims);
+
+            if (road == null) return false;
+            if (user != road.UserId) return false;  
+            
+            
+            this.context.Roads.Remove(road);
             this.context.SaveChanges();
 
             return true;

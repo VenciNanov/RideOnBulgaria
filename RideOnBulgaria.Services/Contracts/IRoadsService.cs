@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using RideOnBulgaria.Models;
 
@@ -25,5 +26,7 @@ namespace RideOnBulgaria.Services.Contracts
             int viewRating, int surfaceRating, int pleasureRating);
 
         bool AddImagesToRoad(ICollection<IFormFile> images, string roadId);
+
+        bool DeleteRoad(string id, ClaimsPrincipal userClaims);
     }
 }

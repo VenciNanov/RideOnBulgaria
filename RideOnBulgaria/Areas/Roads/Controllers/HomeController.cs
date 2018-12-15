@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RideOnBulgaria.Models;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Roads.Models;
 using RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex;
@@ -218,9 +219,13 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             return this.Redirect($"/Roads/Home/EditRoadPictures/{road.Id}");
         }
 
-        public IActionResult DeleteRoad()
+        public IActionResult DeleteRoad(string id)
         {
-            return this.View();
+            ClaimsPrincipal user = this.User;
+
+            bool result = roadsService.DeleteRoad(id,user);
+            
+            return this.RedirectToAction("MyRoads", "Home");
         }
 
         public IActionResult Road(string id)
