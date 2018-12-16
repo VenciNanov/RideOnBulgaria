@@ -21,13 +21,22 @@ namespace RideOnBulgaria.Data
 
         public DbSet<Image> Images { get; set; }
 
+        public DbSet<ProductImage> ProductImages { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<Road>()
                 .HasOne(x => x.CoverPhoto)
                 .WithOne(x => x.Road)
-                .HasForeignKey<CoverPhotoRoad>(x=>x.Id);
+                .HasForeignKey<CoverPhotoRoad>(x => x.Id);
+
+            builder.Entity<Product>()
+                .HasOne(x => x.Image)
+                .WithOne(x => x.Product)
+                .HasForeignKey<ProductImage>(x => x.Id);
         }
     }
 }

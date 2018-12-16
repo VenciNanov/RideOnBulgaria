@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RideOnBulgaria.Data;
 
 namespace RideOnBulgaria.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181215153141_add_Products_model")]
+    partial class add_Products_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,8 +186,6 @@ namespace RideOnBulgaria.Data.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("ImageId");
-
-                    b.Property<string>("Name");
 
                     b.Property<decimal>("Price");
 

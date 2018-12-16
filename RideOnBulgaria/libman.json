@@ -310,6 +310,11 @@
         "LICENSE.txt",
         "README.md"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "font-awesome@4.7.0",
+      "destination": "wwwroot/font-awesome/"
     }
   ]
 }

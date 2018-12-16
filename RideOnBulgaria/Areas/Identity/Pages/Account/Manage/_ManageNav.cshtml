@@ -12,15 +12,19 @@
         <ul class="navbar-nav mr-auto">
             <li class="@ManageNavPages.IndexNavClass(ViewContext) nav-item nav-link"><a asp-page="./Index" class="nav-link">Profile</a></li>
             <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) nav-item nav-link"><a id="change-password" asp-page="./ChangePassword" class="nav-link">Password</a></li>
-           <li class="nav-item nav-link"><a asp-area="Identity" asp-controller="" asp-action="AddOrChangeProfilePicture" class="nav-link">Profile Picture</a></li>
+            <li class="nav-item nav-link"><a asp-area="Identity" asp-controller="" asp-action="AddOrChangeProfilePicture" class="nav-link">Profile Picture</a></li>
             @if (hasExternalLogins)
             {
                 <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext) nav-item nav-link"><a id="external-login" asp-page="./ExternalLogins" class="nav-link">External logins</a></li>
             }
             <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) nav-item nav-link"><a asp-page="./TwoFactorAuthentication" class="nav-link">Two-factor authentication</a></li>
             <li class="@ManageNavPages.PersonalDataNavClass(ViewContext) nav-item nav-link"><a asp-page="./PersonalData" class="nav-link">Personal data</a></li>
-       <li class="nav-item nav-link"><a asp-area="Roads" asp-controller="Home" asp-action="MyRoads" class="nav-link">My Roads</a></li>
-            </ul>
+            <li class="nav-item nav-link"><a asp-area="Roads" asp-controller="Home" asp-action="MyRoads" class="nav-link">My Roads</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item nav-link"><a asp-area="Administration" asp-controller="AdministrationIndex" asp-action="Index" class="nav-link alert-dark">To Administration Page</a></li>
+            }
+        </ul>
     </div>
 
 </nav>

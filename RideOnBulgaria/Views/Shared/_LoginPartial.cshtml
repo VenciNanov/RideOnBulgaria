@@ -19,6 +19,10 @@
 
                         <a class="dropdown-item" asp-area="Roads" asp-controller="Home" asp-action="CreateRoadtrip">Create Roadtrip</a>
 
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="dropdown-item" asp-area="Administration" asp-controller="Products" asp-action="CreateProduct">Create a new Product</a>
+                        }
 
                     </div>
                 </div>
@@ -27,7 +31,11 @@
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="nav-link">Hello @UserManager.GetUserName(User)!</a>
             </li>
             <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+
+                <a class="nav-link" asp-area="Shop" asp-controller="Order" asp-action="Cart"><div style="font-size: 0.5rem"><span class="fa fa-3x fa-shopping-cart"> </span></div> </a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-warning  nav-item navbar-btn navbar-link">Logout</button>
             </li>
         </ul>
     </form>
