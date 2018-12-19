@@ -12,6 +12,22 @@ body {
     padding-left: 25px;
     padding-right: 25px;
 }
+.product-details-content {
+    /*padding-left: 150px;*/
+    /*padding-right: 200px;*/
+    margin-left: 360px;
+    margin-right: 360px;
+    padding-bottom: 20px;
+    background: lightgrey
+}
+.product-details-description {
+    margin-left: 80px;
+    margin-right: 80px;
+    background: darkgrey;
+}
+.product-price-d {
+    font-size: 3rem;
+}
 
 /*.navbar-nav>li{
     border-right: 0.3px solid grey;
@@ -20,7 +36,6 @@ body {
 .navbar-nav>li:last-child{
     border: none;
 }*/
-
 .container-image-details {
     position: relative;
     text-align: center;

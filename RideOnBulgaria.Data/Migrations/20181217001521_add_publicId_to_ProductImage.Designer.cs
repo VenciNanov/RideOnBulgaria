@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RideOnBulgaria.Data;
 
 namespace RideOnBulgaria.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181217001521_add_publicId_to_ProductImage")]
+    partial class add_publicId_to_ProductImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,33 +129,6 @@ namespace RideOnBulgaria.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("RideOnBulgaria.Models.Cart", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("RideOnBulgaria.Models.CartProduct", b =>
-                {
-                    b.Property<string>("ProductId");
-
-                    b.Property<string>("CartId");
-
-                    b.Property<int>("Quantity");
-
-                    b.HasKey("ProductId", "CartId");
-
-                    b.HasIndex("CartId");
-
-                    b.ToTable("CartProducts");
                 });
 
             modelBuilder.Entity("RideOnBulgaria.Models.CoverPhotoRoad", b =>
@@ -282,8 +257,6 @@ namespace RideOnBulgaria.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("CartId");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -320,10 +293,6 @@ namespace RideOnBulgaria.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId")
-                        .IsUnique()
-                        .HasFilter("[CartId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -381,19 +350,6 @@ namespace RideOnBulgaria.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RideOnBulgaria.Models.CartProduct", b =>
-                {
-                    b.HasOne("RideOnBulgaria.Models.Cart", "Cart")
-                        .WithMany("Products")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("RideOnBulgaria.Models.Product", "Product")
-                        .WithMany("CartProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("RideOnBulgaria.Models.CoverPhotoRoad", b =>
                 {
                     b.HasOne("RideOnBulgaria.Models.Road", "Road")
@@ -430,14 +386,6 @@ namespace RideOnBulgaria.Data.Migrations
                     b.HasOne("RideOnBulgaria.Models.User", "User")
                         .WithMany("Roads")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("RideOnBulgaria.Models.User", b =>
-                {
-                    b.HasOne("RideOnBulgaria.Models.Cart", "Cart")
-                        .WithOne("User")
-                        .HasForeignKey("RideOnBulgaria.Models.User", "CartId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

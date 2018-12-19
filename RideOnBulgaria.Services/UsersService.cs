@@ -27,5 +27,9 @@ namespace RideOnBulgaria.Services
             return user;
         }
 
+        public User GetUserByUsername(string username)
+        {
+            return this.userManager.FindByNameAsync(username).GetAwaiter().GetResult();
+        }
     }
 }

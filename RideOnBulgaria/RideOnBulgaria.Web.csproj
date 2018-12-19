@@ -20,9 +20,7 @@
     <Folder Include="Areas\Administration\Data\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\Roads\Data\" />
-    <Folder Include="Areas\Shop\Controllers\" />
     <Folder Include="Areas\Shop\Data\" />
-    <Folder Include="Areas\Shop\Models\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 

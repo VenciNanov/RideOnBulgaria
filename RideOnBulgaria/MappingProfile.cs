@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using RideOnBulgaria.Models;
 using RideOnBulgaria.Web.Areas.Roads.Models;
+using RideOnBulgaria.Web.Areas.Shop.Models;
 
 namespace RideOnBulgaria.Web
 {
@@ -18,6 +19,10 @@ namespace RideOnBulgaria.Web
                 .ForMember(x=>x.Images,c=>c.MapFrom(x=>x.Photos))
                 .ForMember(x=>x.PostedBy,c=>c.MapFrom(x=>x.User))
                 .ForMember(x=>x.ViewRating,c=>c.MapFrom(x=>x.ViewRating))
+                .ReverseMap();
+
+            CreateMap<Product, CartProductsViewModel>()
+                .ForMember(x => x.Id, c => c.MapFrom(x => x.Id))
                 .ReverseMap();
         }
     }

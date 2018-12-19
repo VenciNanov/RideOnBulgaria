@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Http;
 using RideOnBulgaria.Models;
 
@@ -13,6 +14,9 @@ namespace RideOnBulgaria.Services.Contracts
         string ReturnImage(Image image);
         void RemoveImage(Image image);
         Image FindImageById(string id);
+        ProductImage AddImageToProduct(IFormFile photo);
+        string ReturnProductImage(ProductImage image);
+
         //Task<PhotoForReturnViewModel> GetPhoto(string id);
     }
 }

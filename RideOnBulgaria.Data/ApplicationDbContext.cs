@@ -25,9 +25,16 @@ namespace RideOnBulgaria.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Cart> Carts { get; set; }
+
+        public DbSet<CartProduct> CartProducts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<CartProduct>().HasKey(x => new {x.ProductId, x.CartId});
+
             builder.Entity<Road>()
                 .HasOne(x => x.CoverPhoto)
                 .WithOne(x => x.Road)
@@ -37,6 +44,12 @@ namespace RideOnBulgaria.Data
                 .HasOne(x => x.Image)
                 .WithOne(x => x.Product)
                 .HasForeignKey<ProductImage>(x => x.Id);
+
+            builder.Entity<Cart>()
+                .HasOne(x => x.User)
+                .WithOne(x => x.Cart)
+                .HasForeignKey<User>(x => x.CartId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

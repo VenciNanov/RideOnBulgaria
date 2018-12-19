@@ -69,6 +69,43 @@ namespace RideOnBulgaria.Services
 
         }
 
+        public ProductImage AddImageToProduct(IFormFile photo)
+        {
+            var file = photo;
+
+            var uploadResult = new ImageUploadResult();
+
+            string imageName;
+
+            if (file.Length > 0)
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(file.Name, stream)
+
+                    };
+                    imageName = file.Name;
+                    uploadResult = _cloudinary.Upload(uploadParams);
+                }
+            }
+
+            var url = uploadResult.Uri.ToString();
+            var publicId = uploadResult.PublicId;
+
+
+            var image = new ProductImage()
+            {
+                ImageUrl = url,
+                PublicId = publicId,
+            };
+
+           
+            return image;
+
+        }
+
         public Image FindImageById(string id)
         {
             var image = this.context.Images.FirstOrDefault(x => x.Id == id);
@@ -97,7 +134,7 @@ namespace RideOnBulgaria.Services
 
             return url;
         }
-        
+
         public async Task<bool> SaveAll()
         {
             return await context.SaveChangesAsync() > 0;
@@ -107,6 +144,15 @@ namespace RideOnBulgaria.Services
         {
             string url = _cloudinary.Api.UrlImgUp.Transform(
                     new Transformation().Width(2000).Height(300).Crop("fill").Gravity("center"))
+                .BuildUrl(image.PublicId);
+
+            return url;
+        }
+
+        public string ReturnProductImage(ProductImage image)
+        {
+            string url = _cloudinary.Api.UrlImgUp.Transform(
+                    new Transformation().Width(300).Height(350).Crop("fill"))
                 .BuildUrl(image.PublicId);
 
             return url;

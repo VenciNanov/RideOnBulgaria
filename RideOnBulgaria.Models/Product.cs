@@ -19,5 +19,7 @@ namespace RideOnBulgaria.Models
 
         public string AdditionalInfo { get; set; }
 
+        public virtual ICollection<CartProduct> CartProducts { get; set; }
+
     }
 }

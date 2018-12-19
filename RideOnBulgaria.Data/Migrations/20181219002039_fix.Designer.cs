@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RideOnBulgaria.Data;
 
 namespace RideOnBulgaria.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181219002039_fix")]
+    partial class fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,15 +145,20 @@ namespace RideOnBulgaria.Data.Migrations
 
             modelBuilder.Entity("RideOnBulgaria.Models.CartProduct", b =>
                 {
-                    b.Property<string>("ProductId");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CartId");
 
+                    b.Property<string>("ProductId");
+
                     b.Property<int>("Quantity");
 
-                    b.HasKey("ProductId", "CartId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartProducts");
                 });
@@ -385,13 +392,11 @@ namespace RideOnBulgaria.Data.Migrations
                 {
                     b.HasOne("RideOnBulgaria.Models.Cart", "Cart")
                         .WithMany("Products")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CartId");
 
                     b.HasOne("RideOnBulgaria.Models.Product", "Product")
                         .WithMany("CartProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("RideOnBulgaria.Models.CoverPhotoRoad", b =>

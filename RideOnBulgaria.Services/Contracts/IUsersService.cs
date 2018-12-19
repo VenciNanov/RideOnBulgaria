@@ -10,6 +10,7 @@ namespace RideOnBulgaria.Services.Contracts
     {
         Task<User> GetUser(string username);
 
+        User GetUserByUsername(string username);
 
     }
 }

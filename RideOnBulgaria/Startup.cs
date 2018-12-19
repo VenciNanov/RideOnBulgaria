@@ -76,8 +76,12 @@ namespace RideOnBulgaria
             services.AddScoped<IRoadsService, RoadsService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IVideoService, VideoService>();
+            services.AddScoped<IProductsSerivce, ProductsService>();
+            services.AddScoped<ICartService, CartService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-           
+            services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

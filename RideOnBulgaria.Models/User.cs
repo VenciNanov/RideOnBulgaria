@@ -9,7 +9,7 @@ namespace RideOnBulgaria.Models
     {
         public User()
         {
-            this.Roads=new HashSet<Road>();
+            this.Roads = new HashSet<Road>();
         }
 
         public string FirstName { get; set; }
@@ -19,6 +19,9 @@ namespace RideOnBulgaria.Models
         //public ICollection<Trip> Trips { get; set; }
 
         public virtual ICollection<Road> Roads { get; set; }
+
+        public string CartId { get; set; }
+        public virtual Cart Cart { get; set; }
     }
 
 }
