@@ -43,6 +43,10 @@ namespace RideOnBulgaria.Data
                 .HasOne(x => x.CoverPhoto)
                 .WithOne(x => x.Road)
                 .HasForeignKey<CoverPhotoRoad>(x => x.Id);
+            builder.Entity<Road>()
+                .HasMany(x => x.Photos)
+                .WithOne(x => x.Road)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<OrderProduct>().HasKey(x => new {x.OrderId, x.ProductId});
 

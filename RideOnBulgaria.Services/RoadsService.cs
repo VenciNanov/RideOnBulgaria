@@ -242,9 +242,11 @@ namespace RideOnBulgaria.Services
             var user = this.userManager.GetUserId(userClaims);
 
             if (road == null) return false;
-            if (user != road.UserId) return false;  
-            
-            
+            if (user != road.UserId) return false;
+
+            var coverPhotoRoad = this.context.CoverPhotoRoads.FirstOrDefault(x => x.RoadId == road.Id);
+
+            this.context.CoverPhotoRoads.Remove(coverPhotoRoad);
             this.context.Roads.Remove(road);
             this.context.SaveChanges();
 
