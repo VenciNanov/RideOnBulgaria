@@ -1,0 +1,28 @@
+﻿<nav class="navbar navbar-expand-md navbar-light fixed-top rounded">
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><small>Administration </small>Ride On Bulgaria</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Administration" asp-controller="Users" asp-action="All">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Administration" asp-controller="Roads" asp-action="All">Roads</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Administration" asp-controller="Users" asp-action="Register">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Administration" asp-controller="Products" asp-action="All">Products</a>
+                </li>
+            </ul>
+
+
+            @*<partial name="_LoginPartial.cshtml" />*@
+
+        </div>
+    </div>
+</nav>

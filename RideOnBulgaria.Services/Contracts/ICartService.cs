@@ -9,5 +9,7 @@ namespace RideOnBulgaria.Services.Contracts
         void AddProductToCart(string productId, string username, int? quantity = null);
         void EditProductInCart(string productId, string username, int quantity);
         void DeleteProductFromCart(string id, string username);
+        bool AnyProducts(string username);
+        void DeleteAllProductsFromCart(string username);
     }
 }

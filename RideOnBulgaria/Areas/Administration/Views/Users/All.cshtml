@@ -1,0 +1,40 @@
+﻿@model ICollection<UsersTableViewModel>
+
+<div class="justify-content-center row h3 text-light">All Users</div>
+<hr />
+<div class="row col-12">
+    <div class="container-fluid">
+        <table class="table table-dark table-borderless table-hover rounded">
+            <thead>
+                <tr class="row">
+                    <th scope="col" class="col-3 d-flex justify-content-center">Id</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Username</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Phone Number</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Full Name</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Role</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">More</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in @Model)
+                {
+                    <tr class="row">
+                        <td class="col-3 d-flex justify-content-center">@order.Id</td>
+                        <td class="col-2 d-flex justify-content-center">@order.Username</td>
+                        <td class="col-1 d-flex justify-content-center">@order.PhoneNumber</td>
+                        <td class="col-2 d-flex justify-content-center">@order.FullName</td>
+                        <td class="col-2 d-flex justify-content-center">@order.Role</td>
+                        <td class="col-2 d-flex justify-content-center">
+                            <div class="btn-group" role="group" aria-label="Admin-func">
+                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersRoads" asp-route-id="@order.Id">Roads</a>
+                                <button type="button" class="btn btn-outline-danger">Roads</button>
+                                <button type="button" class="btn btn-outline-danger">Orders</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

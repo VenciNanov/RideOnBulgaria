@@ -20,6 +20,9 @@
             <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) nav-item nav-link"><a asp-page="./TwoFactorAuthentication" class="nav-link">Two-factor authentication</a></li>
             <li class="@ManageNavPages.PersonalDataNavClass(ViewContext) nav-item nav-link"><a asp-page="./PersonalData" class="nav-link">Personal data</a></li>
             <li class="nav-item nav-link"><a asp-area="Roads" asp-controller="Home" asp-action="MyRoads" class="nav-link">My Roads</a></li>
+            <li class="nav-item nav-link"><a asp-area="Shop" asp-controller="Orders" asp-action="MyOrders" class="nav-link">My Orders</a></li>
+
+
             @if (User.IsInRole("Admin"))
             {
                 <li class="nav-item nav-link"><a asp-area="Administration" asp-controller="AdministrationIndex" asp-action="Index" class="nav-link alert-dark">To Administration Page</a></li>

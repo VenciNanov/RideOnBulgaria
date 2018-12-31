@@ -97,7 +97,7 @@ namespace RideOnBulgaria.Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    await this._userManager.AddToRoleAsync(user, "User");
+                    await this._userManager.AddToRoleAsync(user, "Admin");
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",

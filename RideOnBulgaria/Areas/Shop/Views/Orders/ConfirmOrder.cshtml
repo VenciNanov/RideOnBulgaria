@@ -1,0 +1,33 @@
+﻿@model RideOnBulgaria.Web.Areas.Shop.Models.Order.ConfirmOrderViewModel
+
+
+
+<div class="h3 text-center mb-3">Confirm Order</div>
+<div class="progress mb-3">
+    <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80">80%</div>
+</div>
+<br/>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <div><span class="font-weight-bold">Name:</span> @Model.RecipientName</div>
+            <hr />
+            <div><span class="font-weight-bold">Phone number:</span> @Model.RecipientPhoneNumber</div>
+            <hr />
+            <div><span class="font-weight-bold">City:</span> @Model.City </div>
+            <hr />
+            <div><span class="font-weight-bold">Address:</span> @Model.Address </div>
+            <hr />
+            <div><span class="font-weight-bold">Payment method:</span> In cash</div>
+            <hr />
+            <div><span class="font-weight-bold">Additional information:</span> @Model.AdditionalInformation</div>
+            <hr/>
+            <div class="justify-content-end">
+                <div class="justify-content-end mt-4">
+                    <a asp-area="Shop" asp-controller="Orders" asp-action="CompleteOrder"  class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Потвърди поръчката</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

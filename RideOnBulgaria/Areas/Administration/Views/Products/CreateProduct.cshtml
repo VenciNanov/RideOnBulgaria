@@ -1,5 +1,7 @@
 ﻿@model CreateProductViewModel
-
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <h1 class="text-center">Create Product</h1>
 <hr class="hr-2 bg-secondary half-width" />
 <form class="mx-auto half-width" asp-area="Administration" asp-controller="Products" asp-action="CreateProduct" method="post" enctype="multipart/form-data">

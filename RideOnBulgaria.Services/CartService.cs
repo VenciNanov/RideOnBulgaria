@@ -20,6 +20,11 @@ namespace RideOnBulgaria.Services
             this.usersService = usersService;
         }
 
+        public bool AnyProducts(string username)
+        {
+            return this.context.CartProducts.Any(x => x.Cart.User.UserName == username);
+        }
+
         public void AddProductToCart(string productId, string username, int? quantity = null)
         {
             var product = this.productsService.GetProductById(productId);
@@ -103,5 +108,17 @@ namespace RideOnBulgaria.Services
             this.context.SaveChanges();
         }
 
+        public void DeleteAllProductsFromCart(string username)
+        {
+            var user = this.usersService.GetUserByUsername(username);
+
+            if(user==null)return;
+
+
+            var cartProducts = this.context.CartProducts.Where(x => x.CartId == user.CartId);
+
+            this.context.CartProducts.RemoveRange(cartProducts);
+            this.context.SaveChanges();
+        }
     }
 }

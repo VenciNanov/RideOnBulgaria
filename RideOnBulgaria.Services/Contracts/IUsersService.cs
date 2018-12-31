@@ -9,7 +9,8 @@ namespace RideOnBulgaria.Services.Contracts
     public interface IUsersService
     {
         Task<User> GetUser(string username);
-
+        ICollection<User> GetAllUsers();
+        string GetUserRole(string username);
         User GetUserByUsername(string username);
 
     }
