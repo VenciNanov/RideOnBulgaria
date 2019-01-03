@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RideOnBulgaria.Data;
 using RideOnBulgaria.Models;
 using RideOnBulgaria.Models.Enums;
@@ -98,11 +99,62 @@ namespace RideOnBulgaria.Services
             this.context.SaveChanges();
         }
 
+        private Order GetOrderById(string id)
+        {
+            var order = this.context.Orders.FirstOrDefault(x => x.Id == id);
+
+            return order;
+        }
+
+        public void SendOrder(string id)
+        {
+            var order = this.GetOrderById(id);
+            var currentOrderStatus = order.OrderStatus;
+
+            if (currentOrderStatus != OrderStatus.Processed)
+            {
+                return;
+            }
+            var newOrderStatus = OrderStatus.Sent;
+            order.OrderStatus = newOrderStatus;
+            order.EstimatedDeliveryDate = DateTime.Today.AddDays(5);
+            this.context.Update(order);
+            this.context.SaveChanges();
+
+        }
+
+        public void DeliverOrder(string id)
+        {
+            var order = this.GetOrderById(id);
+            var currentOrderStatus = order.OrderStatus;
+            if (currentOrderStatus != OrderStatus.Sent)
+            {
+                return;
+            }
+
+            var newOrderStatus = OrderStatus.Delivered;
+            order.OrderStatus = newOrderStatus;
+            this.context.Update(order);
+            this.context.SaveChanges();
+        }
+
         public List<Order> GetCurrentUserOrders(string username)
         {
             var orders = this.context.Orders.Where(x => x.User.UserName == username);
 
             return orders.ToList();
+        }
+
+        public List<OrderProduct> GetOrderDetails(string id)
+        {
+            var orderProduct = this.context.OrderProducts.Where(x => x.OrderId == id).ToList();
+
+            if (orderProduct == null)
+            {
+                return null;
+            }
+
+            return orderProduct;
         }
     }
 }

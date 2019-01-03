@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using RideOnBulgaria.Models;
-
-namespace RideOnBulgaria.Web.Areas.Administration.Models
+﻿namespace RideOnBulgaria.Web.Areas.Administration.Models.Users
 {
     public class UsersTableViewModel
     {

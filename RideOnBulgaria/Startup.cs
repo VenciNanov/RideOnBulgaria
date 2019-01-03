@@ -89,7 +89,7 @@ namespace RideOnBulgaria
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseDatabaseMigration();
-
+            //app.AddOwnerUser();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

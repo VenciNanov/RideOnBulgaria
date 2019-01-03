@@ -21,14 +21,16 @@ namespace RideOnBulgaria.Services
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
         private readonly IVideoService videoService;
+        private readonly IUsersService usersService;
 
-        public RoadsService(ApplicationDbContext context, IImageService imageService, IMapper mapper, IVideoService videoService, UserManager<User> userManager)
+        public RoadsService(ApplicationDbContext context, IImageService imageService, IMapper mapper, IVideoService videoService, UserManager<User> userManager, IUsersService usersService)
         {
             this.context = context;
             this.imageService = imageService;
             this.mapper = mapper;
             this.videoService = videoService;
             this.userManager = userManager;
+            this.usersService = usersService;
         }
 
         public bool Edit(string roadId, string roadName, string startingPoint, string endPoint, double roadLength,
@@ -103,6 +105,7 @@ namespace RideOnBulgaria.Services
 
             return true;
         }
+
         public Road GetRoadById(string id)
         {
             var road = this.context.Roads.FirstOrDefault(x => x.Id == id);
@@ -195,7 +198,7 @@ namespace RideOnBulgaria.Services
 
         public ICollection<Road> GetRoads()
         {
-            return context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User).ToList();
+            return context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).ToList();
         }
 
         public ICollection<Road> GetLatestRoads()
@@ -203,7 +206,7 @@ namespace RideOnBulgaria.Services
             return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
                 .OrderByDescending(x => x.PostedOn).ToList();
         }
-
+        
         public ICollection<Road> GetLongestRoads()
         {
             return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
@@ -239,10 +242,11 @@ namespace RideOnBulgaria.Services
         public bool DeleteRoad(string id , ClaimsPrincipal userClaims)
         {
             var road = this.context.Roads.FirstOrDefault(x => x.Id == id);
-            var user = this.userManager.GetUserId(userClaims);
+            //var userId = this.userManager.GetUserId(userClaims);
+            //var user = this.usersService.GetUserById(userId);
+
 
             if (road == null) return false;
-            if (user != road.UserId) return false;
 
             var coverPhotoRoad = this.context.CoverPhotoRoads.FirstOrDefault(x => x.RoadId == road.Id);
 
@@ -252,6 +256,8 @@ namespace RideOnBulgaria.Services
 
             return true;
         }
+
+
 
     }
 }

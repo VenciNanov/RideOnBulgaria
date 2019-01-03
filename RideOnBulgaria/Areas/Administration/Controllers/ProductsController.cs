@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using RideOnBulgaria.Services;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Administration.Models;
+using RideOnBulgaria.Web.Areas.Administration.Models.Products;
 
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 {

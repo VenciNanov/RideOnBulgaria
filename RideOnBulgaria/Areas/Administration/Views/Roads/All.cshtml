@@ -1,0 +1,47 @@
+﻿@model ICollection<RoadsViewModel>
+
+@{
+    ViewData["Title"] = "AllRoads";
+}
+
+<div class="justify-content-center row h3 text-light">All Users</div>
+<hr />
+<div class="row col-12">
+    <div class="container-fluid">
+        <table class="table table-dark table-borderless table-hover rounded">
+            <thead>
+                <tr class="row">
+                    <th scope="col" class="col-3 d-flex justify-content-center">Id</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Name</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Posted by</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Comments</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Rating</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Poster Rating</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">More</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var road in @Model)
+                {
+                <tr class="row">
+                    <td class="col-3 d-flex justify-content-center">@road.Id</td>
+                    <td class="col-2 d-flex justify-content-center">@road.Name</td>
+                    <td class="col-2 d-flex justify-content-center">@road.PostedBy</td>
+                    <td class="col-1 d-flex justify-content-center">@road.Comments</td>
+                    <td class="col-1 d-flex justify-content-center">@road.Rating</td>
+                    <td class="col-1 d-flex justify-content-center">@road.PosterRating</td>
+
+                    <td class="col-2 d-flex justify-content-center">
+                        <div class="btn-group" role="group" aria-label="Admin-func">
+                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" asp-route-id="@road.Id">Edit</a>
+                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id">Details</a>
+                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoad" asp-route-id="@road.Id">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

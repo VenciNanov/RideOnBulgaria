@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using RideOnBulgaria.Models;
+using RideOnBulgaria.Web.Areas.Administration.Models;
+using RideOnBulgaria.Web.Areas.Administration.Models.Roads;
+using RideOnBulgaria.Web.Areas.Administration.Models.Users;
 using RideOnBulgaria.Web.Areas.Roads.Models;
 using RideOnBulgaria.Web.Areas.Shop.Models;
 
@@ -23,6 +26,22 @@ namespace RideOnBulgaria.Web
 
             CreateMap<Product, CartProductsViewModel>()
                 .ForMember(x => x.Id, c => c.MapFrom(x => x.Id))
+                .ReverseMap();
+
+            CreateMap<OrderProduct, OrderDetailsViewModel>()
+                .ForMember(x => x.Id, c => c.MapFrom(x => x.ProductId))
+                .ForMember(x => x.Name, c => c.MapFrom(x => x.Product.Name))
+                .ForMember(x => x.PriceForOne, c => c.MapFrom(x => x.Product.Price))
+                .ForMember(x => x.Quantity, c => c.MapFrom(x => x.Quantity))
+                .ForMember(x => x.Total, c => c.MapFrom(x => x.Quantity*x.Product.Price))
+                .ReverseMap();
+
+            CreateMap<Road, RoadsViewModel>()
+                .ForMember(x => x.Name, c => c.MapFrom(x => x.RoadName))
+                .ForMember(x => x.PostedBy, c => c.MapFrom(x => x.User))
+                .ForMember(x => x.Comments, c => c.MapFrom(x =>x.SurfaceRating))
+                .ForMember(x => x.PosterRating, c => c.MapFrom(x => x.AveragePosterRating))
+                .ForMember(x => x.Rating, c => c.MapFrom(x =>x.AveragePosterRating))
                 .ReverseMap();
         }
     }

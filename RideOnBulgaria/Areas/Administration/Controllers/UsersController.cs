@@ -4,10 +4,12 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Administration.Models;
+using RideOnBulgaria.Web.Areas.Administration.Models.Users;
 
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 {
@@ -17,11 +19,16 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
     {
         private readonly IUsersService usersService;
         private readonly IRoadsService roadsService;
-
-        public UsersController(IUsersService usersService, IRoadsService roadsService)
+        private readonly IRoadsIndexService roadsIndexService;
+        private readonly IOrdersService ordersService;
+        private readonly IMapper mapper;
+        public UsersController(IUsersService usersService, IRoadsService roadsService, IRoadsIndexService roadsIndexService, IOrdersService ordersService, IMapper mapper)
         {
             this.usersService = usersService;
             this.roadsService = roadsService;
+            this.roadsIndexService = roadsIndexService;
+            this.ordersService = ordersService;
+            this.mapper = mapper;
         }
 
         public IActionResult All()
@@ -62,7 +69,7 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 
             var model = new UsersRoadsViewModelWrapper();
             var userRoadsViewModels = new List<UsersRoadsViewModel>();
-            var roads = this.roadsService.GetRoads();
+            var roads = this.roadsIndexService.GetCurrentUserRoadsById(id);
 
             foreach (var road in roads)
             {
@@ -80,6 +87,32 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 
             model.User = this.usersService.GetUserByUsername(this.User.Identity.Name);
             model.UsersRoadsViewModels = userRoadsViewModels;
+            return this.View(model);
+        }
+
+        public IActionResult UsersOrders(string id)
+        {
+            if (!this.User.IsInRole("Admin"))
+            {
+                return this.Unauthorized();
+            }
+
+            var user = this.usersService.GetUserById(id);
+            var orders = this.ordersService.GetCurrentUserOrders(user.UserName);
+
+
+            var model = new UsersOrdersWrapperViewModel();
+            var usersOrdersViewModel = new List<UsersOrdersViewModel>();
+
+            foreach (var order in orders)
+            {
+                usersOrdersViewModel.Add(mapper.Map<UsersOrdersViewModel>(order));
+            }
+
+            model.User = user;
+            model.UsersOrders = usersOrdersViewModel;
+
+
             return this.View(model);
         }
 

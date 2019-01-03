@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -101,14 +102,14 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
             foreach (var order in orders)
             {
 
-                
+
                 model.Add(new CurrentUserOrders
                 {
                     Id = order.Id,
                     Address = order.Address,
                     City = order.City,
                     OrderStatus = order.OrderStatus.ToString(),
-                    EstimatedDeliveryDate = order.EstimatedDeliveryDate.ToString() == null? ("Not sent yet"):"N/A",
+                    EstimatedDeliveryDate = order.EstimatedDeliveryDate?.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture) == null ? ("Not sent yet"): order.EstimatedDeliveryDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     TotalPrice = order.TotalPrice
                 });
             }

@@ -16,19 +16,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var order in @Model)
+                @foreach (var user in @Model)
                 {
                     <tr class="row">
-                        <td class="col-3 d-flex justify-content-center">@order.Id</td>
-                        <td class="col-2 d-flex justify-content-center">@order.Username</td>
-                        <td class="col-1 d-flex justify-content-center">@order.PhoneNumber</td>
-                        <td class="col-2 d-flex justify-content-center">@order.FullName</td>
-                        <td class="col-2 d-flex justify-content-center">@order.Role</td>
+                        <td class="col-3 d-flex justify-content-center">@user.Id</td>
+                        <td class="col-2 d-flex justify-content-center">@user.Username</td>
+                        <td class="col-1 d-flex justify-content-center">@user.PhoneNumber</td>
+                        <td class="col-2 d-flex justify-content-center">@user.FullName</td>
+                        <td class="col-2 d-flex justify-content-center">@user.Role</td>
                         <td class="col-2 d-flex justify-content-center">
                             <div class="btn-group" role="group" aria-label="Admin-func">
-                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersRoads" asp-route-id="@order.Id">Roads</a>
-                                <button type="button" class="btn btn-outline-danger">Roads</button>
-                                <button type="button" class="btn btn-outline-danger">Orders</button>
+                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersRoads" asp-route-id="@user.Id">Roads</a>
+                                <button type="button" class="btn btn-outline-danger">Promote</button>
+                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersOrders" asp-route-id="@user.Id">Orders</a>
+
                             </div>
                         </td>
                     </tr>

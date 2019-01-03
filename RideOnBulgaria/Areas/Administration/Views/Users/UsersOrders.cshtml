@@ -1,1 +1,51 @@
-﻿
+﻿@using RideOnBulgaria.Models.Enums
+@model UsersOrdersWrapperViewModel
+
+<div class="justify-content-center row h3 text-light">@Model.User.UserName 's orders</div>
+<hr />
+<div class="row col-12">
+    <div class="container-fluid">
+        <table class="table table-dark table-borderless table-hover rounded">
+            <thead>
+                <tr class="row">
+                    <th scope="col" class="col-3 d-flex justify-content-center">Id</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Order Status</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">City</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Address</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Total Price</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">More</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in @Model.UsersOrders)
+                {
+                    <tr class="row">
+                        <td class="col-3 d-flex justify-content-center">@order.Id</td>
+                        <td class="col-2 d-flex justify-content-center">@order.OrderStatus</td>
+                        <td class="col-1 d-flex justify-content-center">@order.City</td>
+                        <td class="col-2 d-flex justify-content-center">@order.Address</td>
+                        <td class="col-2 d-flex justify-content-center">@order.TotalPrice</td>
+                        <td class="col-2 d-flex justify-content-center">
+                            <div class="btn-group" role="group" aria-label="Admin-func">
+                                @if (order.OrderStatus == "Processed")
+                                {
+                                    <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Orders" asp-action="Send" asp-route-id="@order.Id">Send</a>
+                                }
+                                @if (order.OrderStatus == "Sent")
+                                {
+                                    <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Orders" asp-action="Deliver" asp-route-id="@order.Id">Deliver</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Orders" asp-action="Details" asp-route-id="@order.Id">Details</a>
+
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -10,8 +10,10 @@ namespace RideOnBulgaria.Services.Contracts
 
         void MakeOrder(Order order, string fullname, string phoneNumber, string address, string city,
             string additionalInformation);
-
         List<Order> GetCurrentUserOrders(string username);
         void CompleteOrder(string username);
+        void SendOrder(string id);
+        void DeliverOrder(string id);
+        List<OrderProduct> GetOrderDetails(string id);
     }
 }

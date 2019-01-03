@@ -131,8 +131,9 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
 
-            if (userId != road.UserId)
+            if (userId != road.UserId||!this.User.IsInRole("Admin"))
             {
                 return Unauthorized();
             }
@@ -225,7 +226,12 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
             bool result = roadsService.DeleteRoad(id,user);
             
-            return this.RedirectToAction("MyRoads", "Home");
+            return this.RedirectToAction("DeltedRoadSuccesfully", "Home");
+        }
+
+        public IActionResult DeltedRoadSuccesfully()
+        {
+            return this.View();
         }
 
         public IActionResult Road(string id)
@@ -245,7 +251,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var currentUserRoads = this.roadsIndexService.GetCurrentUserRoadsByName(currentUser);
+            var currentUserRoads = this.roadsIndexService.GetCurrentUserRoadsById(currentUser);
 
             var model = new List<MyRoadsViewModel>();
 

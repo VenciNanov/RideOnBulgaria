@@ -12,6 +12,7 @@ namespace RideOnBulgaria.Services.Contracts
         ICollection<User> GetAllUsers();
         string GetUserRole(string username);
         User GetUserByUsername(string username);
+        User GetUserById(string id);
 
     }
 }

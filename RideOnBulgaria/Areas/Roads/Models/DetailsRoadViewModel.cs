@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using RideOnBulgaria.Models;
+using RideOnBulgaria.Web.Areas.Roads.Models.Comments;
 
 namespace RideOnBulgaria.Web.Areas.Roads.Models
 {
     public class DetailsRoadViewModel
     {
+        public string Id { get; set; }
+
         public string RoadName { get; set; }
 
         public string StartingPoint { get; set; }
@@ -32,6 +35,10 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
         public int ViewRating { get; set; }
 
         public int PleasureRating { get; set; }
+
+        //Comments Section
+
+        public CommentViewModel Comment { get; set; }
 
     }
 }

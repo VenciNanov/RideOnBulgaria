@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using RideOnBulgaria.Models;
 
-namespace RideOnBulgaria.Web.Areas.Administration.Models
+namespace RideOnBulgaria.Web.Areas.Administration.Models.Users
 {
     public class UsersRoadsViewModelWrapper
     {
