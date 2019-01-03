@@ -33,6 +33,10 @@ namespace RideOnBulgaria.Data
 
         public DbSet<OrderProduct> OrderProducts { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Reply> Replies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -60,6 +64,10 @@ namespace RideOnBulgaria.Data
                 .WithOne(x => x.Cart)
                 .HasForeignKey<User>(x => x.CartId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Road>()
+                .Property(x => x.AverageRating)
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

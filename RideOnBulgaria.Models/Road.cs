@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace RideOnBulgaria.Models
@@ -9,12 +10,15 @@ namespace RideOnBulgaria.Models
     {
         private const int AverageRatingCountDivider = 3;
 
-        private double averagePosterRating;
+        private double _averagePosterRating;
+        private double _averageRating;
+
 
         public Road()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Photos = new HashSet<Image>();
+            this.Comments = new HashSet<Comment>();
         }
 
         public string Id { get; set; }
@@ -52,9 +56,9 @@ namespace RideOnBulgaria.Models
             {
                 int sum = ViewRating + SurfaceRating + PleasureRating;
                 double average = (double)sum / AverageRatingCountDivider;
-                return averagePosterRating = average;
+                return _averagePosterRating = average;
             }
-            private set => averagePosterRating = value;
+            private set => _averagePosterRating = value;
         }
 
 
@@ -63,5 +67,22 @@ namespace RideOnBulgaria.Models
         public int SurfaceRating { get; set; }
 
         public int PleasureRating { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public double AverageRating
+        {
+            get
+            {
+                var sum = this.Comments.Sum(x => x.Rating);
+                var rating=  sum / Comments.Count;
+
+                return _averageRating=rating;
+            }
+           private set => _averageRating = value;
+        }
+
+
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RideOnBulgaria.Models;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Roads.Models;
 using RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex;
@@ -120,6 +117,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             return this.RedirectToAction("All", "Categories");
         }
 
+        [Authorize]
         public IActionResult EditRoad(string id)
         {
             var road = this.roadsService.GetRoadById(id);
@@ -194,6 +192,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public IActionResult AddImagesToRoad(EditRoadViewModel model)
         {
             var road = this.roadsService.GetRoadById(model.Id);
@@ -209,6 +208,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
         }
 
+        [Authorize]
         public IActionResult DeleteRoadPictures(string id)
         {
             var image = this.imageService.FindImageById(id);
@@ -220,6 +220,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             return this.Redirect($"/Roads/Home/EditRoadPictures/{road.Id}");
         }
 
+        [Authorize]
         public IActionResult DeleteRoad(string id)
         {
             ClaimsPrincipal user = this.User;
