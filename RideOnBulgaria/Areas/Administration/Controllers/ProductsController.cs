@@ -21,11 +21,7 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
             this.productsService = productsService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+        
         [Authorize(Roles = "Admin")]
         public IActionResult CreateProduct()
         {

@@ -38,34 +38,92 @@
 
 </div>
 <div class="container">
-    <div class="container bg-dark text-light rounded">
-        <br />
-        <form class="mx-auto bg-dark half-width" asp-area="Roads" asp-controller="Home" asp-action="Comment" asp-route-id="@Model.Id" method="post">
-            <div asp-validation-summary="ModelOnly"> </div>
-            <div class="form-row d-flex justify-content-start my-3">
-                <div class="form-colmn col-md-12 d-flex flex-column justify-content-start">
-                    <label asp-for="Comment.Comment" class="mb-2"></label>
-                    <textarea rows="4" asp-for="Comment.Comment" class="form-control" placeholder="Comment here..."></textarea>
-                    <span asp-validation-for="Comment.Comment" class="text-danger alert-warning"></span>
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <div class="container bg-dark text-light rounded">
+            <br />
+            <form class="mx-auto bg-dark half-width" asp-area="Roads" asp-controller="Home" asp-action="Comment" asp-route-id="@Model.Id" method="post">
+                <div asp-validation-summary="ModelOnly"> </div>
+                <div class="form-row d-flex justify-content-start my-3">
+                    <div class="form-colmn col-md-12 d-flex flex-column justify-content-start">
+                        <label asp-for="Comment.Comment" class="mb-2"></label>
+                        <textarea rows="4" asp-for="Comment.Comment" class="form-control" placeholder="Comment here..."></textarea>
+                        <span asp-validation-for="Comment.Comment" class="text-danger alert-warning"></span>
+                    </div>
+                    <div class="form-row d-flex my-3 mx-3">
+                        <h4>Rating: &nbsp; </h4>
+                        <fieldset class="rating">
+                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar5" value="5" /><label asp-for="Comment.Rating" class="full" for="pleasureStar5" title="Awesome - 5 stars"></label>
+                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar4" value="4" /><label asp-for="Comment.Rating" class="full" for="pleasureStar4" title="Pretty good - 4 stars"></label>
+                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar3" value="3" /><label asp-for="Comment.Rating" class="full" for="pleasureStar3" title="Meh - 3 stars"></label>
+                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar2" value="2" /><label asp-for="Comment.Rating" class="full" for="pleasureStar2" title="Kinda bad - 2 stars"></label>
+                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar1" value="1" /><label asp-for="Comment.Rating" class="full" for="pleasureStar1" title="Sucks big time - 1 star"></label>
+                        </fieldset>
+                    </div>
                 </div>
-                <div class="form-row d-flex my-3 mx-3">
-                    <h4>Rating: &nbsp; </h4>
-                    <fieldset class="rating">
-                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar5" value="5" /><label asp-for="Comment.Rating" class="full" for="pleasureStar5" title="Awesome - 5 stars"></label>
-                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar4" value="4" /><label asp-for="Comment.Rating" class="full" for="pleasureStar4" title="Pretty good - 4 stars"></label>
-                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar3" value="3" /><label asp-for="Comment.Rating" class="full" for="pleasureStar3" title="Meh - 3 stars"></label>
-                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar2" value="2" /><label asp-for="Comment.Rating" class="full" for="pleasureStar2" title="Kinda bad - 2 stars"></label>
-                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar1" value="1" /><label asp-for="Comment.Rating" class="full" for="pleasureStar1" title="Sucks big time - 1 star"></label>
-                    </fieldset>
+                <div class="row justify-content-end">
+                    <button type="submit" class="btn btn-light">Comment</button>
                 </div>
-            </div>
-            <div class="row justify-content-end">
-                <button type="submit" class="btn btn-light">Comment</button>
-            </div>
-            @*<partial name="_RoadsCommentsPartial"/>*@
+                @*<partial name="_RoadsCommentsPartial"/>*@
 
-        </form>
-        <br />
+            </form>
+            <br />
+        </div>
+    }
+    else
+    {//TODO
+        <div class="container bg-dark text-light rounded">
+            <h3>Log in or register to comment and rate the road</h3>
+        </div>
+    }
+
+    @*Comments*@
+    <div class="card-container">
+        @{ var counter = 1;}
+        @foreach (var comment in Model.CommentsViewModel)
+        {
+            var dataId = "comment" + counter;
+            <div class="card">
+                <div class="card-header">
+                    Rating
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>@comment.Content</p>
+                        <footer class="blockquote-footer">@comment.User.UserName</footer>
+                    </blockquote>
+
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#@dataId" aria-expanded="false" aria-controls="@dataId">Reply</button>
+                </div>
+            </div>
+            @*Replies*@
+            <div class="collapse" id="@dataId">
+                <div class="card card-body ml-5 my-3 w-75">
+                    <blockquote class="blockquote mb-0">
+                        <p>@comment.Content</p>
+                        <footer class="blockquote-footer">@comment.User.UserName </footer>
+                    </blockquote>
+                </div>
+                
+                <div class="card ml-5 my-3 w-75">
+                    <div class="card-body">
+                        <form asp-area="Roads" asp-controller="Home" asp-action="ReplyToComment" asp-route-id="@comment.Id" asp-route-roadId="@Model.Id">
+                            <textarea rows="3" asp-for="Reply.Content" class="form-control rounded" placeholder="Reply.."></textarea>
+                            <br/>
+                            <div class="row justify-content-end w-100">
+                                <button type="submit" class="btn btn-primary">Reply</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            counter++;
+        }
+
     </div>
 </div>
 

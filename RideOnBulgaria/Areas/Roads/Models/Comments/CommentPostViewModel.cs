@@ -6,7 +6,7 @@ using RideOnBulgaria.Models;
 
 namespace RideOnBulgaria.Web.Areas.Roads.Models.Comments
 {
-    public class CommentViewModel
+    public class CommentPostViewModel
     {
         public string RoadId { get; set; }
 
@@ -15,5 +15,6 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models.Comments
         public User Commentator { get; set; }
 
         public string Comment { get; set; }
+
     }
 }

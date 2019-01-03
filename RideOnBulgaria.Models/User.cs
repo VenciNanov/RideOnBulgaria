@@ -23,7 +23,9 @@ namespace RideOnBulgaria.Models
         public string CartId { get; set; }
         public virtual Cart Cart { get; set; }
 
-        public virtual  ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Reply> Replies { get; set; }
     }
 
 }

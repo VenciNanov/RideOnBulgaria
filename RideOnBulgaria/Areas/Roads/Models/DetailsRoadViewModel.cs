@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RideOnBulgaria.Models;
 using RideOnBulgaria.Web.Areas.Roads.Models.Comments;
+using RideOnBulgaria.Web.Areas.Roads.Models.Comments.Replies;
 
 namespace RideOnBulgaria.Web.Areas.Roads.Models
 {
@@ -38,7 +39,12 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
 
         //Comments Section
 
-        public CommentViewModel Comment { get; set; }
+        public CommentPostViewModel Comment { get; set; }
+
+        public ICollection<AllCommentsViewModel> CommentsViewModel { get; set; }
+
+        public ReplyPostViewModel Reply { get; set; }
+
 
     }
 }

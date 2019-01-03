@@ -15,6 +15,10 @@ namespace RideOnBulgaria.Models
 
         public virtual Road Road { get; set; }
 
+        public string UserId { get; set; }
+
+        public virtual User User { get; set; }
+
         public string Content { get; set; }
 
         public int Rating { get; set; }

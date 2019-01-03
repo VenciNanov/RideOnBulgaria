@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RideOnBulgaria.Data;
 
 namespace RideOnBulgaria.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190103123859_add_User_property_to_Comment_entity")]
+    partial class add_User_property_to_Comment_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -320,13 +322,9 @@ namespace RideOnBulgaria.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CommentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Replies");
                 });
@@ -560,10 +558,6 @@ namespace RideOnBulgaria.Data.Migrations
                     b.HasOne("RideOnBulgaria.Models.Comment", "Comment")
                         .WithMany("Replies")
                         .HasForeignKey("CommentId");
-
-                    b.HasOne("RideOnBulgaria.Models.User", "User")
-                        .WithMany("Replies")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("RideOnBulgaria.Models.Road", b =>

@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using AutoMapper;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Roads.Models;
+using RideOnBulgaria.Web.Areas.Roads.Models.Comments;
 using RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex;
 using RoadViewModel = RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex.RoadViewModel;
 
@@ -20,14 +22,16 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         private readonly IRoadsIndexService roadsIndexService;
         private readonly IUsersService usersService;
         private readonly ICommentsService commentsService;
+        private readonly IMapper mapper;
 
-        public HomeController(IRoadsService roadsService, IImageService imageService, IRoadsIndexService roadsIndexService, IUsersService usersService, ICommentsService commentsService)
+        public HomeController(IRoadsService roadsService, IImageService imageService, IRoadsIndexService roadsIndexService, IUsersService usersService, ICommentsService commentsService, IMapper mapper)
         {
             this.roadsService = roadsService;
             this.imageService = imageService;
             this.roadsIndexService = roadsIndexService;
             this.usersService = usersService;
             this.commentsService = commentsService;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
@@ -245,6 +249,13 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         {
             var model = this.roadsService.Details<DetailsRoadViewModel>(id);
 
+            var comments = this.commentsService.GetCommentsByRoadId(id);
+            //if (comments.Count > 0)
+            //{
+            //    model.CommentsViewModel.Add(mapper.Map<AllCommentsViewModel>(comments));
+
+            //}
+
             if (model == null)
             {
                 return this.Redirect("/");
@@ -277,6 +288,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Comment(string id, DetailsRoadViewModel model)
         {
             var commentViewModel = model.Comment;
@@ -294,5 +306,16 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             return this.RedirectToAction("Road", "Home", new {@id = id});
         }
 
+
+        [HttpPost]
+        public IActionResult ReplyToComment(string id, string roadId, DetailsRoadViewModel model)
+        {
+            var replyViewModel = model.Reply;
+            var user = this.usersService.GetUserByUsername(this.User.Identity.Name);
+
+            var result = this.commentsService.AddReplyToComment(id, replyViewModel.Content, user);
+
+            return this.RedirectToAction("Road", "Home",new {@id=roadId});
+        }
     }
 }
