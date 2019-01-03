@@ -79,6 +79,7 @@ namespace RideOnBulgaria
             services.AddScoped<IProductsSerivce, ProductsService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IOrdersService, OrdersService>();
+            services.AddScoped<ICommentsService, CommentsService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSession();

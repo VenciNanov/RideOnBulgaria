@@ -21,6 +21,6 @@ namespace RideOnBulgaria.Models
 
         public virtual ICollection<Reply> Replies { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

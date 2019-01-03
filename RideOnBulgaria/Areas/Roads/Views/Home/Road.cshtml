@@ -40,8 +40,7 @@
 <div class="container">
     <div class="container bg-dark text-light rounded">
         <br />
-        <form class="mx-auto bg-dark half-width" asp-area="Roads" asp-controller="Home" asp-action="Comment" asp-route-id="" method="post">
-            <input hidden="" asp-for="Id" value="@Model.Id" />
+        <form class="mx-auto bg-dark half-width" asp-area="Roads" asp-controller="Home" asp-action="Comment" asp-route-id="@Model.Id" method="post">
             <div asp-validation-summary="ModelOnly"> </div>
             <div class="form-row d-flex justify-content-start my-3">
                 <div class="form-colmn col-md-12 d-flex flex-column justify-content-start">

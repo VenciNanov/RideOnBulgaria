@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Roads.Models;
 using RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex;
@@ -16,12 +18,16 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         private readonly IRoadsService roadsService;
         private readonly IImageService imageService;
         private readonly IRoadsIndexService roadsIndexService;
+        private readonly IUsersService usersService;
+        private readonly ICommentsService commentsService;
 
-        public HomeController(IRoadsService roadsService, IImageService imageService, IRoadsIndexService roadsIndexService)
+        public HomeController(IRoadsService roadsService, IImageService imageService, IRoadsIndexService roadsIndexService, IUsersService usersService, ICommentsService commentsService)
         {
             this.roadsService = roadsService;
             this.imageService = imageService;
             this.roadsIndexService = roadsIndexService;
+            this.usersService = usersService;
+            this.commentsService = commentsService;
         }
 
         public IActionResult Index()
@@ -121,17 +127,17 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         public IActionResult EditRoad(string id)
         {
             var road = this.roadsService.GetRoadById(id);
-            
-                if (road == null)
-                {
-                    return NotFound();
-                }
+
+            if (road == null)
+            {
+                return NotFound();
+            }
 
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
 
-            if (userId != road.UserId||!this.User.IsInRole("Admin"))
+
+            if (userId != road.UserId || !this.User.IsInRole("Admin"))
             {
                 return Unauthorized();
             }
@@ -175,17 +181,17 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             return this.RedirectToAction("MyRoads", "Home");
         }
 
-
+        [Authorize]
         public IActionResult EditRoadPictures(string id)
         {
             var road = this.roadsService.GetRoadById(id);
 
             var model = new EditRoadViewModel
             {
-                Id=road.Id,
+                Id = road.Id,
                 Images = road.Photos
             };
-            
+
 
             return this.View(model);
         }
@@ -225,8 +231,8 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         {
             ClaimsPrincipal user = this.User;
 
-            bool result = roadsService.DeleteRoad(id,user);
-            
+            bool result = roadsService.DeleteRoad(id, user);
+
             return this.RedirectToAction("DeltedRoadSuccesfully", "Home");
         }
 
@@ -270,16 +276,23 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             return this.View(model);
         }
 
-        //[HttpPost]
-        //public IActionResult UploadImage(UploadImageViewModel model)
-        //{
-        //    //var imgId = imageService.UploadImage(model.Path);
+        [HttpPost]
+        public IActionResult Comment(string id, DetailsRoadViewModel model)
+        {
+            var commentViewModel = model.Comment;
+            commentViewModel.Commentator = this.usersService.GetUserByUsername(this.User.Identity.Name);
+            commentViewModel.RoadId = id;
 
-        //    //return this.RedirectToAction("ShowPicture");
-        //    return this.View();
+            var result = this.commentsService.AddCommentToRoad(id, commentViewModel.Commentator, commentViewModel.Rating,
+                 commentViewModel.Comment);
 
-        //}
+            if (result == false)
+            {
+                return this.BadRequest();
+            }
 
+            return this.RedirectToAction("Road", "Home", new {@id = id});
+        }
 
     }
 }
