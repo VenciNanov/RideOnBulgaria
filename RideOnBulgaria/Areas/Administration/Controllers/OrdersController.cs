@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RideOnBulgaria.Models;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Administration.Models;
+using RideOnBulgaria.Web.Areas.Administration.Models.Orders;
 using RideOnBulgaria.Web.Areas.Administration.Models.Users;
 
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
@@ -28,22 +30,54 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 
         public IActionResult All()
         {
-            return View();
+            var orders = this.ordersService.GetAllOrders();
+            //TODO
+            if (orders == null)
+            {
+                return NotFound();
+            }
+
+            var model = mapper.Map<List<OrderViewModel>>(orders);
+        return this.View(model);
         }
 
         public IActionResult Processed()
         {
-            return View();
+            var orders = this.ordersService.GetProcessedOrders();
+            //TODO
+            if (orders == null)
+            {
+                return NotFound();
+            }
+
+            var model = mapper.Map<List<OrderViewModel>>(orders);
+            return this.View(model);
         }
 
         public IActionResult Sent()
         {
-            return View();
+            var orders = this.ordersService.GetSentOrders();
+            //TODO
+            if (orders == null)
+            {
+                return NotFound();
+            }
+
+            var model = mapper.Map<List<OrderViewModel>>(orders);
+            return this.View(model);
         }
 
         public IActionResult Delivered()
         {
-            return this.View();
+            var orders = this.ordersService.GetDeliveredOrders();
+            //TODO
+            if (orders == null)
+            {
+                return NotFound();
+            }
+
+            var model = mapper.Map<List<OrderViewModel>>(orders);
+            return this.View(model);
         }
 
         public IActionResult Details(string id)

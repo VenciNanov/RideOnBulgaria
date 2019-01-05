@@ -156,5 +156,27 @@ namespace RideOnBulgaria.Services
 
             return orderProduct;
         }
+
+        public List<Order> GetAllOrders()
+        {
+            return this.context.Orders.ToList();
+        }
+
+        public List<Order> GetProcessedOrders()
+        {
+            return this.context.Orders.Where(x => x.OrderStatus == OrderStatus.Processed).ToList();
+        }
+
+        public List<Order> GetSentOrders()
+        {
+            return this.context.Orders.Where(x => x.OrderStatus == OrderStatus.Sent).ToList();
+        }
+
+        public List<Order> GetDeliveredOrders()
+        {
+            return this.context.Orders.Where(x => x.OrderStatus == OrderStatus.Delivered).ToList();
+        }
+
+
     }
 }

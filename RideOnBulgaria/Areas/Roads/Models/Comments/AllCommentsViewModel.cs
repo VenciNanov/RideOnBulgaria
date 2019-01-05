@@ -1,4 +1,7 @@
-﻿using RideOnBulgaria.Models;
+﻿using System;
+using System.Collections.Generic;
+using RideOnBulgaria.Models;
+using RideOnBulgaria.Web.Areas.Roads.Models.Comments.Replies;
 
 namespace RideOnBulgaria.Web.Areas.Roads.Models.Comments
 {
@@ -11,5 +14,12 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models.Comments
         public string Content { get; set; }
 
         public int Rating { get; set; }
+
+        public ICollection<ReplyViewModel> ReplyViewModel { get; set; }
+
+        public DateTime PostedOn { get; set; }
+
+        public bool IsDeleted { get; set; }
+
     }
 }

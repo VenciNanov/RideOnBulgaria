@@ -36,7 +36,8 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
                     Id = product.Id,
                     Image = this.imageService.ReturnProductImage(product.Image),
                     Name = product.Name,
-                    Price = product.Price
+                    Price = product.Price,
+                    IsHidden = product.IsHidden
                 });
             }
 

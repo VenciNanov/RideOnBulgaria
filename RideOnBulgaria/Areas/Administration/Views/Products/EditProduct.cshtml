@@ -1,0 +1,47 @@
+﻿@model ProductViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="text-center">Edit Product</h1>
+<hr class="hr-2 bg-secondary half-width" />
+<form class="mx-auto half-width" asp-area="Administration" asp-controller="Products" asp-action="EditProduct" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row d-flex justify-content-between my-3">
+        <div class="form-colmn col-md-12 d-flex flex-column align-items-center">
+            <label style="font-size: 200%" asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row d-flex justify-content-between my-3">
+        <div class="form-colmn col-md-6 d-flex flex-column align-items-center">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-colmn col-md-6 d-flex flex-column align-items-center">
+            <label asp-for="IsHidden"></label>
+            <input type="checkbox" asp-for="IsHidden" />
+            <span asp-validation-for="IsHidden" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row d-flex justify-content-between my-3">
+        <div class="form-colmn col-md-12 d-flex flex-column align-items-center">
+            <label asp-for="Description"></label>
+            <textarea rows="10" asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row d-flex justify-content-between my-3">
+        <div class="form-colmn col-md-12 d-flex flex-column align-items-center">
+            <label asp-for="AdditionalInfo"></label>
+            <input asp-for="AdditionalInfo" class="form-control" />
+            <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+        </div>
+    </div>
+    <hr class="hr-2 bg-secondary" />
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" class="btn ride-bg-color">Edit Product</button>
+    </div>
+
+</form>

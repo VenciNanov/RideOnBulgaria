@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RideOnBulgaria.Models
 {
@@ -26,5 +27,7 @@ namespace RideOnBulgaria.Models
         public virtual ICollection<Reply> Replies { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        public DateTime PostedOn { get; set; }
     }
 }

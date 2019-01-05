@@ -15,5 +15,8 @@ namespace RideOnBulgaria.Services.Contracts
         T IndexProductDetails<T>(string id);
         Product GetProductById(string id);
 
+        Product EditProduct(string id, string name, string description, bool isHidden, string additionalInfo,
+            decimal price);
+
     }
 }

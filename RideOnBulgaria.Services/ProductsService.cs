@@ -85,6 +85,26 @@ namespace RideOnBulgaria.Services
             return model;
         }
 
+        public Product EditProduct(string id, string name, string description, bool isHidden, string additionalInfo,decimal price)
+        {
+            if (name == null || description == null || price <= 0 ) return null;
 
+            var product = this.GetProductById(id);
+
+            if (product==null)
+            {
+                return null;
+            }
+
+            product.Name = name;
+            product.Description = description;
+            product.IsHidden = isHidden;
+            product.AdditionalInfo = additionalInfo;
+            product.Price = price;
+
+            this.context.Update(product);
+            this.context.SaveChanges();
+            return product;
+        }
     }
 }

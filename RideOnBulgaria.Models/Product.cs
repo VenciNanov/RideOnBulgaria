@@ -21,5 +21,7 @@ namespace RideOnBulgaria.Models
 
         public virtual ICollection<CartProduct> CartProducts { get; set; }
 
+        public bool IsHidden { get; set; }
+
     }
 }

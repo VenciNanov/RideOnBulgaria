@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Roads.Models;
 using RideOnBulgaria.Web.Areas.Roads.Models.Comments;
+using RideOnBulgaria.Web.Areas.Roads.Models.Comments.Replies;
 using RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex;
 using RoadViewModel = RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex.RoadViewModel;
 
@@ -248,14 +249,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         public IActionResult Road(string id)
         {
             var model = this.roadsService.Details<DetailsRoadViewModel>(id);
-
-            var comments = this.commentsService.GetCommentsByRoadId(id);
-            //if (comments.Count > 0)
-            //{
-            //    model.CommentsViewModel.Add(mapper.Map<AllCommentsViewModel>(comments));
-
-            //}
-
+            
             if (model == null)
             {
                 return this.Redirect("/");
@@ -308,6 +302,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public IActionResult ReplyToComment(string id, string roadId, DetailsRoadViewModel model)
         {
             var replyViewModel = model.Reply;
@@ -316,6 +311,34 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             var result = this.commentsService.AddReplyToComment(id, replyViewModel.Content, user);
 
             return this.RedirectToAction("Road", "Home",new {@id=roadId});
+        }
+
+        [Authorize]
+        public IActionResult DeleteComment(string id,string roadId)
+        {
+            var result= this.commentsService.DeleteCommentAndItsReplies(id);
+
+            if (result==false)
+            {
+                //TODO
+                return this.NotFound();
+
+            }
+
+            return this.RedirectToAction("Road", "Home", new {@id = roadId});
+        }
+
+        [Authorize]
+        public IActionResult DeleteReply(string id, string roadId)
+        {
+            var result = this.commentsService.DeleteReply(id);
+
+            if (result == false)
+            {
+                return this.NotFound();
+            }
+
+            return this.RedirectToAction("Road", "Home", new {@id = roadId});
         }
     }
 }

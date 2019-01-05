@@ -46,5 +46,6 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
         public ReplyPostViewModel Reply { get; set; }
 
 
+
     }
 }

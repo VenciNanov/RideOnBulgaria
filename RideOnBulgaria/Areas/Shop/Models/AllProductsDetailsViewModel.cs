@@ -11,5 +11,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Models
         public string Name { get; set; }
 
         public decimal Price { get; set; }
+
+        public bool IsHidden { get; set; }
     }
 }

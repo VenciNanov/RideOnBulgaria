@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administration\Data\" />
-    <Folder Include="Areas\Administration\Models\Orders\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\Roads\Data\" />
     <Folder Include="Areas\Shop\Data\" />
@@ -26,7 +25,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Administration\Views\Orders\Delivered.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Administration\Views\Orders\Processed.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Administration\Views\Orders\Sent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Administration\Views\Orders\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Administration\Views\Products\All.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Roads\Views\Shared\_AllRoadsPartial - Copy (2).cshtml">

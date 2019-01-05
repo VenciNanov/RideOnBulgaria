@@ -70,17 +70,19 @@ namespace RideOnBulgaria.Models
 
         public virtual ICollection<Comment> Comments { get; set; }
 
+        //public virtual ICollection<Reply> Replies { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public double AverageRating
         {
             get
             {
                 var sum = this.Comments.Sum(x => x.Rating);
-                var rating=  sum / Comments.Count;
+                var rating = sum / Comments.Count;
 
-                return _averageRating=rating;
+                return _averageRating = rating;
             }
-           private set => _averageRating = value;
+            private set => _averageRating = value;
         }
 
 

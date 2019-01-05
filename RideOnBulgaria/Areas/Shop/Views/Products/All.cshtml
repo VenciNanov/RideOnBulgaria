@@ -2,7 +2,7 @@
 
 @{
     double rows = Math.Ceiling((double)@Model.AllProductsDetails.Count / 4);
-    var productsCount = @Model.AllProductsDetails.Count;
+    var productsCount = @Model.AllProductsDetails.Count - @Model.AllProductsDetails.Count(x=>x.IsHidden==true);
     var missingCols = (rows * 4) - productsCount;
 }
 
@@ -10,7 +10,7 @@
 @for (int i = 0; i < rows; i++)
 {
     <div class="card-deck">
-        @foreach (var product in @Model.AllProductsDetails.Take(4))
+        @foreach (var product in @Model.AllProductsDetails.Where(x => x.IsHidden == false).Take(4))
         {
             <div class="card">
                 <a asp-area="Shop" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id"><img class="card-img-top" src="@product.Image" alt="Card image cap"></a>

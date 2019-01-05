@@ -1,4 +1,6 @@
-﻿namespace RideOnBulgaria.Models
+﻿using System;
+
+namespace RideOnBulgaria.Models
 {
     public class Reply
     {
@@ -10,10 +12,11 @@
 
         public string Content { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         public string UserId { get; set; }
         public virtual User User { get; set; }
 
+        public DateTime PostedOn { get; set; }
     }
 }
