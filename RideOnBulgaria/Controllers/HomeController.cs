@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using RideOnBulgaria.Models;
 
 namespace RideOnBulgaria.Controllers
@@ -38,6 +41,16 @@ namespace RideOnBulgaria.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+
+        public IActionResult TrafficInformation()
+        {
+            var client = new HttpClient();
+            var response = client.GetAsync("http://localhost:53662/api/PathInfo").Result;
+            var products = response.Content.ReadAsAsync<List<TrafficInformation>>().Result;
+            return View(products);
         }
     }
 }

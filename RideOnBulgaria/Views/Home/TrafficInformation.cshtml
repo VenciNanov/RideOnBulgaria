@@ -1,0 +1,26 @@
+﻿@using System.Security.AccessControl
+@model List<TrafficInformation>
+@{
+    ViewData["Title"] = "Актуална пътна обстановка";
+}
+
+<row class="row text-center">
+    <h2>Актуална пътна обстановка</h2>
+</row>
+<div class="card-container">
+    @foreach (var item in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                @Html.Raw(@item.Name)
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>@Html.Raw(@item.Content)</p>
+                    <footer class="blockquote-footer">@item.PostedOn <cite title="Source Title">Агенция пътна инфраструктуа (АПИ)</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    }
+
+</div>
