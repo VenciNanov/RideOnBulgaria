@@ -1,0 +1,40 @@
+﻿@model DetailsRoadViewModel
+
+@if (this.User.Identity.IsAuthenticated)
+{
+    <div class="container bg-dark text-light rounded">
+        <br />
+        <form class="mx-auto bg-dark half-width" asp-area="Roads" asp-controller="Home" asp-action="Comment" asp-route-id="@Model.Id" method="post">
+            <div asp-validation-summary="ModelOnly"> </div>
+            <div class="form-row d-flex justify-content-start my-3">
+                <div class="form-colmn col-md-12 d-flex flex-column justify-content-start">
+                    <label asp-for="Comment.Comment" class="mb-2"></label>
+                    <textarea rows="4" asp-for="Comment.Comment" class="form-control" placeholder="Коментирай тук..."></textarea>
+                    <span asp-validation-for="Comment.Comment" class="text-danger alert-warning"></span>
+                </div>
+                <div class="form-row d-flex my-3 mx-3">
+                    <h4>Рейтинг: &nbsp; </h4>
+                    <fieldset class="rating">
+                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar5" value="5" /><label asp-for="Comment.Rating" class="full" for="pleasureStar5" title="Awesome - 5 stars"></label>
+                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar4" value="4" /><label asp-for="Comment.Rating" class="full" for="pleasureStar4" title="Pretty good - 4 stars"></label>
+                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar3" value="3" /><label asp-for="Comment.Rating" class="full" for="pleasureStar3" title="Meh - 3 stars"></label>
+                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar2" value="2" /><label asp-for="Comment.Rating" class="full" for="pleasureStar2" title="Kinda bad - 2 stars"></label>
+                        <input type="radio" asp-for="Comment.Rating" id="pleasureStar1" value="1" /><label asp-for="Comment.Rating" class="full" for="pleasureStar1" title="Sucks big time - 1 star"></label>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <button type="submit" class="btn btn-light">Коментирай</button>
+            </div>
+            @*<partial name="_RoadsCommentsPartial"/>*@
+
+        </form>
+        <br />
+    </div>
+}
+else
+{//TODO
+    <div class="container bg-dark text-light rounded">
+        <h3>Първо <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">влез</a> или се <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">регистрирай</a> за да коментираш</h3>
+    </div>
+}

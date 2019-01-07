@@ -5,34 +5,29 @@ namespace RideOnBulgaria.Web.Areas.Administration.Models.Products
 {
     public class CreateProductViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Полето е задължително")]
         [DataType(DataType.Text)]
-        [Display(Name = "Product name")]
+        [Display(Name = "Име на продукта")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Полето е задължително")]
         [DataType(DataType.Text)]
-        [Display(Name = "Description about the product")]
+        [Display(Name = "Описание на продукта")]
         public string Description { get; set; }
 
         [DataType(DataType.Text)]
-        [Display(Name = "Additional Info about the product")]
+        [Display(Name = "Допълнителна информация")]
         public string AdditionalInfo { get; set; }
 
         [Required]
-        [Display(Name = "Picture of the product")]
+        [Display(Name = "Снимка на продукта")]
         public IFormFile Image { get; set; }
 
         [Required]
-        [Display(Name = "Price")]
+        [Display(Name = "Цена")]
         [DataType(DataType.Currency)]
-        [Range(0, 9999999, ErrorMessage = "Please enter valid number.")]
+        [Range(0, 9999999, ErrorMessage = "Моля въведете валидно число.")]
         public decimal Price { get; set; }
-
-        [Required]
-        [Display(Name = "Products count")]
-        [Range(0,int.MaxValue,ErrorMessage = "Please enter a valid number.")]
-        public int Count { get; set; }
 
     }
 }

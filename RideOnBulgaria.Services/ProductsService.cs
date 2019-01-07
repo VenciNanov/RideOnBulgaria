@@ -21,19 +21,16 @@ namespace RideOnBulgaria.Services
             this.imageService = imageService;
         }
 
-        public Product CreateProduct(string name, string description, decimal price, int count, IFormFile image, string additionalInfo)
+        public Product CreateProduct(string name, string description, decimal price, IFormFile image, string additionalInfo)
         {
-            if (name == null || description == null || price <= 0 || count <= 0 || image == null) return null;
-
-
-
+            if (name == null || description == null || price <= 0  || image == null) return null;
+            
             var product = new Product
             {
                 Name = name,
                 Description = description,
                 Price = price,
-                Count = count,
-                AdditionalInfo = additionalInfo,
+               AdditionalInfo = additionalInfo,
             };
 
             this.context.Products.Add(product);

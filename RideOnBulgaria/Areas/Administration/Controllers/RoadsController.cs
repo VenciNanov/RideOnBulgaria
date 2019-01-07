@@ -10,9 +10,8 @@ using RideOnBulgaria.Web.Areas.Administration.Models.Roads;
 
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 {
-
     [Area("Administration")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Owner")]
     public class RoadsController : Controller
     {
         private readonly IMapper mapper;
@@ -27,8 +26,6 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
         public IActionResult All()
         {
             var roads = this.roadsIndexService.GetAllRoads();
-
-
 
             var model = new List<RoadsViewModel>();
 

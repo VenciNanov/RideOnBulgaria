@@ -6,7 +6,7 @@ namespace RideOnBulgaria.Services.Contracts
 {
     public interface IProductsSerivce
     {
-        Product CreateProduct(string name, string description, decimal price, int count, IFormFile image,
+        Product CreateProduct(string name, string description, decimal price, IFormFile image,
             string additionalInfo);
 
         T Details<T>(string id);

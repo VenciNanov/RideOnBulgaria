@@ -1,7 +1,7 @@
 ﻿@using RideOnBulgaria.Models.Enums
 @model ICollection<OrderViewModel>
 
-<div class="justify-content-center row h3 text-light">Delivered orders</div>
+<div class="justify-content-center row h3 text-light">Доставени поръчки</div>
 <hr />
 <div class="row col-12">
     <div class="container-fluid">
@@ -9,12 +9,12 @@
             <thead>
                 <tr class="row">
                     <th scope="col" class="col-3 d-flex justify-content-center">Id</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">Ordered by</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">City</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">Address</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Total Price</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">More</th>
-                </tr>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Поръчано от</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Град</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Адрес</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Общо</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Още</th>
+                </tr>                                                           
             </thead>
             <tbody>
                 @foreach (var order in @Model)
@@ -27,7 +27,7 @@
                         <td class="col-1 d-flex justify-content-center">@order.TotalPrice</td>
                         <td class="col-2 d-flex justify-content-center">
                             <div class="btn-group" role="group" aria-label="Admin-func">
-                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Orders" asp-action="Details" asp-route-id="@order.Id">Details</a>
+                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Orders" asp-action="Details" asp-route-id="@order.Id">Детайли</a>
                             </div>
                         </td>
                     </tr>

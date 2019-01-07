@@ -1,6 +1,6 @@
 ﻿@model UsersRoadsViewModelWrapper
 
-<div class="justify-content-center row h3 text-light">@Model.User.UserName's roads</div>
+<div class="justify-content-center row h3 text-light">Трасета на @Model.User.UserName</div>
 <hr />
 <div class="row col-12">
     <div class="container-fluid">
@@ -8,12 +8,12 @@
             <thead>
                 <tr class="row">
                     <th scope="col" class="col-3 d-flex justify-content-center">Id</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">Road name</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Starting point</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">End point</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Road length</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Rating</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">More</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Име</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Начана точка</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Крайна точка</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Дължина</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Рейтинг</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Още</th>
 
                 </tr>
             </thead>
@@ -29,8 +29,8 @@
                         <td class="col-1 d-flex justify-content-center">@road.Rating</td>
                         <td class="col-2 d-flex justify-content-center">
                             <div class="btn-group" role="group" aria-label="Admin-func">
-                                <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id">Details</a>
-                                <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoad" asp-route-id="@road.Id">Delete</a>
+                                <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id">Детайли</a>
+                                <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoad" asp-route-id="@road.Id">Изтрий</a>
                             </div>
                         </td>
                     </tr>

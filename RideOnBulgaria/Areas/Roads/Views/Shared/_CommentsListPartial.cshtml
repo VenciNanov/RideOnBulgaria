@@ -1,0 +1,94 @@
+﻿@model DetailsRoadViewModel
+
+<div class="card-container">
+    @{ var counter = 1;}
+    @foreach (var comment in this.User.IsInRole("Admin") || this.User.IsInRole("Owner") ? Model.CommentsViewModel : Model.CommentsViewModel.Where(x => x.IsDeleted == false))
+    {
+        var dataId = "comment" + counter;
+        <div class="card">
+
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-11">
+                        <div class="row justify-content-start ml-2 mt-2">
+                            <h5>Рейтинг: &nbsp; </h5>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (@i <= comment.Rating)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                }
+                                else
+                                {
+                                    <span class="fa fa-star"></span>
+                                }
+                            }
+                        </div>
+                    </div>
+                    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Owner") || this.User.Identity.Name == comment.User.UserName)
+                    {
+                        <div class="col align-content-end mt-2">
+                            <a class="text-muted" asp-area="Roads" asp-controller="Home" asp-action="DeleteComment" asp-route-id="@comment.Id" asp-route-roadId="@Model.Id">Изтрий</a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>@comment.Content</p>
+                    <footer class="blockquote-footer">@comment.User.UserName</footer>
+                </blockquote>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#@dataId" aria-expanded="false" aria-controls="@dataId">Отговори</button>
+                <small class="text-muted ml-2"><a class="text-muted" href="#@dataId" data-toggle="collapse" data-target="#@dataId" aria-expanded="false" aria-controls="@dataId">@comment.ReplyViewModel.Count Отговора</a> </small>
+                <small class="text-muted">Публикуван на: @comment.PostedOn</small>
+                @if (comment.IsDeleted == true)
+                {
+                    <small class="alert-danger">Изтрит</small>
+
+                }
+
+            </div>
+        </div>
+        <div class="collapse" id="@dataId">
+            @*Replies*@
+            @foreach (var reply in comment.ReplyViewModel)
+            {
+                <div class="card ml-5 my-3 w-75">
+                    <div class="card-body ">
+                        <blockquote class="blockquote mb-0">
+                            <p>@reply.Content</p>
+                            <footer class="blockquote-footer">@reply.User.UserName </footer>
+                        </blockquote>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted"> Публикуван на: @reply.PostedOn </small> &nbsp;
+                        @if ((this.User.IsInRole("Admin") || this.User.IsInRole("Owner") || this.User.Identity.Name == reply.User.UserName) && reply.IsDeleted == false)
+                        {
+                            <a class="text-muted" asp-area="Roads" asp-controller="Home" asp-action="DeleteReply" asp-route-id="@reply.Id" asp-route-roadId="@Model.Id">Изтрий</a>
+
+                        }
+                        @if (reply.IsDeleted == true)
+                        {
+                            <small class="alert-danger">Изтрит</small>
+
+                        }
+                    </div>
+                </div>
+            }
+            <div class="card ml-5 my-3 w-75">
+                <div class="card-body">
+                    <form asp-area="Roads" asp-controller="Home" asp-action="ReplyToComment" asp-route-id="@comment.Id" asp-route-roadId="@Model.Id">
+                        <textarea rows="3" asp-for="Reply.Content" class="form-control rounded" placeholder="Отговор..."></textarea>
+                        <br />
+                        <div class="row justify-content-end w-100">
+                            <button type="submit" class="btn btn-primary">Отговори</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        counter++;
+    }
+</div>

@@ -16,6 +16,7 @@ namespace RideOnBulgaria.Services
 {
     public class RoadsService : IRoadsService
     {
+        private const int RoadsShownOnPage = 10;
         private readonly ApplicationDbContext context;
         private readonly IImageService imageService;
         private readonly IMapper mapper;
@@ -40,16 +41,9 @@ namespace RideOnBulgaria.Services
             if (roadName == null ||
                 startingPoint == null ||
                 endPoint == null ||
-                roadLength == null ||
+                roadLength == 0.00 ||
                 description == null) return false;
-
-            //if (this.context.Roads.Any(x => x.RoadName == roadName))
-            //{
-            //    return false;
-            //}
-
-            //if (this.context.Roads.Any(x => x.RoadName == roadName)) return false;
-
+            
             string embedYoutubeUrl = null;
 
             if (video != null)
@@ -74,8 +68,6 @@ namespace RideOnBulgaria.Services
                 road.Video = embedYoutubeUrl;
             }
 
-
-           // context.Roads.Add(road);
             context.SaveChanges();
 
             if (imageFromForm != null)
@@ -117,7 +109,7 @@ namespace RideOnBulgaria.Services
             if (roadName == null ||
                 startingPoint == null ||
                 endPoint == null ||
-                roadLength == null ||
+                roadLength == 0.00 ||
                 description == null ||
                 userId == null ||
                 imageFromForm == null) return false;
@@ -204,15 +196,20 @@ namespace RideOnBulgaria.Services
         public ICollection<Road> GetLatestRoads()
         {
             return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
-                .OrderByDescending(x => x.PostedOn).ToList();
+                .OrderByDescending(x => x.PostedOn).Take(RoadsShownOnPage).ToList();
         }
-        
+
         public ICollection<Road> GetLongestRoads()
         {
             return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
-                .OrderByDescending(x => x.RoadLength).ToList();
+                .OrderByDescending(x => x.RoadLength).Take(RoadsShownOnPage).ToList();
         }
 
+        public ICollection<Road> GetTopRoads()
+        {
+            return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
+                .OrderByDescending(x => x.RoadLength).Take(RoadsShownOnPage).OrderByDescending(x=>x.AverageRating).ToList();
+        }
         public Road GetRoadByImage(Image image)
         {
             var img = this.context.Images.First(x => x.Id == image.Id);

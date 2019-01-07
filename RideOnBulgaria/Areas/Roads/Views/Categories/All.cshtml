@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RoadViewModel>
+﻿@model IEnumerable<RideOnBulgaria.Web.Areas.Roads.Models.RoadViewModel>
 
 @{
     ViewData["Title"] = "All Roads";
@@ -12,7 +12,7 @@
                 <img class="img-fluid rounded" src="@item.Image" />
             </a>
             <div class="bottom-right">@item.RoadName</div>
-            <div class="bottom-left-info"> Posted On: @item.PostedOn by @item.PostedBy.</div>
+            <div class="bottom-left-info"> Добавено на: @item.PostedOn от @item.PostedBy.</div>
         </div>
 
     }

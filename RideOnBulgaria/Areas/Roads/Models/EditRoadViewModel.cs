@@ -10,42 +10,38 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
     {
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Add a name first.")]
-        [Display(Name = "Road Name")]
+        [Required(ErrorMessage = "Добави име първо")]
+        [Display(Name = "Име на трасето")]
         [DataType(DataType.Text)]
         public string TripName { get; set; }
 
-        [Required(ErrorMessage = "This field is required")]
-        [Display(Name = "Starting Point")]
+        [Required(ErrorMessage = "Това поле е задължително")]
+        [Display(Name = "Начална точка")]
         [DataType(DataType.Text)]
         public string StartingPoint { get; set; }
 
-        [Required(ErrorMessage = "This field is required")]
-        [Display(Name = "End Point")]
+        [Required(ErrorMessage = "Това поле е задължително")]
+        [Display(Name = "Крайна точка")]
         [DataType(DataType.Text)]
         public string EndPoint { get; set; }
 
-        [Display(Name = "Road Length")]
+        [Display(Name = "Дължина")]
         [Range(0, double.MaxValue, ErrorMessage = "Please enter valid road length.")]
         public double TripLength { get; set; }
 
-        //public virtual ICollection<Image> Photos { get; set; }
-
-        [Required(ErrorMessage = "This field is required")]
-        [Display(Name = "Description about the road")]
+        [Required(ErrorMessage = "Това поле е задължително")]
+        [Display(Name = "Информация за трасето")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [Url]
-        [Display(Name = "Video")]
+        [Display(Name = "Видео")]
         public string Video { get; set; }
 
-       // [Required(ErrorMessage = "Add an image first.")]
-        [Display(Name = "Cover Photo(To change the current photo add a new one)")]
+        [Display(Name = "Основна снимка(Провлечи и пусни снимката тук)")]
         public IFormFile CoverPhoto { get; set; }
 
-
-        [Display(Name = "Photos(Drag and drop your new images here...)")]
+        [Display(Name = "Снимки(Провлечи и пусни снимките тук)")]
         [DataType(DataType.Upload)]
         public ICollection<IFormFile> NewImages { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿@model ICollection<UsersTableViewModel>
 
-<div class="justify-content-center row h3 text-light">All Users</div>
+<div class="justify-content-center row h3 text-light">Всички потребители</div>
 <hr />
 <div class="row col-12">
     <div class="container-fluid">
@@ -8,11 +8,11 @@
             <thead>
                 <tr class="row">
                     <th scope="col" class="col-3 d-flex justify-content-center">Id</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">Username</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Phone Number</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">Full Name</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">Role</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">More</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Никнейм</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Телефонен номер</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Име</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Роля</th>
+                    <th scope="col" class="col-3 d-flex justify-content-center">Още</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,12 +23,12 @@
                         <td class="col-2 d-flex justify-content-center">@user.Username</td>
                         <td class="col-1 d-flex justify-content-center">@user.PhoneNumber</td>
                         <td class="col-2 d-flex justify-content-center">@user.FullName</td>
-                        <td class="col-2 d-flex justify-content-center">@user.Role</td>
-                        <td class="col-2 d-flex justify-content-center">
+                        <td class="col-1 d-flex justify-content-center">@user.Role</td>
+                        <td class="col-3 d-flex justify-content-center">
                             <div class="btn-group" role="group" aria-label="Admin-func">
-                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersRoads" asp-route-id="@user.Id">Roads</a>
+                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersRoads" asp-route-id="@user.Id">Трасета</a>
                                 <button type="button" class="btn btn-outline-danger">Promote</button>
-                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersOrders" asp-route-id="@user.Id">Orders</a>
+                                <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersOrders" asp-route-id="@user.Id">Поръчки</a>
 
                             </div>
                         </td>

@@ -15,7 +15,7 @@ using RideOnBulgaria.Web.Areas.Administration.Models.Users;
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Owner")]
     public class OrdersController : Controller
     {
 

@@ -4,7 +4,7 @@
     ViewData["Title"] = "AllRoads";
 }
 
-<div class="justify-content-center row h3 text-light">All Users</div>
+<div class="justify-content-center row h3 text-light">Всички трасета</div>
 <hr />
 <div class="row col-12">
     <div class="container-fluid">
@@ -12,12 +12,11 @@
             <thead>
                 <tr class="row">
                     <th scope="col" class="col-3 d-flex justify-content-center">Id</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">Name</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">Posted by</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Comments</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Rating</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Poster Rating</th>
-                    <th scope="col" class="col-2 d-flex justify-content-center">More</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Име</th>
+                    <th scope="col" class="col-2 d-flex justify-content-center">Добавено от</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Коментари</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Рейтинг</th>
+                    <th scope="col" class="col-3 d-flex justify-content-center">Още</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,13 +28,11 @@
                     <td class="col-2 d-flex justify-content-center">@road.PostedBy</td>
                     <td class="col-1 d-flex justify-content-center">@road.Comments</td>
                     <td class="col-1 d-flex justify-content-center">@road.Rating</td>
-                    <td class="col-1 d-flex justify-content-center">@road.PosterRating</td>
-
-                    <td class="col-2 d-flex justify-content-center">
-                        <div class="btn-group" role="group" aria-label="Admin-func">
-                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" asp-route-id="@road.Id">Edit</a>
-                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id">Details</a>
-                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoad" asp-route-id="@road.Id">Delete</a>
+                    <td class="col-3 d-flex justify-content-center">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Admin-func">
+                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" asp-route-id="@road.Id">Редактирай</a>
+                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id">Детайли</a>
+                            <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoad" asp-route-id="@road.Id">Изтрий</a>
                         </div>
                     </td>
                 </tr>

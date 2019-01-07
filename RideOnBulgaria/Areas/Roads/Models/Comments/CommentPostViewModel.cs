@@ -11,13 +11,14 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models.Comments
     {
         public string RoadId { get; set; }
 
-        [Required(ErrorMessage = "Please rate the road")]
+        [Display(Name = " ")]
         public int Rating { get; set; }
 
         public User Commentator { get; set; }
 
-        [Required(ErrorMessage = "Please fill in the field.")]
-        [StringLength(500,ErrorMessage = "Comment should be between 10 or 500 words.",MinimumLength = 10)]
+        [Required(ErrorMessage = "Моля попълнете полето.")]
+        [StringLength(500,ErrorMessage = "Коментарът трябва да е между 10 и 500 символа.",MinimumLength = 10)]
+        [Display(Name = "Коментар")]
         public string Comment { get; set; }
 
     }

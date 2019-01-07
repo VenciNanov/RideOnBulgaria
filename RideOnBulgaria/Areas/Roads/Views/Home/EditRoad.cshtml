@@ -1,11 +1,11 @@
 ﻿@model EditRoadViewModel
 
-<h1 class="text-center">Edit Road</h1>
+<h1 class="text-center">Редактиране на трасето</h1>
 <hr class="hr-2 bg-secondary half-width" />
 <form class="mx-auto half-width" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
-        <a  class="btn ride-bg-color" type="button" asp-area="Roads" asp-controller="Home" asp-action="EditRoadPictures" asp-route-id="@Model.Id">Add/Remove Pictures</a>
+        <a  class="btn ride-bg-color" type="button" asp-area="Roads" asp-controller="Home" asp-action="EditRoadPictures" asp-route-id="@Model.Id">Добави/премахни Снимки</a>
     </div>
     <div class="form-row d-flex justify-content-between my-3">
         <div class="form-colmn col-md-12 d-flex flex-column align-items-center">
@@ -53,9 +53,9 @@
         </div>
         <div class="col-6 ">
             <br />
-            <div class="row"><h4>View: &nbsp; </h4><partial name="_EditRoadViewRatingPartial" /></div>
-            <div class="row"><h4>Surface: &nbsp; </h4><partial name="_EditRoadSurfaceRatingPartial" /></div>
-            <div class="row"><h4>Pleasure: &nbsp; </h4><partial name="_EditRoadPleasureRatingPartial" /></div>
+            <div class="row"><h4>Гледка: &nbsp; </h4><partial name="_EditRoadViewRatingPartial" /></div>
+            <div class="row"><h4>Настилка: &nbsp; </h4><partial name="_EditRoadSurfaceRatingPartial" /></div>
+            <div class="row"><h4>Удоволствие: &nbsp; </h4><partial name="_EditRoadPleasureRatingPartial" /></div>
 
         </div>
     </div>
@@ -72,7 +72,7 @@
 
     <hr class="hr-2 bg-secondary" />
     <div class="button-holder d-flex justify-content-center">
-        <button type="submit" class="btn ride-bg-color">Edit Road</button>
+        <button type="submit" class="btn ride-bg-color">Редактирай трасето</button>
     </div>
 
 </form>

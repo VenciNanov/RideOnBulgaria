@@ -7,7 +7,7 @@
 <div class="container-image-details">
     <img class="img-thumbnail" src="@Model.CoverPhoto.ImageUrl" />
     <div class="centered">@Model.RoadName</div>
-    <div class="centered-info">From: @Model.StartingPoint To: @Model.EndPoint , @Model.RoadLength Km</div>
+    <div class="centered-info">От: @Model.StartingPoint До: @Model.EndPoint , Дължина @Model.RoadLength Км</div>
 </div>
 <br />
 <div class="container justify-content-center text-center">
@@ -27,153 +27,19 @@
     }
 
 
-    <p class="text-left">Posted On: @Model.PostedOn by: @Model.PostedBy</p>
+    <p class="text-left">Добавено на: @Model.PostedOn От: @Model.PostedBy</p>
     <hr class="hr-1" />
     @if (@Model.Images.Any())
     {
-        <p>User posted pictures:</p>
+        <p>Снимки:</p>
         <partial name="_RoadsUserPostedGalleryPartial" />
     }
     <br /><br />
 
 </div>
 <div class="container">
-    @if (this.User.Identity.IsAuthenticated)
-    {
-        <div class="container bg-dark text-light rounded">
-            <br />
-            <form class="mx-auto bg-dark half-width" asp-area="Roads" asp-controller="Home" asp-action="Comment" asp-route-id="@Model.Id" method="post">
-                <div asp-validation-summary="ModelOnly"> </div>
-                <div class="form-row d-flex justify-content-start my-3">
-                    <div class="form-colmn col-md-12 d-flex flex-column justify-content-start">
-                        <label asp-for="Comment.Comment" class="mb-2"></label>
-                        <textarea rows="4" asp-for="Comment.Comment" class="form-control" placeholder="Comment here..."></textarea>
-                        <span asp-validation-for="Comment.Comment" class="text-danger alert-warning"></span>
-                    </div>
-                    <div class="form-row d-flex my-3 mx-3">
-                        <h4>Rating: &nbsp; </h4>
-                        <fieldset class="rating">
-                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar5" value="5" /><label asp-for="Comment.Rating" class="full" for="pleasureStar5" title="Awesome - 5 stars"></label>
-                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar4" value="4" /><label asp-for="Comment.Rating" class="full" for="pleasureStar4" title="Pretty good - 4 stars"></label>
-                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar3" value="3" /><label asp-for="Comment.Rating" class="full" for="pleasureStar3" title="Meh - 3 stars"></label>
-                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar2" value="2" /><label asp-for="Comment.Rating" class="full" for="pleasureStar2" title="Kinda bad - 2 stars"></label>
-                            <input type="radio" asp-for="Comment.Rating" id="pleasureStar1" value="1" /><label asp-for="Comment.Rating" class="full" for="pleasureStar1" title="Sucks big time - 1 star"></label>
-                        </fieldset>
-                    </div>
-                </div>
-                <div class="row justify-content-end">
-                    <button type="submit" class="btn btn-light">Comment</button>
-                </div>
-                @*<partial name="_RoadsCommentsPartial"/>*@
-
-            </form>
-            <br />
-        </div>
-    }
-    else
-    {//TODO
-        <div class="container bg-dark text-light rounded">
-            <h3>Log in or register to comment and rate the road</h3>
-        </div>
-    }
+   <partial name="_CommentRoadPartial" model="@Model"/>
 
     @*Comments*@
-    <div class="card-container">
-        @{ var counter = 1;}
-        @foreach (var comment in this.User.IsInRole("Admin") || this.User.IsInRole("Owner") ? Model.CommentsViewModel : Model.CommentsViewModel.Where(x => x.IsDeleted == false))
-        {
-            var dataId = "comment" + counter;
-            <div class="card">
-
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-11">
-                            <div class="row justify-content-start ml-2 mt-2">
-                                <h5>Rating: &nbsp; </h5>
-                                @for (int i = 1; i <= 5; i++)
-                                {
-                                    if (@i <= comment.Rating)
-                                    {
-                                        <span class="fa fa-star checked"></span>
-                                    }
-                                    else
-                                    {
-                                        <span class="fa fa-star"></span>
-                                    }
-                                }
-                            </div>
-                        </div>
-                        @if (this.User.IsInRole("Admin") || this.User.IsInRole("Owner") || this.User.Identity.Name == comment.User.UserName)
-                        {
-                            <div class="col align-content-end mt-2">
-                                <a class="text-muted" asp-area="Roads" asp-controller="Home" asp-action="DeleteComment" asp-route-id="@comment.Id" asp-route-roadId="@Model.Id">Delete</a>
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>@comment.Content</p>
-                        <footer class="blockquote-footer">@comment.User.UserName</footer>
-                    </blockquote>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#@dataId" aria-expanded="false" aria-controls="@dataId">Reply</button>
-                    <small class="text-muted ml-2"><a class="text-muted" href="#@dataId" data-toggle="collapse" data-target="#@dataId" aria-expanded="false" aria-controls="@dataId">@comment.ReplyViewModel.Count Replies</a> </small>
-                    <small class="text-muted">Posted On: @comment.PostedOn</small>
-                    @if (comment.IsDeleted == true)
-                    {
-                        <small class="alert-danger">Deleted</small>
-
-                    }
-
-                </div>
-            </div>
-            <div class="collapse" id="@dataId">
-                @*Replies*@
-
-                @foreach (var reply in comment.ReplyViewModel)
-                {
-                    <div class="card ml-5 my-3 w-75">
-                        <div class="card-body ">
-                            <blockquote class="blockquote mb-0">
-                                <p>@reply.Content</p>
-                                <footer class="blockquote-footer">@reply.User.UserName </footer>
-                            </blockquote>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted"> Posted On: @reply.PostedOn </small> &nbsp;
-                            @if ((this.User.IsInRole("Admin") || this.User.IsInRole("Owner") || this.User.Identity.Name == reply.User.UserName) && reply.IsDeleted==false)
-                            {
-                                <a class="text-muted" asp-area="Roads" asp-controller="Home" asp-action="DeleteReply" asp-route-id="@reply.Id" asp-route-roadId="@Model.Id">Delete</a>
-
-                            }
-                            @if (reply.IsDeleted == true)
-                            {
-                                <small class="alert-danger">Deleted</small>
-
-                            }
-                        </div>
-                    </div>
-                }
-
-
-                <div class="card ml-5 my-3 w-75">
-                    <div class="card-body">
-                        <form asp-area="Roads" asp-controller="Home" asp-action="ReplyToComment" asp-route-id="@comment.Id" asp-route-roadId="@Model.Id">
-                            <textarea rows="3" asp-for="Reply.Content" class="form-control rounded" placeholder="Reply..."></textarea>
-                            <br />
-                            <div class="row justify-content-end w-100">
-                                <button type="submit" class="btn btn-primary">Reply</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
-            counter++;
-        }
-
-    </div>
+   <partial name="_CommentsListPartial"/>
 </div>

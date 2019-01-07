@@ -6,13 +6,13 @@
     </div>
     <div class="row justify-content-center">
         <img class="rounded" src="@Model.Image.ImageUrl" width="200" height="200" />
-        <div class="col-4">
-            <p class="product-price-d"><b>@Model.Price</b> Leva</p>
+        <div class="col-5">
+            <p class="product-price-d"><b>@Model.Price</b> лв.</p>
         </div>
     </div>
     <br />
     <div class="justify-content-center row">
-        <p style="font-size: 1.5rem;">About the product:</p>
+        <p style="font-size: 1.5rem;">За продукта:</p>
 
     </div>
     <div class="row justify-content-center product-details-description">
@@ -20,30 +20,7 @@
     </div>
     <br />
     <div class="row justify-content-center">
-        <button type="button" class="btn btn-dark" asp-area="Shop" asp-controller="Orders" asp-action="AddToCart" asp-route-id="@Model.Id">Add to cart</button>
+        <button type="button" class="btn btn-dark" asp-area="Shop" asp-controller="Cart" asp-action="AddProduct" asp-route-id="@Model.Id">Добави в количката</button>
     </div>
-
-    @if (User.IsInRole("Admin"))
-    {
-        <br />
-        <div class="row justify-content-center">
-            <p>Available count: @Model.Count</p>
-            <br />
-
-        </div>
-        <div class="row justify-content-center">
-            <button data-toggle="collapse" data-target="#addMore" class="btn btn-info">Add more</button>
-        </div>
-        <br />
-        <div id="addMore" class="collapse justify-content-center row">
-            <form asp-area="Administration" asp-controller="Products" asp-action="AddMoreProducts">
-                <input hidden="" asp-for="Id" value="@Model.Id"/>
-                <label asp-for="Count"></label>
-                <input asp-for="Count"/>
-
-                <button type="submit" class="btn btn-dark">Add</button>
-            </form>
-        </div>
-    }
-
+    
 </div>

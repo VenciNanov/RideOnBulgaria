@@ -49,7 +49,10 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
         public IActionResult TopRoads()
         {
-            return View();
+            var roads = this.roadsService.GetTopRoads();
+            List<RoadViewModel> roadsModel = GetRoadsViewModel(roads);
+
+            return View(roadsModel);
         }
 
         private List<RoadViewModel> GetRoadsViewModel(ICollection<RideOnBulgaria.Models.Road> roads)
@@ -65,7 +68,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
                     Image = coverPhoto,
                     PostedOn = road.PostedOn,
                     RoadName = road.RoadName,
-                    PostedBy = this.User.Identity.Name
+                    PostedBy = road.User.UserName
                 });
             }
 

@@ -32,6 +32,7 @@ namespace RideOnBulgaria.Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
         }
 

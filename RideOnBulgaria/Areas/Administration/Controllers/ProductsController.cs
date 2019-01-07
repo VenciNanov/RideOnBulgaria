@@ -13,6 +13,7 @@ using RideOnBulgaria.Web.Areas.Administration.Models.Products;
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
+    [Authorize(Roles = "Admin,Owner")]
     public class ProductsController : Controller
     {
         private readonly IProductsSerivce productsService;
@@ -38,10 +39,10 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
             if (!ModelState.IsValid) return this.View(model);
 
             var product =
-                this.productsService.CreateProduct(model.Name, model.Description, model.Price, model.Count, model.Image,
+                this.productsService.CreateProduct(model.Name, model.Description, model.Price, model.Image,
                     model.AdditionalInfo);
 
-            return this.Redirect("Shop/Products/Details/" + product.Id);
+            return this.RedirectToAction("Details","Products",new {area="Shop",@id=product.Id});
         }
 
         public IActionResult All()

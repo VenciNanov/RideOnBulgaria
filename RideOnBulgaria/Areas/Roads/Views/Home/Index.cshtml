@@ -5,49 +5,49 @@
 }
 
 
-<div class="jumbotron text-center">
-    <div class="container-fluid text-center">
-        <h2 class="font-weight-light">All Roads</h2>
-        <hr class="hr-1" />
-    </div>
-    <partial name="_AllRoadsPartial" />
-    <br />
-    <a asp-area="Roads" asp-controller="Categories" asp-action="All" style="color: red"><h4>more roads...</h4></a>
-</div>
-<br />
+
 
 
 <div class="jumbotron text-center">
     <div class="container-fluid text-center">
-        <h2 class="font-weight-light">Longest Roads</h2>
+        <h2 class="font-weight-light">Най-дългите трасета</h2>
         <hr class="hr-1" />
     </div>
     <partial name="_LongestRoadsPartial" />
     <br />
-    <a asp-area="Roads" asp-controller="Categories" asp-action="LongestRoads" style="color: red"><h4>more roads...</h4></a>
+    <a asp-area="Roads" asp-controller="Categories" asp-action="LongestRoads" class="btn btn-dark" style="color: red"><h5>Oще трасета</h5></a>
 </div>
 <br />
 
 <div class="jumbotron text-center">
     <div class="container-fluid text-center">
-        <h2 class="font-weight-light">Top Roads</h2>
+        <h2 class="font-weight-light">Трасета с висок рейтинг</h2>
         <hr class="hr-1" />
     </div>
     <partial name="_TopRoadsPartial" />
     <br />
-    <a asp-area="Roads" asp-controller="Categories" asp-action="TopRoads" style="color: red"><h4>more roads...</h4></a>
+    <a asp-area="Roads" asp-controller="Categories" asp-action="TopRoads" class="btn btn-dark" style="color: red"><h5>Oще трасета</h5></a>
 </div>
 <br />
 
 <div class="jumbotron text-center">
     <div class="container-fluid text-center">
-        <h2 class="font-weight-light">Latest Roads</h2>
+        <h2 class="font-weight-light">Последни трасета</h2>
         <hr class="hr-1" />
     </div>
     <partial name="_LatestRoadsPartial" />
     <br />
-    <a asp-area="Roads" asp-controller="Categories" asp-action="LatestRoads" style="color: red"><h4>more roads...</h4></a>
+    <a asp-area="Roads" asp-controller="Categories" asp-action="LatestRoads" class="btn btn-dark" style="color: red"><h5>Oще трасета</h5></a>
 </div>
 <br />
-
+<div class="jumbotron text-center">
+    <div class="container-fluid text-center">
+        <h2 class="font-weight-light">Всички трасета</h2>
+        <hr class="hr-1" />
+    </div>
+    <partial name="_AllRoadsPartial" />
+    <br />
+    <a asp-area="Roads" asp-controller="Categories" asp-action="All" class="btn btn-dark" style="color: red"><h5>Oще трасета</h5></a>
+</div>
+<br />
 

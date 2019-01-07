@@ -7,7 +7,7 @@
     <span class="fa fa-star"></span>*@
 <div class="jumbotron-fluid">
     <div class="row justify-content-center">
-        <h5>View: &nbsp; </h5>
+        <h5>Гледка: &nbsp; </h5>
         @for (int i = 1; i <= 5; i++)
         {
             if (@i <= @Model.ViewRating)
@@ -21,7 +21,7 @@
         }
     </div>
     <div class="row justify-content-center">
-        <h5>Surface: &nbsp; </h5>
+        <h5>Настилка: &nbsp; </h5>
         @for (int i = 1; i <= 5; i++)
         {
             if (@i <= @Model.SurfaceRating)
@@ -36,7 +36,7 @@
 
     </div>
     <div class="row justify-content-center">
-        <h5>Pleasure: &nbsp; </h5>
+        <h5>Удоволствие: &nbsp; </h5>
         @for (int i = 1; i <= 5; i++)
         {
             if (@i <= @Model.PleasureRating)

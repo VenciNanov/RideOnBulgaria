@@ -52,6 +52,16 @@ namespace RideOnBulgaria.Data
                 .WithOne(x => x.Road)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<Road>()
+                .HasMany(x => x.Comments)
+                .WithOne(x => x.Road)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Comment>()
+                .HasMany(x => x.Replies)
+                .WithOne(x => x.Comment)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<OrderProduct>().HasKey(x => new {x.OrderId, x.ProductId});
 
             builder.Entity<Product>()

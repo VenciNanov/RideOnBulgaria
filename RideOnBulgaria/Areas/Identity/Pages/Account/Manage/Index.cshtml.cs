@@ -28,6 +28,7 @@ namespace RideOnBulgaria.Web.Areas.Identity.Pages.Account.Manage
             _emailSender = emailSender;
         }
 
+        [Display(Name = "Никнейм")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -45,7 +46,7 @@ namespace RideOnBulgaria.Web.Areas.Identity.Pages.Account.Manage
             public string Email { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Телефонен номер")]
             public string PhoneNumber { get; set; }
         }
 
@@ -110,7 +111,7 @@ namespace RideOnBulgaria.Web.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Профилът ви беше обновен успешно";
             return RedirectToPage();
         }
 

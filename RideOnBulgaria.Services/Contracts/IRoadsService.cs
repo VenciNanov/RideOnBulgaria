@@ -19,6 +19,8 @@ namespace RideOnBulgaria.Services.Contracts
 
         ICollection<Road> GetLongestRoads();
 
+        ICollection<Road> GetTopRoads();
+
         Road GetRoadByImage(Image image);
 
         bool Edit(string roadId, string roadName, string startingPoint, string endPoint, double roadLength,

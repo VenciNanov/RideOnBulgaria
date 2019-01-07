@@ -6,6 +6,7 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Roads.Models;
 using RideOnBulgaria.Web.Areas.Roads.Models.Comments;
@@ -135,21 +136,21 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
             if (road == null)
             {
+                //TODO
                 return NotFound();
             }
-
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 
-            if (userId != road.UserId || !this.User.IsInRole("Admin"))
+            if (!this.User.IsInRole("Admin"))
             {
-                return Unauthorized();
+                if (userId != road.UserId)
+                {
+                    return Unauthorized();
+                }
+
             }
-            //if (this.User.Identity!=road.User)
-            //{
-            //    return Unauthorized();
-            //}
 
             var model = new EditRoadViewModel
             {
@@ -249,7 +250,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         public IActionResult Road(string id)
         {
             var model = this.roadsService.Details<DetailsRoadViewModel>(id);
-            
+
             if (model == null)
             {
                 return this.Redirect("/");
@@ -297,7 +298,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
                 return this.BadRequest();
             }
 
-            return this.RedirectToAction("Road", "Home", new {@id = id});
+            return this.RedirectToAction("Road", "Home", new { @id = id });
         }
 
 
@@ -310,22 +311,22 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
             var result = this.commentsService.AddReplyToComment(id, replyViewModel.Content, user);
 
-            return this.RedirectToAction("Road", "Home",new {@id=roadId});
+            return this.RedirectToAction("Road", "Home", new { @id = roadId });
         }
 
         [Authorize]
-        public IActionResult DeleteComment(string id,string roadId)
+        public IActionResult DeleteComment(string id, string roadId)
         {
-            var result= this.commentsService.DeleteCommentAndItsReplies(id);
+            var result = this.commentsService.DeleteCommentAndItsReplies(id);
 
-            if (result==false)
+            if (result == false)
             {
                 //TODO
                 return this.NotFound();
 
             }
 
-            return this.RedirectToAction("Road", "Home", new {@id = roadId});
+            return this.RedirectToAction("Road", "Home", new { @id = roadId });
         }
 
         [Authorize]
@@ -338,7 +339,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
                 return this.NotFound();
             }
 
-            return this.RedirectToAction("Road", "Home", new {@id = roadId});
+            return this.RedirectToAction("Road", "Home", new { @id = roadId });
         }
     }
 }

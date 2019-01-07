@@ -39,14 +39,15 @@ namespace RideOnBulgaria.Web.Areas.Identity.Pages.Account
         {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Username")]
+            [Display(Name = "Никнейм")]
             public string Username { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Запомни ме?")]
             public bool RememberMe { get; set; }
         }
 
