@@ -24,9 +24,7 @@ namespace RideOnBulgaria.Services
 
             Account account = new Account
             {
-                Cloud = "rideonbg",
-                ApiSecret = "AXj6a668SCJ9PchRZbFYGpmaMmo",
-                ApiKey = "695619639461885",
+                Cloud = "rideonbg", ApiSecret = "AXj6a668SCJ9PchRZbFYGpmaMmo", ApiKey = "695619639461885",
             };
 
             _cloudinary = new Cloudinary(account);
@@ -44,11 +42,7 @@ namespace RideOnBulgaria.Services
             {
                 using (var stream = file.OpenReadStream())
                 {
-                    var uploadParams = new ImageUploadParams()
-                    {
-                        File = new FileDescription(file.Name, stream)
-
-                    };
+                    var uploadParams = new ImageUploadParams() {File = new FileDescription(file.Name, stream)};
                     imageName = file.Name;
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
@@ -57,16 +51,9 @@ namespace RideOnBulgaria.Services
             var url = uploadResult.Uri.ToString();
             var publicId = uploadResult.PublicId;
 
-
-            var image = new Image
-            {
-                ImageUrl = url,
-                DateAdded = DateTime.UtcNow,
-                PublicId = publicId,
-            };
+            var image = new Image {ImageUrl = url, DateAdded = DateTime.UtcNow, PublicId = publicId,};
 
             return image;
-
         }
 
         public ProductImage AddImageToProduct(IFormFile photo)
@@ -81,11 +68,7 @@ namespace RideOnBulgaria.Services
             {
                 using (var stream = file.OpenReadStream())
                 {
-                    var uploadParams = new ImageUploadParams()
-                    {
-                        File = new FileDescription(file.Name, stream)
-
-                    };
+                    var uploadParams = new ImageUploadParams() {File = new FileDescription(file.Name, stream)};
                     imageName = file.Name;
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
@@ -94,16 +77,9 @@ namespace RideOnBulgaria.Services
             var url = uploadResult.Uri.ToString();
             var publicId = uploadResult.PublicId;
 
+            var image = new ProductImage() {ImageUrl = url, PublicId = publicId,};
 
-            var image = new ProductImage()
-            {
-                ImageUrl = url,
-                PublicId = publicId,
-            };
-
-           
             return image;
-
         }
 
         public Image FindImageById(string id)
@@ -113,8 +89,10 @@ namespace RideOnBulgaria.Services
             return image;
         }
 
-        public void RemoveImage(Image image)
+        public void RemoveImage(string imageId)
         {
+            var image = this.FindImageById(imageId);
+
             this.context.Images.Remove(image);
             this.context.SaveChanges();
         }
@@ -124,15 +102,6 @@ namespace RideOnBulgaria.Services
             var image = this.context.Images.FirstOrDefault(x => x.PublicId == publicId);
 
             this.context.Images.Remove(image);
-        }
-
-        public string ReturnProfilePicture(Image image)
-        {
-            string url = _cloudinary.Api.UrlImgUp.Transform(
-                    new Transformation().Width(150).Height(100).Crop("thumb").Gravity("face").Radius("max"))
-                .BuildUrl(image.PublicId);
-
-            return url;
         }
 
         public async Task<bool> SaveAll()
@@ -151,25 +120,10 @@ namespace RideOnBulgaria.Services
 
         public string ReturnProductImage(ProductImage image)
         {
-            string url = _cloudinary.Api.UrlImgUp.Transform(
-                    new Transformation().Width(300).Height(350).Crop("fill"))
+            string url = _cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(300).Height(350).Crop("fill"))
                 .BuildUrl(image.PublicId);
 
             return url;
         }
-
-        //public async Task<PhotoForReturnViewModel> GetPhoto(string id)
-        //{
-        //    var photo = await context.Images.FirstOrDefaultAsync(x => x.Id == id);
-
-        //    var photoForReturn = new PhotoForReturnViewModel
-        //    {
-        //        Id = photo.Id,
-        //        Url = photo.ImageUrl,
-        //        DateAdded = photo.DateAdded,
-        //        PublicId = photo.PublicId
-        //    };
-        //    return photoForReturn;
-        //}
     }
 }

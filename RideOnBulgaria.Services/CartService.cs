@@ -45,15 +45,11 @@ namespace RideOnBulgaria.Services
 
             cartProduct = new CartProduct
             {
-                Product = product,
-                Quantity = quantity == null ? 1 : quantity.Value,
-                CartId = user.CartId
+                Product = product, Quantity = quantity == null ? 1 : quantity.Value, CartId = user.CartId
             };
 
             this.context.CartProducts.Add(cartProduct);
             this.context.SaveChanges();
-
-
         }
 
         public IEnumerable<CartProduct> GetAllCartProducts(string username)
@@ -67,7 +63,8 @@ namespace RideOnBulgaria.Services
 
         private CartProduct GetShoppingCartProduct(string productId, string shoppingCartId)
         {
-            return this.context.CartProducts.FirstOrDefault(x => x.CartId == shoppingCartId && x.ProductId == productId);
+            return this.context.CartProducts.FirstOrDefault(x =>
+                x.CartId == shoppingCartId && x.ProductId == productId);
         }
 
         public void DeleteProductFromCart(string id, string username)
@@ -112,8 +109,7 @@ namespace RideOnBulgaria.Services
         {
             var user = this.usersService.GetUserByUsername(username);
 
-            if(user==null)return;
-
+            if (user == null) return;
 
             var cartProducts = this.context.CartProducts.Where(x => x.CartId == user.CartId);
 

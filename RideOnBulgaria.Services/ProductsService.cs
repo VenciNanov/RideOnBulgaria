@@ -21,16 +21,14 @@ namespace RideOnBulgaria.Services
             this.imageService = imageService;
         }
 
-        public Product CreateProduct(string name, string description, decimal price, IFormFile image, string additionalInfo)
+        public Product CreateProduct(string name, string description, decimal price, IFormFile image,
+            string additionalInfo)
         {
-            if (name == null || description == null || price <= 0  || image == null) return null;
-            
+            if (name == null || description == null || price <= 0 || image == null) return null;
+
             var product = new Product
             {
-                Name = name,
-                Description = description,
-                Price = price,
-               AdditionalInfo = additionalInfo,
+                Name = name, Description = description, Price = price, AdditionalInfo = additionalInfo,
             };
 
             this.context.Products.Add(product);
@@ -82,13 +80,14 @@ namespace RideOnBulgaria.Services
             return model;
         }
 
-        public Product EditProduct(string id, string name, string description, bool isHidden, string additionalInfo,decimal price)
+        public Product EditProduct(string id, string name, string description, bool isHidden, string additionalInfo,
+            decimal price)
         {
-            if (name == null || description == null || price <= 0 ) return null;
+            if (name == null || description == null || price <= 0) return null;
 
             var product = this.GetProductById(id);
 
-            if (product==null)
+            if (product == null)
             {
                 return null;
             }

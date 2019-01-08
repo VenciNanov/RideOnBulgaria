@@ -12,12 +12,10 @@ namespace RideOnBulgaria.Services
     {
         private readonly ApplicationDbContext context;
         private readonly IRoadsService roadsService;
-        private readonly IMapper mapper;
 
-        public CommentsService(IRoadsService roadsService, IMapper mapper, ApplicationDbContext context)
+        public CommentsService(IRoadsService roadsService, ApplicationDbContext context)
         {
             this.roadsService = roadsService;
-            this.mapper = mapper;
             this.context = context;
         }
 
@@ -61,8 +59,6 @@ namespace RideOnBulgaria.Services
 
             var comments = road.Comments.ToList();
 
-
-
             return comments;
         }
 
@@ -75,13 +71,7 @@ namespace RideOnBulgaria.Services
                 return false;
             }
 
-            var reply = new Reply
-            {
-                Comment = comment,
-                Content = content,
-                User = user,
-                PostedOn = DateTime.UtcNow
-            };
+            var reply = new Reply {Comment = comment, Content = content, User = user, PostedOn = DateTime.UtcNow};
 
             comment.Replies.Add(reply);
             this.context.Replies.Add(reply);
@@ -89,7 +79,6 @@ namespace RideOnBulgaria.Services
             this.context.SaveChanges();
 
             return true;
-
         }
 
         public Comment GetCommentById(string commentId)
@@ -98,6 +87,7 @@ namespace RideOnBulgaria.Services
 
             return comment;
         }
+
         public Dictionary<Comment, List<Reply>> GetCommentsWithRepliesByRoadId(string roadId)
         {
             var road = this.roadsService.GetRoadById(roadId);
@@ -111,6 +101,7 @@ namespace RideOnBulgaria.Services
 
             return result;
         }
+
         private List<Reply> GetRepliesByCommentId(string commentId)
         {
             var comment = this.GetCommentById(commentId);
@@ -144,8 +135,8 @@ namespace RideOnBulgaria.Services
                 }
 
                 this.context.UpdateRange(replies);
-
             }
+
             comment.IsDeleted = true;
 
             this.context.Update(comment);

@@ -5,13 +5,13 @@
 <form class="mx-auto half-width" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
-        <a  class="btn ride-bg-color" type="button" asp-area="Roads" asp-controller="Home" asp-action="EditRoadPictures" asp-route-id="@Model.Id">Добави/премахни Снимки</a>
+        <a  class="btn btn-dark" asp-area="Roads" asp-controller="Home" asp-action="EditRoadPictures" asp-route-id="@Model.Id">Добави/премахни Снимки</a>
     </div>
     <div class="form-row d-flex justify-content-between my-3">
         <div class="form-colmn col-md-12 d-flex flex-column align-items-center">
-            <label style="font-size: 200%" asp-for="TripName"></label>
-            <input asp-for="TripName" class="form-control" value="@Model.TripName" />
-            <span asp-validation-for="TripName" class="text-danger"></span>
+            <label style="font-size: 200%" asp-for="RoadName"></label>
+            <input asp-for="RoadName" class="form-control" value="@Model.RoadName" />
+            <span asp-validation-for="RoadName" class="text-danger"></span>
         </div>
     </div>
     <div class="form-row d-flex justify-content-between my-3">
@@ -26,9 +26,9 @@
             <span asp-validation-for="EndPoint" class="text-danger"></span>
         </div>
         <div class="form-colmn col-md-2 d-flex flex-column align-items-center">
-            <label asp-for="TripLength"></label>
-            <input asp-for="TripLength" class="form-control" />
-            <span asp-validation-for="TripLength" class="text-danger"></span>
+            <label asp-for="RoadLength"></label>
+            <input asp-for="RoadLength" class="form-control" />
+            <span asp-validation-for="RoadLength" class="text-danger"></span>
         </div>
     </div>
     <div class="form-row d-flex justify-content-between my-3">

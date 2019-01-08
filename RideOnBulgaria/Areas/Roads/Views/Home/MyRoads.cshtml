@@ -1,19 +1,19 @@
-﻿@model ICollection<MyRoadsViewModel>
+﻿@model ICollection<RoadViewModel>
 
-<h1>My Roads</h1>
+<h1>Мойте трасета</h1>
 
 <div class="card-container">
     <div class="row">
         @foreach (var road in @Model)
         {
             <div class="card">
-                <a asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id"><img src="@road.CoverPhotoUrl" alt="Avatar" style="width: 100%"></a>
+                <a asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id"><img src="@road.CoverPhoto" alt="Avatar" style="width: 100%"></a>
                 <div class="container">
                     <h4><b>@road.RoadName</b></h4>
                     <p>Posted On: @road.PostedOn</p>
                     <div class="btn-group bottom-right">
-                        <a type="button" class="btn btn-primary" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" asp-route-id="@road.Id">Edit</a>
-                        <a type="button" class="btn btn-primary delete" data-confirm="Are you sure you want to delete this road?" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoad" asp-route-id="@road.Id">Delete</a>
+                        <a type="button" class="btn btn-primary" asp-area="Roads" asp-controller="Home" asp-action="EditRoad" asp-route-id="@road.Id">Редактирай</a>
+                        <a type="button" class="btn btn-primary delete" data-confirm="Сигурни ли сте, че искате да изтриете това трасе?" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoad" asp-route-id="@road.Id">Изтрий</a>
                       
                     </div>
                 </div>

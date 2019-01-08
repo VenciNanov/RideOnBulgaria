@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +22,8 @@ namespace RideOnBulgaria.Services
         private readonly IVideoService videoService;
         private readonly IUsersService usersService;
 
-        public RoadsService(ApplicationDbContext context, IImageService imageService, IMapper mapper, IVideoService videoService, UserManager<User> userManager, IUsersService usersService)
+        public RoadsService(ApplicationDbContext context, IImageService imageService, IMapper mapper,
+            IVideoService videoService, UserManager<User> userManager, IUsersService usersService)
         {
             this.context = context;
             this.imageService = imageService;
@@ -35,15 +34,13 @@ namespace RideOnBulgaria.Services
         }
 
         public bool Edit(string roadId, string roadName, string startingPoint, string endPoint, double roadLength,
-            string description, string video, IFormFile imageFromForm,
-            int viewRating, int surfaceRating, int pleasureRating)
+            string description, string video, IFormFile imageFromForm, int viewRating, int surfaceRating,
+            int pleasureRating)
         {
-            if (roadName == null ||
-                startingPoint == null ||
-                endPoint == null ||
-                roadLength == 0.00 ||
-                description == null) return false;
-            
+            if (roadName == null || startingPoint == null || endPoint == null || roadLength == 0.00 ||
+                description == null)
+                return false;
+
             string embedYoutubeUrl = null;
 
             if (video != null)
@@ -78,13 +75,7 @@ namespace RideOnBulgaria.Services
 
                 image.Name = roadName + "main";
 
-                var coverPhoto = new CoverPhotoRoad
-                {
-                    Image = image,
-                    ImageId = image.Id,
-                    Road = road,
-                    RoadId = road.Id
-                };
+                var coverPhoto = new CoverPhotoRoad {Image = image, ImageId = image.Id, Road = road, RoadId = road.Id};
 
                 context.CoverPhotoRoads.Add(coverPhoto);
                 context.SaveChanges();
@@ -104,15 +95,13 @@ namespace RideOnBulgaria.Services
             return road;
         }
 
-        public bool Create(string roadName, string startingPoint, string endPoint, double roadLength, string description, string video, string userId, IFormFile imageFromForm, ICollection<IFormFile> photos, int viewRating, int surfaceRating, int pleasureRating)
+        public bool Create(string roadName, string startingPoint, string endPoint, double roadLength,
+            string description, string video, string userId, IFormFile imageFromForm, ICollection<IFormFile> photos,
+            int viewRating, int surfaceRating, int pleasureRating)
         {
-            if (roadName == null ||
-                startingPoint == null ||
-                endPoint == null ||
-                roadLength == 0.00 ||
-                description == null ||
-                userId == null ||
-                imageFromForm == null) return false;
+            if (roadName == null || startingPoint == null || endPoint == null || roadLength == 0.00 ||
+                description == null || userId == null || imageFromForm == null)
+                return false;
 
             if (this.context.Roads.Any(x => x.RoadName == roadName))
             {
@@ -156,13 +145,7 @@ namespace RideOnBulgaria.Services
 
             image.Name = roadName + "main";
 
-            var coverPhoto = new CoverPhotoRoad
-            {
-                Image = image,
-                ImageId = image.Id,
-                Road = road,
-                RoadId = road.Id
-            };
+            var coverPhoto = new CoverPhotoRoad {Image = image, ImageId = image.Id, Road = road, RoadId = road.Id};
 
             context.CoverPhotoRoads.Add(coverPhoto);
             context.SaveChanges();
@@ -195,21 +178,35 @@ namespace RideOnBulgaria.Services
 
         public ICollection<Road> GetLatestRoads()
         {
-            return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
-                .OrderByDescending(x => x.PostedOn).Take(RoadsShownOnPage).ToList();
+            return this.context.Roads.Include(x => x.CoverPhoto)
+                .Include(x => x.Photos)
+                .Include(x => x.User)
+                .OrderByDescending(x => x.PostedOn)
+                .Take(RoadsShownOnPage)
+                .ToList();
         }
 
         public ICollection<Road> GetLongestRoads()
         {
-            return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
-                .OrderByDescending(x => x.RoadLength).Take(RoadsShownOnPage).ToList();
+            return this.context.Roads.Include(x => x.CoverPhoto)
+                .Include(x => x.Photos)
+                .Include(x => x.User)
+                .OrderByDescending(x => x.RoadLength)
+                .Take(RoadsShownOnPage)
+                .ToList();
         }
 
         public ICollection<Road> GetTopRoads()
         {
-            return this.context.Roads.Include(x => x.CoverPhoto).Include(x => x.Photos).Include(x => x.User)
-                .OrderByDescending(x => x.RoadLength).Take(RoadsShownOnPage).OrderByDescending(x=>x.AverageRating).ToList();
+            return this.context.Roads.Include(x => x.CoverPhoto)
+                .Include(x => x.Photos)
+                .Include(x => x.User)
+                .OrderByDescending(x => x.RoadLength)
+                .Take(RoadsShownOnPage)
+                .OrderByDescending(x => x.AverageRating)
+                .ToList();
         }
+
         public Road GetRoadByImage(Image image)
         {
             var img = this.context.Images.First(x => x.Id == image.Id);
@@ -217,7 +214,7 @@ namespace RideOnBulgaria.Services
             return road;
         }
 
-        public bool AddImagesToRoad(ICollection<IFormFile> images,string roadId)
+        public bool AddImagesToRoad(ICollection<IFormFile> images, string roadId)
         {
             var road = this.GetRoadById(roadId);
 
@@ -236,12 +233,11 @@ namespace RideOnBulgaria.Services
             return true;
         }
 
-        public bool DeleteRoad(string id , ClaimsPrincipal userClaims)
+        public bool DeleteRoad(string id, ClaimsPrincipal userClaims)
         {
             var road = this.context.Roads.FirstOrDefault(x => x.Id == id);
             //var userId = this.userManager.GetUserId(userClaims);
             //var user = this.usersService.GetUserById(userId);
-
 
             if (road == null) return false;
 
@@ -253,8 +249,5 @@ namespace RideOnBulgaria.Services
 
             return true;
         }
-
-
-
     }
 }

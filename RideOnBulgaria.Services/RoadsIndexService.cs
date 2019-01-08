@@ -9,7 +9,7 @@ using RideOnBulgaria.Services.Contracts;
 
 namespace RideOnBulgaria.Services
 {
-    public class RoadsIndexService:IRoadsIndexService
+    public class RoadsIndexService : IRoadsIndexService
     {
         private const int ImagesCountForCarousel = 5;
 
@@ -47,7 +47,9 @@ namespace RideOnBulgaria.Services
 
         public ICollection<Road> GetTopRoads()
         {
-            var roads = this.context.Roads.OrderByDescending(x => x.AveragePosterRating).Take(ImagesCountForCarousel).ToList();
+            var roads = this.context.Roads.OrderByDescending(x => x.AverageRating)
+                .Take(ImagesCountForCarousel)
+                .ToList();
 
             return roads;
         }

@@ -12,11 +12,10 @@ namespace RideOnBulgaria.Services.Contracts
         Task<bool> SaveAll();
         void RemovePicture(string publicId);
         string ReturnImage(Image image);
-        void RemoveImage(Image image);
+        void RemoveImage(string imageId);
         Image FindImageById(string id);
         ProductImage AddImageToProduct(IFormFile photo);
         string ReturnProductImage(ProductImage image);
 
-        //Task<PhotoForReturnViewModel> GetPhoto(string id);
     }
 }

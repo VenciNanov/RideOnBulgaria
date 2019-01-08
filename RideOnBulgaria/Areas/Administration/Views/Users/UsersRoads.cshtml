@@ -9,7 +9,7 @@
                 <tr class="row">
                     <th scope="col" class="col-3 d-flex justify-content-center">Id</th>
                     <th scope="col" class="col-2 d-flex justify-content-center">Име</th>
-                    <th scope="col" class="col-1 d-flex justify-content-center">Начана точка</th>
+                    <th scope="col" class="col-1 d-flex justify-content-center">Начална точка</th>
                     <th scope="col" class="col-1 d-flex justify-content-center">Крайна точка</th>
                     <th scope="col" class="col-1 d-flex justify-content-center">Дължина</th>
                     <th scope="col" class="col-1 d-flex justify-content-center">Рейтинг</th>
@@ -26,7 +26,7 @@
                         <td class="col-1 d-flex justify-content-center">@road.StartingPoint</td>
                         <td class="col-1 d-flex justify-content-center">@road.EndPoint</td>
                         <td class="col-1 d-flex justify-content-center">@road.RoadLength</td>
-                        <td class="col-1 d-flex justify-content-center">@road.Rating</td>
+                        <td class="col-1 d-flex justify-content-center">@road.AverageRating</td>
                         <td class="col-2 d-flex justify-content-center">
                             <div class="btn-group" role="group" aria-label="Admin-func">
                                 <a class="btn btn-outline-danger" asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@road.Id">Детайли</a>

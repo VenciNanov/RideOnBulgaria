@@ -12,6 +12,7 @@ namespace RideOnBulgaria.Services
 {
     public class OrdersService : IOrdersService
     {
+        private const int EstimatedDeliveryDateAddDays = 5;
         private readonly ICartService cartService;
         private readonly IUsersService usersService;
         private readonly ApplicationDbContext context;
@@ -33,29 +34,26 @@ namespace RideOnBulgaria.Services
                 return processingOrder;
             }
 
-            var order = new Order
-            {
-                OrderStatus = OrderStatus.Processing,
-                User = user
-            };
+            var order = new Order {OrderStatus = OrderStatus.Processing, User = user};
 
             this.context.Orders.Add(order);
             this.context.SaveChanges();
 
             return order;
-
         }
+
         public Order GetProcessingOrder(string username)
         {
             var user = this.usersService.GetUserByUsername(username);
 
-            var order = this.context.Orders.Include(x => x.OrderProducts).FirstOrDefault(x =>
-                  x.User.UserName == username && x.OrderStatus == OrderStatus.Processing);
+            var order = this.context.Orders.Include(x => x.OrderProducts)
+                .FirstOrDefault(x => x.User.UserName == username && x.OrderStatus == OrderStatus.Processing);
 
             return order;
         }
 
-        public void MakeOrder(Order order, string fullname, string phoneNumber, string address, string city, string additionalInformation)
+        public void MakeOrder(Order order, string fullname, string phoneNumber, string address, string city,
+            string additionalInformation)
         {
             order.Address = address;
             order.City = city;
@@ -81,9 +79,7 @@ namespace RideOnBulgaria.Services
             {
                 var orderProduct = new OrderProduct
                 {
-                    Order = order,
-                    Product = product.Product,
-                    Quantity = product.Quantity
+                    Order = order, Product = product.Product, Quantity = product.Quantity
                 };
 
                 orderProducts.Add(orderProduct);
@@ -115,12 +111,12 @@ namespace RideOnBulgaria.Services
             {
                 return;
             }
+
             var newOrderStatus = OrderStatus.Sent;
             order.OrderStatus = newOrderStatus;
-            order.EstimatedDeliveryDate = DateTime.Today.AddDays(5);
+            order.EstimatedDeliveryDate = DateTime.Today.AddDays(EstimatedDeliveryDateAddDays);
             this.context.Update(order);
             this.context.SaveChanges();
-
         }
 
         public void DeliverOrder(string id)
@@ -176,7 +172,5 @@ namespace RideOnBulgaria.Services
         {
             return this.context.Orders.Where(x => x.OrderStatus == OrderStatus.Delivered).ToList();
         }
-
-
     }
 }

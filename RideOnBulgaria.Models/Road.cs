@@ -78,6 +78,10 @@ namespace RideOnBulgaria.Models
             get
             {
                 var sum = this.Comments.Sum(x => x.Rating);
+                if (sum==0||Comments.Count==0)
+                {
+                    return _averageRating;
+                }
                 var rating = sum / Comments.Count;
 
                 return _averageRating = rating;

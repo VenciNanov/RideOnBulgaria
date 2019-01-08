@@ -12,11 +12,8 @@
 
         public int Roads { get; set; }
 
-        public int Orders { get; set; }
-
         public string Role { get; set; }
 
-        public string Badge { get; set; }
 
         
     }

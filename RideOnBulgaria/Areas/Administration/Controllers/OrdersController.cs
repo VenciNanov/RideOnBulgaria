@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RideOnBulgaria.Models;
 using RideOnBulgaria.Services.Contracts;
-using RideOnBulgaria.Web.Areas.Administration.Models;
 using RideOnBulgaria.Web.Areas.Administration.Models.Orders;
 using RideOnBulgaria.Web.Areas.Administration.Models.Users;
+using RideOnBulgaria.Web.Common;
 
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
-    [Authorize(Roles = "Admin,Owner")]
+    [Authorize(Roles = Constants.AdminAndOwnerRoleAuth)]
     public class OrdersController : Controller
     {
-
         private readonly IOrdersService ordersService;
         private readonly IMapper mapper;
 
@@ -38,7 +32,7 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
             }
 
             var model = mapper.Map<List<OrderViewModel>>(orders);
-        return this.View(model);
+            return this.View(model);
         }
 
         public IActionResult Processed()
@@ -82,13 +76,8 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 
         public IActionResult Details(string id)
         {
-           var orderProducts = this.ordersService.GetOrderDetails(id);
-            var model = new List<OrderDetailsViewModel>();
-
-            foreach (var product in orderProducts)
-            {
-                model.Add(mapper.Map<OrderDetailsViewModel>(product));
-            }
+            var orderProducts = this.ordersService.GetOrderDetails(id);
+            var model = mapper.Map<List<OrderDetailsViewModel>>(orderProducts);
 
             return this.View(model);
         }
@@ -104,7 +93,7 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
         {
             this.ordersService.SendOrder(id);
 
-            return this.RedirectToAction("Index","AdministrationIndex");
+            return this.RedirectToAction("Index", "AdministrationIndex");
         }
     }
 }

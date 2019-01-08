@@ -13,7 +13,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
         [Required(ErrorMessage = "Добави име първо")]
         [Display(Name = "Име на трасето")]
         [DataType(DataType.Text)]
-        public string TripName { get; set; }
+        public string RoadName { get; set; }
 
         [Required(ErrorMessage = "Това поле е задължително")]
         [Display(Name = "Начална точка")]
@@ -27,16 +27,14 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
 
         [Display(Name = "Дължина")]
         [Range(0, double.MaxValue, ErrorMessage = "Please enter valid road length.")]
-        public double TripLength { get; set; }
+        public double RoadLength { get; set; }
 
         [Required(ErrorMessage = "Това поле е задължително")]
         [Display(Name = "Информация за трасето")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        [Url]
-        [Display(Name = "Видео")]
-        public string Video { get; set; }
+        [Url] [Display(Name = "Видео")] public string Video { get; set; }
 
         [Display(Name = "Основна снимка(Провлечи и пусни снимката тук)")]
         public IFormFile CoverPhoto { get; set; }
@@ -49,14 +47,10 @@ namespace RideOnBulgaria.Web.Areas.Roads.Models
 
         public DateTime PostedOn { get; set; }
 
+        [Display(Name = "")] public int ViewRating { get; set; }
 
-        [Display(Name = "")]
-        public int View { get; set; }
+        [Display(Name = "")] public int SurfaceRating { get; set; }
 
-        [Display(Name = "")]
-        public int Surface { get; set; }
-
-        [Display(Name = "")]
-        public int Pleasure { get; set; }
+        [Display(Name = "")] public int PleasureRating { get; set; }
     }
 }

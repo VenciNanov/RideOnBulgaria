@@ -6,7 +6,7 @@
 
         public string RoadName { get; set; }
 
-        public string Rating { get; set; }
+        public string AverageRating { get; set; }
 
         public string PostedOn { get; set; }
 

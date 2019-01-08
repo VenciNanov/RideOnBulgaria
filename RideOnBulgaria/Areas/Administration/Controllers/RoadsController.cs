@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Administration.Models.Roads;
+using RideOnBulgaria.Web.Common;
 
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
-    [Authorize(Roles = "Admin,Owner")]
+    [Authorize(Roles = Constants.AdminAndOwnerRoleAuth)]
     public class RoadsController : Controller
     {
         private readonly IMapper mapper;
@@ -27,12 +28,7 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
         {
             var roads = this.roadsIndexService.GetAllRoads();
 
-            var model = new List<RoadsViewModel>();
-
-            foreach (var road in roads)
-            {
-                model.Add(mapper.Map<RoadsViewModel>(road));
-            }
+            var model = mapper.Map<List<RoadsViewModel>>(roads);
 
             return View(model);
         }

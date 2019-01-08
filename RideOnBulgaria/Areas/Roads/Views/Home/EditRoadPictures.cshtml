@@ -7,7 +7,7 @@
         <div class="card">
             <img class="card-img" src="@img.ImageUrl" alt="Card image cap">
             <div class="card-footer">
-                <a type="button" class="btn btn-danger" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoadPictures" asp-route-id="@img.Id" asp->Премахни</a>
+                <a type="button" class="btn btn-danger" asp-area="Roads" asp-controller="Home" asp-action="DeleteRoadPictures" asp-route-id="@img.Id" asp-route-roadId="@Model.Id" asp->Премахни</a>
             </div>
         </div>
     }

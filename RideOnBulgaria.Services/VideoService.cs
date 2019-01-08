@@ -8,11 +8,10 @@ namespace RideOnBulgaria.Services
 {
     public class VideoService : IVideoService
     {
-        public const string RegexPattern =
+        private const string RegexPattern =
             "(?:https?:\\/\\/)?(?:www\\.)?(?:(?:(?:youtube.com\\/watch\\?[^?]*v=|youtu.be\\/)([\\w\\-]+))(?:[^\\s?]+)?)";
 
-        public const string Target = "https://www.youtube.com/embed/$1";
-
+        private const string Target = "https://www.youtube.com/embed/$1";
 
         public string ReturnEmbedYoutubeLink(string url)
         {
@@ -21,6 +20,5 @@ namespace RideOnBulgaria.Services
 
             return result;
         }
-
     }
 }

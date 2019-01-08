@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RideOnBulgaria.Services;
 using RideOnBulgaria.Services.Contracts;
-using RideOnBulgaria.Web.Areas.Administration.Models;
 using RideOnBulgaria.Web.Areas.Administration.Models.Products;
+using RideOnBulgaria.Web.Common;
 
 namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
-    [Authorize(Roles = "Admin,Owner")]
+    [Authorize(Roles = Constants.AdminAndOwnerRoleAuth)]
     public class ProductsController : Controller
     {
+        private const string ProductsDetailsAction = "Details";
+        private const string ProductsControllerName = "Products";
+        private const string ShopAreaName = "Shop";
         private readonly IProductsSerivce productsService;
         private readonly IMapper mapper;
 
@@ -25,24 +24,21 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
             this.mapper = mapper;
         }
 
-
-        [Authorize(Roles = "Admin")]
         public IActionResult CreateProduct()
         {
             return this.View();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CreateProduct(CreateProductViewModel model)
         {
             if (!ModelState.IsValid) return this.View(model);
 
-            var product =
-                this.productsService.CreateProduct(model.Name, model.Description, model.Price, model.Image,
-                    model.AdditionalInfo);
+            var product = this.productsService.CreateProduct(model.Name, model.Description, model.Price, model.Image,
+                model.AdditionalInfo);
 
-            return this.RedirectToAction("Details","Products",new {area="Shop",@id=product.Id});
+            return this.RedirectToAction(ProductsDetailsAction, ProductsControllerName,
+                new {area = ShopAreaName, @id = product.Id});
         }
 
         public IActionResult All()
@@ -64,7 +60,8 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
         public IActionResult EditProduct(ProductViewModel model)
         {
             if (!ModelState.IsValid)
-            {//TODO
+            {
+                //TODO
                 return NotFound();
             }
 
@@ -77,10 +74,8 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
                 return ValidationProblem();
             }
 
-            return this.RedirectToAction("Details", "Products", new{area="Shop", @id = model.Id });
+            return this.RedirectToAction(ProductsDetailsAction, ProductsControllerName,
+                new {area = ShopAreaName, @id = model.Id});
         }
-
-
-
     }
 }

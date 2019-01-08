@@ -7,13 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Shop.Models;
+using RideOnBulgaria.Web.Common;
 using RideOnBulgaria.Web.Helpers;
 
 namespace RideOnBulgaria.Web.Areas.Shop.Controllers
 {
-    [Area("Shop")]
+    [Area(Constants.ShopArea)]
     public class CartController : Controller
     {
+        private const string CartJson = "cart";
         private readonly ICartService cartService;
         private readonly IProductsSerivce productsService;
         private readonly IMapper mapper;
@@ -31,20 +33,15 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
             {
                 var cartProducts = this.cartService.GetAllCartProducts(this.User.Identity.Name);
 
-                var viewModel = cartProducts.Select(x => new CartProductsViewModel
-                {
-                    Id = x.ProductId,
-                    ImageUrl = x.Product.Image.ImageUrl,
-                    Quantity = x.Quantity,
-                    TotalPrice = x.Quantity * x.Product.Price,
-                    Name = x.Product.Name,
-                    Price=x.Product.Price
-                }).ToList();
+
+                var viewModel = mapper.Map<List<CartProductsViewModel>>(cartProducts);
+
+
                 return this.View(viewModel);
             }
            
 
-            var cart = SessionHelper.GetObjectFromJson<List<CartProductsViewModel>>(HttpContext.Session, "cart");
+            var cart = SessionHelper.GetObjectFromJson<List<CartProductsViewModel>>(HttpContext.Session, CartJson);
 
             if (cart==null)
             {
@@ -62,7 +59,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
                 return this.RedirectToAction(nameof(MyCart));
             }
 
-            List<CartProductsViewModel> cart = SessionHelper.GetObjectFromJson<List<CartProductsViewModel>>(HttpContext.Session, "cart");
+            List<CartProductsViewModel> cart = SessionHelper.GetObjectFromJson<List<CartProductsViewModel>>(HttpContext.Session, CartJson);
 
             if (cart == null)
             {
@@ -79,7 +76,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
 
                 cart.Add(shoppingCart);
 
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, CartJson, cart);
             }
 
             return this.RedirectToAction(nameof(MyCart));
@@ -93,7 +90,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
                 return this.RedirectToAction(nameof(MyCart));
             }
 
-            List<CartProductsViewModel> cart = SessionHelper.GetObjectFromJson<List<CartProductsViewModel>>(HttpContext.Session, "cart");
+            List<CartProductsViewModel> cart = SessionHelper.GetObjectFromJson<List<CartProductsViewModel>>(HttpContext.Session, CartJson);
             if (cart == null)
             {
                 cart = new List<CartProductsViewModel>();
@@ -105,7 +102,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
                 product.Quantity = quantity;
                 product.TotalPrice = quantity * product.Price;
 
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, CartJson, cart);
             }
 
             return this.RedirectToAction(nameof(MyCart));
@@ -120,7 +117,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
                 return this.RedirectToAction(nameof(MyCart));
             }
 
-            List<CartProductsViewModel> cart = SessionHelper.GetObjectFromJson<List<CartProductsViewModel>>(HttpContext.Session, "cart");
+            List<CartProductsViewModel> cart = SessionHelper.GetObjectFromJson<List<CartProductsViewModel>>(HttpContext.Session, CartJson);
             if (cart == null)
             {
                 cart = new List<CartProductsViewModel>();
@@ -131,7 +128,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
                 var product = cart.First(x => x.Id == id);
                 cart.Remove(product);
 
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, CartJson, cart);
             }
 
             return this.RedirectToAction(nameof(MyCart));

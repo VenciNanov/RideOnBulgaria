@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using RideOnBulgaria.Models;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Roads.Models;
 using RideOnBulgaria.Web.Areas.Roads.Models.Comments;
 using RideOnBulgaria.Web.Areas.Roads.Models.Comments.Replies;
 using RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex;
+using RideOnBulgaria.Web.Common;
 using RoadViewModel = RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex.RoadViewModel;
 
 namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 {
-    [Area("Roads")]
+    [Area(Constants.RoadsArea)]
     public class HomeController : Controller
     {
         private readonly IRoadsService roadsService;
@@ -38,70 +40,12 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
         public IActionResult Index()
         {
-            var model = new RoadsIndexViewModel();
-
-            var allRoads = this.roadsIndexService.GetAllRoads().ToList();
-            var allRoadsModel = model.AllRoads = new List<RoadViewModel>();
-
-            foreach (var road in allRoads)
-            {
-                model.AllRoads.Add(new RoadViewModel
-                {
-                    Id = road.Id,
-                    CoverPhoto = imageService.ReturnImage(road.CoverPhoto.Image),
-                    PostedOn = road.PostedOn,
-                    PostedBy = road.User.UserName,
-                    RoadName = road.RoadName
-                });
-            }
-
-            var latestRoads = this.roadsIndexService.GetLatestRoads();
-            var latestRoadsModel = model.LatestRoads = new List<RoadViewModel>();
-
-            foreach (var road in latestRoads)
-            {
-                model.LatestRoads.Add(new RoadViewModel
-                {
-                    Id = road.Id,
-                    CoverPhoto = imageService.ReturnImage(road.CoverPhoto.Image),
-                    PostedOn = road.PostedOn,
-                    PostedBy = road.User.UserName,
-                    RoadName = road.RoadName
-                });
-            }
-
-            var longestRoads = this.roadsIndexService.GetLongestRoads();
-            var longestRoadsModel = model.LongestRoads = new List<RoadViewModel>();
-
-            foreach (var road in longestRoads)
-            {
-                model.LongestRoads.Add(new RoadViewModel
-                {
-                    Id = road.Id,
-                    CoverPhoto = imageService.ReturnImage(road.CoverPhoto.Image),
-                    PostedOn = road.PostedOn,
-                    PostedBy = road.User.UserName,
-                    RoadName = road.RoadName
-                });
-            }
-
-            var topRoads = this.roadsIndexService.GetTopRoads();
-            var topRoadsModel = model.TopRoads = new List<RoadViewModel>();
-
-            foreach (var road in topRoads)
-            {
-                model.TopRoads.Add(new RoadViewModel
-                {
-                    Id = road.Id,
-                    CoverPhoto = imageService.ReturnImage(road.CoverPhoto.Image),
-                    PostedOn = road.PostedOn,
-                    PostedBy = road.User.UserName,
-                    RoadName = road.RoadName
-                });
-            }
+            RoadsIndexViewModel model = MapCategories();
 
             return View(model);
         }
+
+
 
         [Authorize]
         public IActionResult Create()
@@ -143,7 +87,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 
-            if (!this.User.IsInRole("Admin"))
+            if (!this.User.IsInRole(Constants.AdminRole))
             {
                 if (userId != road.UserId)
                 {
@@ -152,21 +96,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
             }
 
-            var model = new EditRoadViewModel
-            {
-                TripName = road.RoadName,
-                Description = road.Description,
-                StartingPoint = road.StartingPoint,
-                EndPoint = road.EndPoint,
-                Id = id,
-                Surface = road.SurfaceRating,
-                View = road.ViewRating,
-                Pleasure = road.PleasureRating,
-                Images = road.Photos,
-                TripLength = road.RoadLength,
-                Video = road.Video,
-            };
-
+            var model = mapper.Map<EditRoadViewModel>(road);
 
             return this.View(model);
         }
@@ -180,9 +110,9 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             if (road == null) return NotFound();
 
 
-            var result = this.roadsService.Edit(model.Id, model.TripName, model.StartingPoint, model.EndPoint,
-                model.TripLength, model.Description, model.Video, model.CoverPhoto, model.View, model.Surface,
-                model.Pleasure);
+            var result = this.roadsService.Edit(model.Id, model.RoadName, model.StartingPoint, model.EndPoint,
+                model.RoadLength, model.Description, model.Video, model.CoverPhoto, model.ViewRating, model.SurfaceRating,
+                model.PleasureRating);
 
             return this.RedirectToAction("MyRoads", "Home");
         }
@@ -192,11 +122,13 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         {
             var road = this.roadsService.GetRoadById(id);
 
-            var model = new EditRoadViewModel
-            {
-                Id = road.Id,
-                Images = road.Photos
-            };
+            var model = mapper.Map<EditRoadViewModel>(road);
+
+            //var model = new EditRoadViewModel
+            //{
+            //    Id = road.Id,
+            //    Images = road.Photos
+            //};
 
 
             return this.View(model);
@@ -221,15 +153,11 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         }
 
         [Authorize]
-        public IActionResult DeleteRoadPictures(string id)
+        public IActionResult DeleteRoadPictures(string id, string roadId)
         {
-            var image = this.imageService.FindImageById(id);
+            this.imageService.RemoveImage(id);
 
-            var road = this.roadsService.GetRoadByImage(image);
-
-            this.imageService.RemoveImage(image);
-
-            return this.Redirect($"/Roads/Home/EditRoadPictures/{road.Id}");
+            return this.Redirect($"/Roads/Home/EditRoadPictures/{roadId}");
         }
 
         [Authorize]
@@ -238,6 +166,11 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             ClaimsPrincipal user = this.User;
 
             bool result = roadsService.DeleteRoad(id, user);
+
+            if (result == false)
+            {
+                return this.RedirectToAction("Error");
+            }
 
             return this.RedirectToAction("DeltedRoadSuccesfully", "Home");
         }
@@ -266,19 +199,15 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
             var currentUserRoads = this.roadsIndexService.GetCurrentUserRoadsById(currentUser);
 
-            var model = new List<MyRoadsViewModel>();
+            var model = new List<RoadViewModel>();
 
             foreach (var road in currentUserRoads)
             {
-                model.Add(new MyRoadsViewModel
-                {
-                    Id = road.Id,
-                    RoadName = road.RoadName,
-                    CoverPhotoUrl = this.imageService.ReturnImage(road.CoverPhoto.Image),
-                    PostedOn = road.PostedOn,
-                });
+                var coverPhoto = this.imageService.ReturnImage(road.CoverPhoto.Image);
+                var token = mapper.Map<RoadViewModel>(road);
+                token.CoverPhoto = coverPhoto;
+                model.Add(token);
             }
-
             return this.View(model);
         }
 
@@ -340,6 +269,34 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
             }
 
             return this.RedirectToAction("Road", "Home", new { @id = roadId });
+        }
+
+        private RoadsIndexViewModel MapCategories()
+        {
+            var model = new RoadsIndexViewModel
+            {
+                AllRoads = MapAllRoads(this.roadsIndexService.GetAllRoads().ToList()),
+                LatestRoads = MapAllRoads(this.roadsIndexService.GetLatestRoads().ToList()),
+                LongestRoads = MapAllRoads(this.roadsIndexService.GetLongestRoads().ToList()),
+                TopRoads = MapAllRoads(this.roadsIndexService.GetTopRoads().ToList()),
+            };
+
+            return model;
+        }
+
+        private List<RoadViewModel> MapAllRoads(List<Road> roads)
+        {
+            var roadsModel = new List<RoadViewModel>();
+
+            foreach (var road in roads)
+            {
+                var coverPhoto = this.imageService.ReturnImage(road.CoverPhoto.Image);
+                var token = mapper.Map<RoadViewModel>(road);
+                token.CoverPhoto = coverPhoto;
+                roadsModel.Add(token);
+            }
+
+            return roadsModel;
         }
     }
 }

@@ -37,6 +37,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
 
             var user = this.usersService.GetUserByUsername(this.User.Identity.Name);
             var fullName = $"{user.FirstName} {user.LastName}";
+
             var createOrderViewModel = new CreateOrderViewModel
             {
                 FullName = fullName,
@@ -58,6 +59,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
             if (!ModelState.IsValid) return this.View(model);
 
             var order = this.ordersService.GetProcessingOrder(this.User.Identity.Name);
+
             if (order==null)
             {
                 return this.RedirectToAction("MyCart", "Cart");
@@ -65,6 +67,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
 
             this.ordersService.MakeOrder(order, model.FullName, model.PhoneNumber, model.Address, model.City,
                 model.AdditionalInformation);
+
             return this.RedirectToAction(nameof(ConfirmOrder));
         }
 
@@ -101,8 +104,6 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
 
             foreach (var order in orders)
             {
-
-
                 model.Add(new CurrentUserOrders
                 {
                     Id = order.Id,
