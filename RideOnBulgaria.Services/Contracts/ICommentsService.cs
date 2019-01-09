@@ -11,7 +11,7 @@ namespace RideOnBulgaria.Services.Contracts
         Comment GetCommentById(string commentId);
 
         bool AddReplyToComment(string commentId, string content, User user);
-        Dictionary<Comment, List<Reply>> GetCommentsWithRepliesByRoadId(string roadId);
+        //Dictionary<Comment, List<Reply>> GetCommentsWithRepliesByRoadId(string roadId);
         bool DeleteCommentAndItsReplies(string commentId);
         bool DeleteReply(string replyId);
     }

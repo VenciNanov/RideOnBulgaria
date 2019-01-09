@@ -220,12 +220,9 @@ namespace RideOnBulgaria.Services
 
             if (road == null) return false;
 
-            var imageList = new List<Image>();
-
             foreach (var image in images)
             {
-                //imageList.Add(this.imageService.AddPhoto(image));
-                road.Photos.Add(this.imageService.AddPhoto(image));
+               road.Photos.Add(this.imageService.AddPhoto(image));
             }
 
             this.context.SaveChanges();
@@ -243,7 +240,12 @@ namespace RideOnBulgaria.Services
 
             var coverPhotoRoad = this.context.CoverPhotoRoads.FirstOrDefault(x => x.RoadId == road.Id);
 
-            this.context.CoverPhotoRoads.Remove(coverPhotoRoad);
+            if (coverPhotoRoad!=null)
+            {
+                this.context.CoverPhotoRoads.Remove(coverPhotoRoad);
+            }
+           
+            
             this.context.Roads.Remove(road);
             this.context.SaveChanges();
 

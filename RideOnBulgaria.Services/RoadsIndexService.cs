@@ -14,14 +14,10 @@ namespace RideOnBulgaria.Services
         private const int ImagesCountForCarousel = 5;
 
         private readonly ApplicationDbContext context;
-        private readonly IImageService imageService;
-        private readonly IMapper mapper;
 
-        public RoadsIndexService(ApplicationDbContext context, IImageService imageService, IMapper mapper)
+        public RoadsIndexService(ApplicationDbContext context)
         {
             this.context = context;
-            this.imageService = imageService;
-            this.mapper = mapper;
         }
 
         public ICollection<Road> GetAllRoads()

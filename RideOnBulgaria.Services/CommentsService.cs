@@ -88,19 +88,19 @@ namespace RideOnBulgaria.Services
             return comment;
         }
 
-        public Dictionary<Comment, List<Reply>> GetCommentsWithRepliesByRoadId(string roadId)
-        {
-            var road = this.roadsService.GetRoadById(roadId);
-            var result = new Dictionary<Comment, List<Reply>>();
-            var comments = GetCommentsByRoadId(roadId);
+        //public Dictionary<Comment, List<Reply>> GetCommentsWithRepliesByRoadId(string roadId)
+        //{
+        //    var road = this.roadsService.GetRoadById(roadId);
+        //    var result = new Dictionary<Comment, List<Reply>>();
+        //    var comments = GetCommentsByRoadId(roadId);
 
-            foreach (var comment in comments)
-            {
-                result[comment] = GetRepliesByCommentId(comment.Id);
-            }
+        //    foreach (var comment in comments)
+        //    {
+        //        result[comment] = GetRepliesByCommentId(comment.Id);
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         private List<Reply> GetRepliesByCommentId(string commentId)
         {

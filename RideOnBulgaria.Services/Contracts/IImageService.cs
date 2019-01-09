@@ -9,8 +9,7 @@ namespace RideOnBulgaria.Services.Contracts
     {
 
         Image AddPhoto(IFormFile formFile);
-        Task<bool> SaveAll();
-        void RemovePicture(string publicId);
+        //Task<bool> SaveAll();
         string ReturnImage(Image image);
         void RemoveImage(string imageId);
         Image FindImageById(string id);

@@ -28,7 +28,10 @@ namespace RideOnBulgaria.Services
 
             var product = new Product
             {
-                Name = name, Description = description, Price = price, AdditionalInfo = additionalInfo,
+                Name = name,
+                Description = description,
+                Price = price,
+                AdditionalInfo = additionalInfo,
             };
 
             this.context.Products.Add(product);

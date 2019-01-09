@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CloudinaryDotNet;
@@ -24,7 +25,9 @@ namespace RideOnBulgaria.Services
 
             Account account = new Account
             {
-                Cloud = "rideonbg", ApiSecret = "AXj6a668SCJ9PchRZbFYGpmaMmo", ApiKey = "695619639461885",
+                Cloud = "rideonbg",
+                ApiSecret = "AXj6a668SCJ9PchRZbFYGpmaMmo",
+                ApiKey = "695619639461885",
             };
 
             _cloudinary = new Cloudinary(account);
@@ -36,13 +39,16 @@ namespace RideOnBulgaria.Services
 
             var uploadResult = new ImageUploadResult();
 
-            string imageName;
+            string imageName = "";
+            
+            var uniqueFileName = Convert.ToString(Guid.NewGuid());
+            var fileName = uniqueFileName + Path.GetExtension(photo.Name);
 
             if (file.Length > 0)
             {
                 using (var stream = file.OpenReadStream())
                 {
-                    var uploadParams = new ImageUploadParams() {File = new FileDescription(file.Name, stream)};
+                    var uploadParams = new ImageUploadParams() { File = new FileDescription(uniqueFileName, stream) };
                     imageName = file.Name;
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
@@ -51,7 +57,7 @@ namespace RideOnBulgaria.Services
             var url = uploadResult.Uri.ToString();
             var publicId = uploadResult.PublicId;
 
-            var image = new Image {ImageUrl = url, DateAdded = DateTime.UtcNow, PublicId = publicId,};
+            var image = new Image { ImageUrl = url, DateAdded = DateTime.UtcNow, PublicId = publicId, };
 
             return image;
         }
@@ -68,7 +74,7 @@ namespace RideOnBulgaria.Services
             {
                 using (var stream = file.OpenReadStream())
                 {
-                    var uploadParams = new ImageUploadParams() {File = new FileDescription(file.Name, stream)};
+                    var uploadParams = new ImageUploadParams() { File = new FileDescription(file.Name, stream) };
                     imageName = file.Name;
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
@@ -77,7 +83,7 @@ namespace RideOnBulgaria.Services
             var url = uploadResult.Uri.ToString();
             var publicId = uploadResult.PublicId;
 
-            var image = new ProductImage() {ImageUrl = url, PublicId = publicId,};
+            var image = new ProductImage() { ImageUrl = url, PublicId = publicId, };
 
             return image;
         }
@@ -97,18 +103,7 @@ namespace RideOnBulgaria.Services
             this.context.SaveChanges();
         }
 
-        public void RemovePicture(string publicId)
-        {
-            var image = this.context.Images.FirstOrDefault(x => x.PublicId == publicId);
-
-            this.context.Images.Remove(image);
-        }
-
-        public async Task<bool> SaveAll()
-        {
-            return await context.SaveChangesAsync() > 0;
-        }
-
+       
         public string ReturnImage(Image image)
         {
             string url = _cloudinary.Api.UrlImgUp.Transform(

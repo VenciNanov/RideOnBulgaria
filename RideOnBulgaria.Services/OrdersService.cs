@@ -95,7 +95,7 @@ namespace RideOnBulgaria.Services
             this.context.SaveChanges();
         }
 
-        private Order GetOrderById(string id)
+        public Order GetOrderById(string id)
         {
             var order = this.context.Orders.FirstOrDefault(x => x.Id == id);
 
@@ -145,7 +145,7 @@ namespace RideOnBulgaria.Services
         {
             var orderProduct = this.context.OrderProducts.Where(x => x.OrderId == id).ToList();
 
-            if (orderProduct == null)
+            if (orderProduct.Count == 0)
             {
                 return null;
             }

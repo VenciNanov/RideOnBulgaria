@@ -19,5 +19,6 @@ namespace RideOnBulgaria.Services.Contracts
         List<Order> GetProcessedOrders();
         List<Order> GetSentOrders();
         List<Order> GetDeliveredOrders();
+        Order GetOrderById(string id);
     }
 }
