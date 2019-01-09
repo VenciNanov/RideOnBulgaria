@@ -17,9 +17,7 @@
                     <div class="dropdown-menu mt-2" aria-labelledby="dropDownMenuLink">
                         <a class="dropdown-item" asp-area="Roads" asp-controller="Home" asp-action="Create">Създай трасе</a>
 
-                        <a class="dropdown-item" asp-area="Roads" asp-controller="Home" asp-action="CreateRoadtrip">Създай пътепис</a>
-
-                        @if (User.IsInRole("Admin"))
+                        @if (User.IsInRole("Admin")||User.IsInRole("Owner"))
                         {
                             <a class="dropdown-item" asp-area="Administration" asp-controller="Products" asp-action="CreateProduct">Добави нов продукт</a>
                         }

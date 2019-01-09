@@ -4,12 +4,14 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RideOnBulgaria.Services.Contracts;
 using RideOnBulgaria.Web.Areas.Shop.Models.Order;
 
 namespace RideOnBulgaria.Web.Areas.Shop.Controllers
 {
+    [Authorize]
     [Area("Shop")]
     public class OrdersController : Controller
     {
@@ -26,11 +28,12 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
             this.mapper = mapper;
         }
 
+
         public IActionResult Create()
         {
             if (!this.cartService.AnyProducts(this.User.Identity.Name))
             {
-                return this.Redirect("Error");
+                return this.RedirectToAction("All", "Products", new { area = "Shop" });
             }
 
             var order = this.ordersService.CreateOrder(this.User.Identity.Name);
@@ -53,14 +56,15 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
         {
             if (!this.cartService.AnyProducts(this.User.Identity.Name))
             {
-                return this.Redirect("Error");
+                return this.RedirectToAction("All", "Products", new { area = "Shop" });
+
             }
 
             if (!ModelState.IsValid) return this.View(model);
 
             var order = this.ordersService.GetProcessingOrder(this.User.Identity.Name);
 
-            if (order==null)
+            if (order == null)
             {
                 return this.RedirectToAction("MyCart", "Cart");
             }
@@ -93,7 +97,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
 
             this.ordersService.CompleteOrder(this.User.Identity.Name);
 
-            return this.RedirectToAction("MyCart","Cart");
+            return this.RedirectToAction("MyCart", "Cart");
         }
 
         public IActionResult MyOrders()
@@ -110,7 +114,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
                     Address = order.Address,
                     City = order.City,
                     OrderStatus = order.OrderStatus.ToString(),
-                    EstimatedDeliveryDate = order.EstimatedDeliveryDate?.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture) == null ? ("Not sent yet"): order.EstimatedDeliveryDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    EstimatedDeliveryDate = order.EstimatedDeliveryDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) == null ? ("Not sent yet") : order.EstimatedDeliveryDate?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                     TotalPrice = order.TotalPrice
                 });
             }

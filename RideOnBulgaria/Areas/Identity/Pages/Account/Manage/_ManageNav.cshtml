@@ -21,7 +21,7 @@
             <li class="nav-item nav-link"><a asp-area="Shop" asp-controller="Orders" asp-action="MyOrders" class="nav-link">Мой поръчки</a></li>
 
 
-            @if (User.IsInRole("Admin"))
+            @if (User.IsInRole("Admin")||User.IsInRole("Owner"))
             {
                 <li class="nav-item nav-link"><a asp-area="Administration" asp-controller="AdministrationIndex" asp-action="Index" class="nav-link alert-dark">Към администраторския панел</a></li>
             }

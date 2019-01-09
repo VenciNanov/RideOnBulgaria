@@ -61,5 +61,36 @@ namespace RideOnBulgaria.Services
 
             return user;
         }
+
+        
+        public bool DemoteUserToUserRole(string id)
+        {
+            var user = this.GetUserById(id);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var removeRole = userManager.RemoveFromRoleAsync(user, "Admin").GetAwaiter().GetResult();
+            var promoteUser = userManager.AddToRoleAsync(user, "User").GetAwaiter().GetResult();
+
+            return promoteUser.Succeeded;
+        }
+
+        public bool PromoteUserToAdminRole(string id)
+        {
+            var user = this.GetUserById(id);
+
+            if (user==null)
+            {
+                return false;
+            }
+
+            var removeRole = userManager.RemoveFromRoleAsync(user, "User").GetAwaiter().GetResult();
+            var promoteUser = userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+
+            return true;
+        }
     }
 }

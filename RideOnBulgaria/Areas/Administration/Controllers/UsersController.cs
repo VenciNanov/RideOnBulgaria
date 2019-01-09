@@ -50,11 +50,6 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
 
         public IActionResult UsersRoads(string id)
         {
-            if (!this.User.IsInRole(Constants.AdminRole))
-            {
-                return this.Unauthorized();
-            }
-
             var roads = this.roadsIndexService.GetCurrentUserRoadsById(id);
 
             var model = new UsersRoadsViewModelWrapper
@@ -78,6 +73,31 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
             };
 
             return this.View(model);
+        }
+
+        public IActionResult PromoteUser(string id)
+        {
+
+            bool isPromoted = this.usersService.PromoteUserToAdminRole(id);
+
+            if (!isPromoted)
+            {
+                return NotFound();
+            }
+
+            return this.RedirectToAction("All", "Users");
+        }
+
+        public IActionResult DemoteUser(string id)
+        {
+            bool isDemoted = this.usersService.DemoteUserToUserRole(id);
+
+            if (!isDemoted)
+            {
+                return NotFound();
+            }
+
+            return this.RedirectToAction("All", "Users");
         }
     }
 }

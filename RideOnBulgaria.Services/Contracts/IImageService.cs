@@ -10,6 +10,7 @@ namespace RideOnBulgaria.Services.Contracts
 
         Image AddPhoto(IFormFile formFile);
         //Task<bool> SaveAll();
+        string ReturnImageWithGiverDimensions(Image image, int width, int height, string crop);
         string ReturnImage(Image image);
         void RemoveImage(string imageId);
         Image FindImageById(string id);

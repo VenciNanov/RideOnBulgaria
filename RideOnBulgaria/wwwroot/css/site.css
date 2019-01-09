@@ -9,8 +9,8 @@ body {
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .product-details-content {
     /*padding-left: 150px;*/
@@ -29,13 +29,6 @@ body {
     font-size: 3rem;
 }
 
-/*.navbar-nav>li{
-    border-right: 0.3px solid grey;
-}
-
-.navbar-nav>li:last-child{
-    border: none;
-}*/
 .container-image-details {
     position: relative;
     text-align: center;

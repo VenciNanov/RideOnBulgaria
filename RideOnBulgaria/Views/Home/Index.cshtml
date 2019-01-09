@@ -1,9 +1,62 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ICollection<RideOnBulgaria.Web.Areas.Roads.Models.RoadsIndex.RoadViewModel>
+
+@{
+    ViewData["Title"] = "Начална страница";
 }
 
-<div class="index-content">
-    <div class="jumbotron rounded ride-bg-color text-black-50">
-        <h1>Welcome @User.Identity.Name</h1>
+<div class="row justify-content-center">
+    <h2>Някой от най-добрите трасета</h2>
+    <br/><br/>
+
+    <div id="topRoads" class="carousel slide" data-ride="carousel">
+        <ul class="carousel-indicators">
+            <li data-target="#topRoads" data-slide-to="0" class="active"></li>
+            @for (int i = 1; i <= @Model.Count - 1; i++)
+            {
+                <li data-target="#topRoads" data-slide-to="i"></li>
+            }
+        </ul>
+
+
+        <div class="carousel-inner">
+            @{
+                var roadActive = Model.Take(1);
+            }
+            @foreach (var item in roadActive)
+            {
+                <div class="carousel-item active">
+                    <img src="@item.CoverPhoto" alt="" width="1500" height="300">
+                    <div class="carousel-caption">
+                        <a class="link-none" asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@item.Id">
+                            <h3>@item.RoadName</h3>
+                            <p>Добавено на: @item.PostedOn От @item.PostedBy</p>
+                        </a>
+                    </div>
+                </div>
+            }
+
+            @foreach (var item in Model.Skip(1))
+            {
+
+                <div class="carousel-item">
+                    <img src="@item.CoverPhoto" width="1500" height="300" />
+                    <div class="carousel-caption">
+                        <a class="link-none" asp-area="Roads" asp-controller="Home" asp-action="Road" asp-route-id="@item.Id">
+                            <h3>@item.RoadName</h3>
+                            <p>Добавено на: @item.PostedOn От @item.PostedBy</p>
+                        </a>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+        <a class="carousel-control-prev" href="#topRoads" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#topRoads" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
     </div>
+
 </div>

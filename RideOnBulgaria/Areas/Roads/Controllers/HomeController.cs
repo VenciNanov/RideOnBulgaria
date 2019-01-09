@@ -89,12 +89,17 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
 
             if (!this.User.IsInRole(Constants.AdminRole))
             {
-                if (userId != road.UserId)
+                if (!this.User.IsInRole(Constants.OwnerRole))
                 {
-                    return Unauthorized();
-                }
 
+                    if (userId != road.UserId)
+                    {
+                        return Unauthorized();
+                    }
+
+                }
             }
+
 
             var model = mapper.Map<EditRoadViewModel>(road);
 
@@ -114,7 +119,7 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
                 model.RoadLength, model.Description, model.Video, model.CoverPhoto, model.ViewRating, model.SurfaceRating,
                 model.PleasureRating);
 
-            return this.RedirectToAction("MyRoads", "Home");
+            return this.RedirectToAction("Index", "Home");
         }
 
         [Authorize]
@@ -163,9 +168,28 @@ namespace RideOnBulgaria.Web.Areas.Roads.Controllers
         [Authorize]
         public IActionResult DeleteRoad(string id)
         {
-            ClaimsPrincipal user = this.User;
+            var user = this.usersService.GetUserByUsername(this.User.Identity.Name);
+            var road = roadsService.GetRoadById(id);
 
-            bool result = roadsService.DeleteRoad(id, user);
+            if (road == null)
+            {
+                return NotFound();
+            }
+
+            if (!this.User.IsInRole(Constants.AdminRole))
+            {
+                if (!this.User.IsInRole(Constants.OwnerRole))
+                {
+
+                    if (user.Id != road.UserId)
+                    {
+                        return Unauthorized();
+                    }
+
+                }
+            }
+
+            bool result = roadsService.DeleteRoad(id);
 
             if (result == false)
             {

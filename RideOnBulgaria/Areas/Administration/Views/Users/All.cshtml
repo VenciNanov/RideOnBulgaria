@@ -27,7 +27,17 @@
                         <td class="col-3 d-flex justify-content-center">
                             <div class="btn-group" role="group" aria-label="Admin-func">
                                 <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersRoads" asp-route-id="@user.Id">Трасета</a>
-                                <button type="button" class="btn btn-outline-danger">Promote</button>
+                                @if (this.User.IsInRole("Owner")&&user.Role!="Owner")
+                                {
+                                    if (user.Role == "Admin")
+                                    {
+                                        <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="DemoteUser" asp-route-id="@user.Id">Demote</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="PromoteUser" asp-route-id="@user.Id">Promote</a>
+                                    }
+                                }
                                 <a class="btn btn-outline-danger" asp-area="Administration" asp-controller="Users" asp-action="UsersOrders" asp-route-id="@user.Id">Поръчки</a>
 
                             </div>

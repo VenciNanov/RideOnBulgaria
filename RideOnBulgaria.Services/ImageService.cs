@@ -113,6 +113,15 @@ namespace RideOnBulgaria.Services
             return url;
         }
 
+        public string ReturnImageWithGiverDimensions(Image image,int width, int height, string crop)
+        {
+            string url = _cloudinary.Api.UrlImgUp.Transform(
+                    new Transformation().Width(width).Height(height).Crop(crop))
+                .BuildUrl(image.PublicId);
+
+            return url;
+        }
+
         public string ReturnProductImage(ProductImage image)
         {
             string url = _cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(300).Height(350).Crop("fill"))

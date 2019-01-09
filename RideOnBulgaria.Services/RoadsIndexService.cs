@@ -45,6 +45,8 @@ namespace RideOnBulgaria.Services
         {
             var roads = this.context.Roads.OrderByDescending(x => x.AverageRating)
                 .Take(ImagesCountForCarousel)
+                .ToList()
+                .OrderByDescending(x=>x.AverageRating)
                 .ToList();
 
             return roads;

@@ -13,6 +13,7 @@ namespace RideOnBulgaria.Services.Contracts
         string GetUserRole(string username);
         User GetUserByUsername(string username);
         User GetUserById(string id);
-
+        bool PromoteUserToAdminRole(string id);
+        bool DemoteUserToUserRole(string id);
     }
 }

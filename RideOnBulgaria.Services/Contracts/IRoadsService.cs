@@ -29,6 +29,6 @@ namespace RideOnBulgaria.Services.Contracts
 
         bool AddImagesToRoad(ICollection<IFormFile> images, string roadId);
 
-        bool DeleteRoad(string id, ClaimsPrincipal userClaims);
+        bool DeleteRoad(string id);
     }
 }

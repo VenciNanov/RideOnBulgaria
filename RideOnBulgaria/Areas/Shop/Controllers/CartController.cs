@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RideOnBulgaria.Services.Contracts;
@@ -51,6 +52,7 @@ namespace RideOnBulgaria.Web.Areas.Shop.Controllers
             return View(cart);
         }
 
+        [Authorize]
         public IActionResult AddProduct(string id)
         {
             if (this.User.Identity.IsAuthenticated)

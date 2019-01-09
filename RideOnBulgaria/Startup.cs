@@ -74,7 +74,7 @@ namespace RideOnBulgaria
             services.AddScoped<IRoadsIndexService, RoadsIndexService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IRoadsService, RoadsService>();
-            services.AddScoped<IImageService, ImageService>();
+            services.AddTransient<IImageService, ImageService>();
             services.AddScoped<IVideoService, VideoService>();
             services.AddScoped<IProductsSerivce, ProductsService>();
             services.AddScoped<ICartService, CartService>();
@@ -90,7 +90,7 @@ namespace RideOnBulgaria
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseDatabaseMigration();
-            //app.AddOwnerUser();
+            app.AddOwnerUser();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

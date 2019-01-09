@@ -198,13 +198,13 @@ namespace RideOnBulgaria.Services
 
         public ICollection<Road> GetTopRoads()
         {
-            return this.context.Roads.Include(x => x.CoverPhoto)
-                .Include(x => x.Photos)
-                .Include(x => x.User)
-                .OrderByDescending(x => x.RoadLength)
+            var roads = this.context.Roads.OrderByDescending(x => x.AverageRating)
                 .Take(RoadsShownOnPage)
+                .ToList()
                 .OrderByDescending(x => x.AverageRating)
                 .ToList();
+
+            return roads;
         }
 
         public Road GetRoadByImage(Image image)
@@ -230,11 +230,10 @@ namespace RideOnBulgaria.Services
             return true;
         }
 
-        public bool DeleteRoad(string id, ClaimsPrincipal userClaims)
+        public bool DeleteRoad(string id)
         {
             var road = this.context.Roads.FirstOrDefault(x => x.Id == id);
-            //var userId = this.userManager.GetUserId(userClaims);
-            //var user = this.usersService.GetUserById(userId);
+           
 
             if (road == null) return false;
 

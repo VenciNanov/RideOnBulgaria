@@ -25,7 +25,6 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
         public IActionResult All()
         {
             var orders = this.ordersService.GetAllOrders();
-            //TODO
             if (orders == null)
             {
                 return NotFound();
@@ -38,7 +37,7 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
         public IActionResult Processed()
         {
             var orders = this.ordersService.GetProcessedOrders();
-            //TODO
+
             if (orders == null)
             {
                 return NotFound();
@@ -51,7 +50,7 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
         public IActionResult Sent()
         {
             var orders = this.ordersService.GetSentOrders();
-            //TODO
+
             if (orders == null)
             {
                 return NotFound();
@@ -64,7 +63,7 @@ namespace RideOnBulgaria.Web.Areas.Administration.Controllers
         public IActionResult Delivered()
         {
             var orders = this.ordersService.GetDeliveredOrders();
-            //TODO
+
             if (orders == null)
             {
                 return NotFound();
