@@ -18,19 +18,20 @@ namespace RideOnBulgaria.Services
         private readonly Cloudinary _cloudinary;
         private readonly ApplicationDbContext context;
 
-        public ImageService(ApplicationDbContext context, IUsersService usersService)
+        public ImageService(ApplicationDbContext context, IUsersService usersService, Cloudinary cloudinary)
         {
             this.context = context;
             _usersService = usersService;
+            _cloudinary = cloudinary;
 
-            Account account = new Account
-            {
-                Cloud = "rideonbg",
-                ApiSecret = "AXj6a668SCJ9PchRZbFYGpmaMmo",
-                ApiKey = "695619639461885",
-            };
+            //Account account = new Account
+            //{
+            //    Cloud = "rideonbg",
+            //    ApiSecret = "AXj6a668SCJ9PchRZbFYGpmaMmo",
+            //    ApiKey = "695619639461885",
+            //};
 
-            _cloudinary = new Cloudinary(account);
+            //_cloudinary = new Cloudinary(account);
         }
 
         public Image AddPhoto(IFormFile photo)

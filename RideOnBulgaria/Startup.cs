@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -63,6 +64,16 @@ namespace RideOnBulgaria
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
                 });
+
+            var account = new Account(
+                this.Configuration.GetSection("Cloudinary").GetSection("CloudName").Value,
+                this.Configuration.GetSection("Cloudinary").GetSection("APIKey").Value,
+                this.Configuration.GetSection("Cloudinary").GetSection("APISecret").Value);
+
+            var cloudinary = new Cloudinary(account);
+
+            services.AddSingleton(new Cloudinary(account));
+
 
             var mappingConfig = new MapperConfiguration(mc =>
                 mc.AddProfile(new MappingProfile())

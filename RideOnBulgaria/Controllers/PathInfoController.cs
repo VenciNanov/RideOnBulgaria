@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
@@ -39,7 +40,7 @@ namespace RideOnBulgaria.Controllers
                     bool isNameNull = result[i].Name == null;
                     bool isPostedOnNull = result[i].PostedOn == null;
                     bool isContentNull = result[i].Content == null;
-
+                    
                     bool isTokenDone = !isNameNull && !isPostedOnNull && !isContentNull && item.Length < NameWordsCountLimit;
 
                     if (isTokenDone)
