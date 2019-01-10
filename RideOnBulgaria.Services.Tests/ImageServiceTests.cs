@@ -22,7 +22,7 @@ namespace RideOnBulgaria.Services.Tests
 
             var dbContext = new ApplicationDbContext(options);
 
-            var imageService = new ImageService(dbContext, null);
+            var imageService = new ImageService(dbContext, null,null);
 
             var image = new Image
             {
@@ -49,7 +49,7 @@ namespace RideOnBulgaria.Services.Tests
 
             var dbContext = new ApplicationDbContext(options);
 
-            var imageService = new ImageService(dbContext, null);
+            var imageService = new ImageService(dbContext, null,null);
 
             var image = new Image
             {

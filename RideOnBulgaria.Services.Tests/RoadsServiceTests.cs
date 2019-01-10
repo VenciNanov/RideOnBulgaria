@@ -289,7 +289,7 @@ namespace RideOnBulgaria.Services.Tests
             dbContext.Roads.Add(road);
             dbContext.SaveChanges();
 
-            var result = roadsService.DeleteRoad(road.Id, null);
+            var result = roadsService.DeleteRoad(road.Id);
 
             Assert.True(result);
         }
@@ -318,7 +318,7 @@ namespace RideOnBulgaria.Services.Tests
             dbContext.Roads.Remove(road);
             dbContext.SaveChanges();
 
-            var result = roadsService.DeleteRoad(road.Id, null);
+            var result = roadsService.DeleteRoad(road.Id);
 
             Assert.False(result);
         }
